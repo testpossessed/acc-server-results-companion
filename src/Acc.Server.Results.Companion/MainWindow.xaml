@@ -10,16 +10,26 @@
         d:DataContext="{d:DesignInstance local:MainWindowViewModel}">
     <Grid>
         <DockPanel LastChildFill="True">
-            <ToolBar DockPanel.Dock="Top" OverflowMode="Never" >
+            <ToolBar DockPanel.Dock="Top"
+                     OverflowMode="Never">
                 <Button ToolTip="Add a new ACC Server"
-                        Command="{Binding AddServer}" Height="32" Width="32">
+                        Command="{Binding AddServer}"
+                        Height="32"
+                        Width="32">
                     <Image Source="../Icons/server-add2.png" />
                 </Button>
+                <Label Content="Servers:" Margin="10 0 5 0" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Servers}"
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedServer, Mode=TwoWay}" VerticalAlignment="Center" />
             </ToolBar>
 
             <StatusBar DockPanel.Dock="Bottom" />
 
-            <ListBox DockPanel.Dock="Left" ItemsSource="{Binding Sessions}" VerticalAlignment="Stretch" Width="300"/>
+            <ListBox DockPanel.Dock="Left"
+                     ItemsSource="{Binding Sessions}"
+                     VerticalAlignment="Stretch"
+                     Width="300" DisplayMemberPath="DisplayName" />
 
             <TabControl>
                 <TabItem Header="Details" />

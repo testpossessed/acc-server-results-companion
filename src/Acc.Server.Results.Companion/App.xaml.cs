@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Acc.Server.Results.Companion.Core.Services;
+using Acc.Server.Results.Companion.Database;
 using Acc.Server.Results.Companion.Installer;
 using NLog;
 using NuGet.Versioning;
@@ -29,6 +30,7 @@ namespace Acc.Server.Results.Companion
             this.InitialiseApp();
             Configuration.Init();
             LogWriter.Init();
+            DbRepository.Init();
 
 #if RELEASE
             SquirrelAwareApp.HandleEvents(this.OnAppInstall,
@@ -77,18 +79,23 @@ namespace Acc.Server.Results.Companion
 #endif
         }
 
-        private void EnsureAppDataFolderExists()
+        private void EnsureAppDataFoldersExist()
         {
             if(!Directory.Exists(PathProvider.AppDataFolderPath))
             {
                 Directory.CreateDirectory(PathProvider.AppDataFolderPath);
+            }
+
+            if(!Directory.Exists(PathProvider.DownloadedResultsFolderPath))
+            {
+                Directory.CreateDirectory(PathProvider.DownloadedResultsFolderPath);
             }
         }
 
         private void InitialiseApp()
         {
             this.SetupExceptionHandling();
-            this.EnsureAppDataFolderExists();
+            this.EnsureAppDataFoldersExist();
         }
 
         private void LogUnhandledException(Exception exception, string source)

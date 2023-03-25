@@ -5,7 +5,7 @@ namespace Acc.Server.Results.Companion.Core.Services;
 
 public static class Configuration
 {
-    private static IConfigurationRoot configuration = null!;
+    private static IConfigurationRoot configuration;
 
     internal static IConfiguration CurrentConfig => configuration;
 

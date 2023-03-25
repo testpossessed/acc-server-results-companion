@@ -9,7 +9,7 @@ namespace Acc.Server.Results.Companion.Core.Services
     internal static class LogWriter
     {
         private const string NLogInternalLogPath = @"C:\NLog\ACCServerResultsCompanion";
-        private static Logger logger = null!;
+        private static Logger logger; 
 
         internal static void Init()
         {

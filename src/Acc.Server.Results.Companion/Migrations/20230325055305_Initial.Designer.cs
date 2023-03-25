@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acc.Server.Results.Companion.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230324071742_Initial")]
+    [Migration("20230325055305_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,9 +25,12 @@ namespace Acc.Server.Results.Companion.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Host")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsLocalFolder")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -36,9 +39,6 @@ namespace Acc.Server.Results.Companion.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Port")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Username")
                         .IsRequired()

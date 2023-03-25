@@ -9,6 +9,7 @@ public static class PathProvider
     public const string AppSettingsFileName = "appsettings.json";
     private const string UserSettingsFileName = "userSettings.json";
     private const string LogFolderName = "Logs";
+    private const string ResultsFolder = "Results";
 
     static PathProvider()
     {
@@ -21,6 +22,7 @@ public static class PathProvider
         AppLogFolderPath = Path.Combine(AppDataFolderPath, LogFolderName);
         DefaultSettingsFilePath = Path.Combine(AppFolderPath!, AppSettingsFileName);
         UserSettingsFilePath = Path.Combine(AppDataFolderPath, UserSettingsFileName);
+        DownloadedResultsFolderPath = Path.Combine(AppDataFolderPath, ResultsFolder);
     }
 
     public static string AppDataFolderPath { get; }
@@ -29,6 +31,7 @@ public static class PathProvider
     public static string AppSettingsFilePath { get; }
     public static string DefaultSettingsFilePath { get; }
     public static string UserSettingsFilePath { get; }
+    public static string DownloadedResultsFolderPath { get; }
 
     public static string GetLastFolderName(string path)
     {

@@ -9,8 +9,8 @@ namespace Acc.Server.Results.Companion.Installer;
 
 public class UpdateProgressDialogViewModel : ObservableObject
 {
-    private string installedVersion = null!;
-    private string newVersion = null!;
+    private string installedVersion;
+    private string newVersion; 
     private int progress;
     private readonly UpdateInfo updateInfo;
     private readonly UpdateManager updateManager;

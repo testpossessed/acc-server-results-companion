@@ -7,7 +7,8 @@ namespace Acc.Server.Results.Companion.Database
 {
     internal class AppDbContext : DbContext
     {
-        public DbSet<ServerDetails> Servers { get; set; }
+        public DbSet<ServerDetails> Servers { get; set; } 
+        public DbSet<Session> Sessions { get; set; } 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

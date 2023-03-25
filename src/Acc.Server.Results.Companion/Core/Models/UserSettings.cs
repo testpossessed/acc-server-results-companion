@@ -8,6 +8,6 @@ namespace Acc.Server.Results.Companion.Core.Models
 {
     internal class UserSettings
     {
-        public int? LastServerId { get; set; }
+        public int LastServerId { get; set; }
     }
 }

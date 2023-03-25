@@ -3,6 +3,7 @@ using System;
 using Acc.Server.Results.Companion.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acc.Server.Results.Companion.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230325075231_AddSession")]
+    partial class AddSession
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
@@ -24,18 +27,22 @@ namespace Acc.Server.Results.Companion.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsLocalFolder")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -50,30 +57,13 @@ namespace Acc.Server.Results.Companion.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("FilePath")
+                        .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<string>("MetaData")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("RaceWeekendIndex")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ServerId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ServerName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("SessionIndex")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("SessionType")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TrackName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

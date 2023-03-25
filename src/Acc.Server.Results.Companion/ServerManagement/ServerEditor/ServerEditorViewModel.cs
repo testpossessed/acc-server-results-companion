@@ -14,13 +14,13 @@ namespace Acc.Server.Results.Companion.ServerManagement.ServerEditor
         private const string FtpServerType = "FTP";
         private readonly ServerEditor serverEditor;
 
-        private string folderPath = null!;
-        private string hostName = null!;
-        private string hostPort = null!;
-        private string name = null!;
-        private string password = null!;
-        private string serverType = null!;
-        private string username = null!;
+        private string folderPath;
+        private string hostName;
+        private string hostPort;
+        private string name;
+        private string password;
+        private string serverType;
+        private string username;
 
         public ServerEditorViewModel(ServerEditor serverEditor)
         {
