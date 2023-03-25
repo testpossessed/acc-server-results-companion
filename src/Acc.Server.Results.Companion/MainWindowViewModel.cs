@@ -27,6 +27,7 @@ internal class MainWindowViewModel : ObservableObject
     public ICommand AddServer { get; }
     public ObservableCollection<ServerDetails> Servers { get; } = new();
     public ObservableCollection<Session> Sessions { get; } = new();
+    public ObservableCollection<LeaderBoardLine> LeaderBoardLines { get; } = new();
 
     public ServerDetails SelectedServer
     {
@@ -41,7 +42,22 @@ internal class MainWindowViewModel : ObservableObject
     public Session SelectedSession
     {
         get => this.selectedSession;
-        set => this.SetProperty(ref this.selectedSession, value);
+        set
+        {
+            this.SetProperty(ref this.selectedSession, value);
+            this.LoadLeaderBoardLines();
+        }
+    }
+
+    private void LoadLeaderBoardLines()
+    {
+        this.LeaderBoardLines.Clear();
+        var lines = DbRepository.GetLeaderBoardLines(this.SelectedSession.Id);
+
+        foreach(var leaderBoardLine in lines)
+        {
+            this.LeaderBoardLines.Add(leaderBoardLine);
+        }
     }
 
     private void HandleAddServer()

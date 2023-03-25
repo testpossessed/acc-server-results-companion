@@ -9,7 +9,7 @@ namespace Acc.Server.Results.Companion.Database;
 
 internal static class DbRepository
 {
-    public static List<Session> GetSessionsForServer(int serverId)
+    internal static List<Session> GetSessionsForServer(int serverId)
     {
         var dbContext = GetDbContext();
 
@@ -61,6 +61,14 @@ internal static class DbRepository
 
         var car = dbContext.Cars.FirstOrDefault(c => c.AccModelId == modelId);
         return car?.Name ?? "Unknown Car";
+    }
+
+    internal static List<LeaderBoardLine> GetLeaderBoardLines(int sessionId)
+    {
+        var dbContext = GetDbContext();
+
+        return dbContext.LeaderBoardLines.Where(l => l.SessionId == sessionId)
+                        .ToList();
     }
 
     internal static List<ServerDetails> GetServers()

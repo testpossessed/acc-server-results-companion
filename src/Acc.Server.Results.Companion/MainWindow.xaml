@@ -34,9 +34,12 @@
 
             <TabControl>
                 <TabItem Header="Details">
-                    <sessions:SessionDetails Session="{Binding SelectedSession, Mode=TwoWay}" />
+                    <sessions:SessionDetails Session="{Binding SelectedSession}" />
                 </TabItem>
-                <TabItem Header="Leader Board" />
+                <TabItem Header="Leader Board">
+                    <sessions:LeaderBoard LeaderBoardLines="{Binding LeaderBoardLines}"/>
+                </TabItem>
+
                 <TabItem Header="Laps" />
             </TabControl>
 
