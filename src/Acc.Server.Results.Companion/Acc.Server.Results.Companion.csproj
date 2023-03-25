@@ -4,11 +4,15 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<ApplicationIcon>Icons\Icon.ico</ApplicationIcon>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<None Remove="Icons\cancel.png" />
+		<None Remove="Icons\Icon.png" />
 		<None Remove="Icons\Logo.png" />
 		<None Remove="Icons\save.png" />
 		<None Remove="Icons\server-add2.png" />
@@ -40,6 +44,7 @@
 
 	<ItemGroup>
 		<Resource Include="Icons\cancel.png" />
+		<Resource Include="Icons\Icon.png" />
 		<Resource Include="Icons\save.png" />
 		<Resource Include="Icons\server-add2.png" />
 		<Resource Include="Icons\server-edit.png" />
