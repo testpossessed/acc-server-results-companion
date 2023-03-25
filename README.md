@@ -27,7 +27,7 @@ For Folder, an absolute path must be entered or selected using the Browse... but
 
 The Save button will not be enabled until the required information is correctly entered.
 
-Click Save when enabled and the new server will be added to the list labelled Servers in the toolbar and an result files that contain laps driven will be imported and a list of session will be displayed in the left panel.  Selecting a session in this panel will update the views in the right panel.
+Click Save when enabled and the new server will be added to the list labelled Servers in the toolbar and any result files that contain laps driven will be imported and a list of session will be displayed in the left panel.  Selecting a session in this panel will update the views in the right panel.
 
 
 PLEASE NOTE:  This application and documentation is in the early stages of development so it will change frequently.
