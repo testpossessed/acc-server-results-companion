@@ -34,6 +34,10 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.0.0-alpha.3 2003-03-24
+
+### Added
+- Display leader board for selected session
 
 ## v1.0.0-alpha.2 2003-03-24
 
