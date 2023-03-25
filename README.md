@@ -31,3 +31,24 @@ Click Save when enabled and the new server will be added to the list labelled Se
 
 
 PLEASE NOTE:  This application and documentation is in the early stages of development so it will change frequently.
+
+# Release History
+
+
+## v1.0.0-alpha.2 2003-03-24
+
+### Added
+- Display of selected session details
+
+### Fixed
+- Error on startup when no servers registered
+
+
+## v1.0.0-aplha.1 2003-03-25
+
+Initial release
+
+### Added
+- Ability to register and save details of server
+- Ability to switch between servers
+- Import new result files from selected server
