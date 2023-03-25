@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="Acc.Server.Results.Companion.Sessions.SessionDetails"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Acc.Server.Results.Companion.Sessions"
+             xmlns:converters="clr-namespace:Acc.Server.Results.Companion.Core.Converters"
+             mc:Ignorable="d"
+             Margin="20">
+    <UserControl.Resources>
+        <converters:SessionTypeConverter x:Key="SessionTypeConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0"
+               Grid.Row="0"
+               Content="Server Name:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="0"
+               Content="{Binding Session.ServerName, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="1"
+               Content="Track Name:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="1"
+               Content="{Binding Session.TrackName, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="2"
+               Content="Session Type:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="2"
+               Content="{Binding Session.SessionType, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}, Converter={StaticResource SessionTypeConverter}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="3"
+               Content="Metadata:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="3"
+               Content="{Binding Session.MetaData, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="4"
+               Content="Race Weekend Index:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="4"
+               Content="{Binding Session.RaceWeekendIndex, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="5"
+               Content="Session Index:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="5"
+               Content="{Binding Session.RaceWeekendIndex, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="6"
+               Content="Session Index:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="6"
+               Content="{Binding Session.SessionIndex, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="7"
+               Content="Start Date/Time:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="7"
+               Content="{Binding Session.TimeStamp, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="8"
+               Content="Imported From:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="8"
+               Content="{Binding Session.FilePath, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+    </Grid>
+</UserControl>

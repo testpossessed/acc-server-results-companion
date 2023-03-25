@@ -5,7 +5,7 @@ ACC Server Results Companion is an application that imports the session result f
 The data from the result files is imported into a local database and presented in various views with the ability to export to CSV or Excel.
 
 The latest release can be found [here](https://github.com/testpossessed/acc-server-results-companion/releases). Simply download and run ACCServerResultsCompanionSetup.exe.
-The application will install then launch automatically Each time the application is started it will automatically update to the latest version before launching.
+The application will install then launch automatically. Each time the application is started it will automatically update to the latest version before launching.
 
 ## Getting Started
 

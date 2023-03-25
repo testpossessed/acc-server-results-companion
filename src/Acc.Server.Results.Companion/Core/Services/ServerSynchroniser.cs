@@ -43,7 +43,7 @@ namespace Acc.Server.Results.Companion.Core.Services
             var filePaths = Directory.GetFiles(localFolderPath, "*.json");
             foreach(var filePath in filePaths)
             {
-                if(filePath.Contains("_entrylist"))
+                if(filePath.Contains("_entrylist") || DbRepository.SessionExists(filePath))
                 {
                     continue;
                 }
@@ -85,8 +85,10 @@ namespace Acc.Server.Results.Companion.Core.Services
             var hour = elements[1][..2];
             var minute = elements[1]
                 .Substring(2, 2);
+            var second = elements[1]
+                .Substring(4, 2);
 
-            return new DateTime(int.Parse(year), int.Parse(month), int.Parse(day), int.Parse(hour), int.Parse(minute), 0);
+            return new DateTime(int.Parse(year), int.Parse(month), int.Parse(day), int.Parse(hour), int.Parse(minute), int.Parse(second));
         }
 
         private static void SyncFtpServerFiles(ServerDetails serverDetails)

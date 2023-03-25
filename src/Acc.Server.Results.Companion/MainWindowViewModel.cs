@@ -72,6 +72,11 @@ internal class MainWindowViewModel : ObservableObject
             this.Servers.Add(server);
         }
 
+        if(!this.Servers.Any())
+        {
+            return;
+        }
+
         var userSettings = UserSettingsProvider.GetSettings();
         var lastServer = this.Servers.FirstOrDefault(s => s.Id == userSettings.LastServerId);
         this.SelectedServer = lastServer ?? this.Servers[0];
@@ -89,6 +94,11 @@ internal class MainWindowViewModel : ObservableObject
         foreach(var session in sessions)
         {
             this.Sessions.Add(session);
+        }
+
+        if(!this.Sessions.Any())
+        {
+            return;
         }
 
         this.SelectedSession = this.Sessions[0];

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Acc.Server.Results.Companion"
+        xmlns:sessions="clr-namespace:Acc.Server.Results.Companion.Sessions"
         mc:Ignorable="d"
         Title="ACC Server Results Companion"
         WindowStartupLocation="CenterScreen"
@@ -27,12 +28,14 @@
             <StatusBar DockPanel.Dock="Bottom" />
 
             <ListBox DockPanel.Dock="Left"
-                     ItemsSource="{Binding Sessions}"
+                     ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession, Mode=TwoWay}"
                      VerticalAlignment="Stretch"
                      Width="300" DisplayMemberPath="DisplayName" />
 
             <TabControl>
-                <TabItem Header="Details" />
+                <TabItem Header="Details">
+                    <sessions:SessionDetails Session="{Binding SelectedSession, Mode=TwoWay}" />
+                </TabItem>
                 <TabItem Header="Leader Board" />
                 <TabItem Header="Laps" />
             </TabControl>

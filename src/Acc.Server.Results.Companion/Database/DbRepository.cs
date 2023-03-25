@@ -48,6 +48,13 @@ internal static class DbRepository
         dbContext.Database.Migrate();
     }
 
+    internal static bool SessionExists(string filePath)
+    {
+        var dbContext = GetDbContext();
+
+        return dbContext.Sessions.Any(s => s.FilePath == filePath);
+    }
+
     private static AppDbContext GetDbContext()
     {
         return new AppDbContext();
