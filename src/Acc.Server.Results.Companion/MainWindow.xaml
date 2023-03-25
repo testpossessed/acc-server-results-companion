@@ -1,0 +1,32 @@
+﻿<Window x:Class="Acc.Server.Results.Companion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Acc.Server.Results.Companion"
+        mc:Ignorable="d"
+        Title="ACC Server Results Companion"
+        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance local:MainWindowViewModel}">
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <ToolBar DockPanel.Dock="Top" OverflowMode="Never" >
+                <Button ToolTip="Add a new ACC Server"
+                        Command="{Binding AddServer}" Height="32" Width="32">
+                    <Image Source="../Icons/server-add2.png" />
+                </Button>
+            </ToolBar>
+
+            <StatusBar DockPanel.Dock="Bottom" />
+
+            <ListBox DockPanel.Dock="Left" ItemsSource="{Binding Sessions}" VerticalAlignment="Stretch" Width="300"/>
+
+            <TabControl>
+                <TabItem Header="Details" />
+                <TabItem Header="Leader Board" />
+                <TabItem Header="Laps" />
+            </TabControl>
+
+        </DockPanel>
+    </Grid>
+</Window>

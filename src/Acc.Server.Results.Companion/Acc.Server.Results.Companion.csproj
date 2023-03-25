@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Icons\cancel.png" />
+		<None Remove="Icons\Logo.png" />
+		<None Remove="Icons\save.png" />
+		<None Remove="Icons\server-add2.png" />
+		<None Remove="Icons\server-edit.png" />
+		<None Remove="Icons\server.png" />
+		<None Remove="Splash.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Clowd.Squirrel" Version="3.0.210-g5f9f594" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>
+				runtime; build; native; contentfiles; analyzers; buildtransitive
+			</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.4" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+		<PackageReference Include="NLog" Version="5.1.2" />
+		<PackageReference Include="NLog.Extensions.Logging" Version="5.2.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Icons\cancel.png" />
+		<Resource Include="Icons\save.png" />
+		<Resource Include="Icons\server-add2.png" />
+		<Resource Include="Icons\server-edit.png" />
+		<Resource Include="Icons\server.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Icons\Logo.png" />
+	  <Resource Include="Splash.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
