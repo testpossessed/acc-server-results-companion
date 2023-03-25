@@ -93,9 +93,9 @@ namespace Acc.Server.Results.Companion.Core
             return longValue >= int.MaxValue? 0: longValue;
         }
 
-        internal static int ValidatedValue(this int intValue)
+        internal static double ValidatedValue(this double doubleValue)
         {
-            return intValue >= int.MaxValue? 0: intValue;
+            return doubleValue >= int.MaxValue? 0: doubleValue;
         }
     }
 }

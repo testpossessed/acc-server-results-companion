@@ -18,6 +18,14 @@ internal static class DbRepository
                         .ToList();
     }
 
+    internal static void AddLeaderBoardLine(LeaderBoardLine leaderBoardLine)
+    {
+        var dbContext = GetDbContext();
+
+        dbContext.LeaderBoardLines.Add(leaderBoardLine);
+        dbContext.SaveChanges();
+    }
+
     internal static void AddServerDetails(ServerDetails serverDetails)
     {
         var dbContext = GetDbContext();
@@ -34,11 +42,41 @@ internal static class DbRepository
         return session;
     }
 
+    internal static void ClearSessions()
+    {
+        var dbContext = GetDbContext();
+
+        var sessions = dbContext.Sessions.ToList();
+        foreach(var session in sessions)
+        {
+            dbContext.Sessions.Remove(session);
+        }
+
+        dbContext.SaveChanges();
+    }
+
+    internal static string GetCarNameByAccModelId(int modelId)
+    {
+        var dbContext = GetDbContext();
+
+        var car = dbContext.Cars.FirstOrDefault(c => c.AccModelId == modelId);
+        return car?.Name ?? "Unknown Car";
+    }
+
     internal static List<ServerDetails> GetServers()
     {
         var dbContext = GetDbContext();
 
         return dbContext.Servers.ToList();
+    }
+
+    internal static string GetTrackNameByAccTrackId(string trackName)
+    {
+        var dbContext = GetDbContext();
+
+        var track = dbContext.Tracks.FirstOrDefault(t => t.AccTrackId == trackName);
+
+        return track?.Name ?? trackName;
     }
 
     internal static void Init()

@@ -55,20 +55,71 @@ namespace Acc.Server.Results.Companion.Core.Services
                     continue;
                 }
 
-                var session = new Session
-                              {
-                                  FilePath = filePath,
-                                  MetaData = accSession.MetaData,
-                                  RaceWeekendIndex = accSession.RaceWeekendIndex,
-                                  ServerId = serverId,
-                                  ServerName = accSession.ServerName,
-                                  SessionIndex = accSession.SessionIndex,
-                                  SessionType = accSession.SessionType,
-                                  TimeStamp = GetTimestampFromFileName(filePath),
-                                  TrackName = accSession.TrackName
-                              };
-                DbRepository.AddSession(session);
+                var session = AddSession(serverId, filePath, accSession);
+
+                AddLeaderBoardLines(session, accSession);
             }
+        }
+
+        private static void AddLeaderBoardLines(Session session, AccSession accSession)
+        {
+            var position = 1;
+            foreach(var accLeaderBoardLine in accSession.SessionResult.LeaderBoardLines)
+            {
+                var accTiming = accLeaderBoardLine.Timing;
+                var currentDriver = accLeaderBoardLine.CurrentDriver;
+                var accCar = accLeaderBoardLine.Car;
+                var leaderBoardLine = new LeaderBoardLine
+                                      {
+                                          AverageLapTime = accTiming.AverageLapTime,
+                                          AverageLapTimeMs = accTiming.AverageLapTimeMs.ValidatedValue(),
+                                          BestSector1Time = accTiming.BestSector1,
+                                          BestSector1TimeMs = accTiming.BestSplits[0].ValidatedValue(),
+                                          BestSector2Time = accTiming.BestSector2,
+                                          BestSector2TimeMs =
+                                              accTiming.BestSplits[1].ValidatedValue(),
+                                          BestSector3Time = accTiming.BestSector3,
+                                          BestSector3TimeMs =
+                                              accTiming.BestSplits[2].ValidatedValue(),
+                                          BestLapTime = accTiming.BestLapTime,
+                                          BestLapTimeMs = accTiming.BestLap,
+                                          CarName = DbRepository.GetCarNameByAccModelId(
+                                              accCar.CarModel),
+                                          CarClass = accCar.CarGroup,
+                                          DriverName = currentDriver.DisplayName,
+                                          DriverShortName = currentDriver.ShortName,
+                                          MissingMandatoryPitStop = accLeaderBoardLine.MissingMandatoryPitstop,
+                                          Position = position++,
+                                          SessionId = session.Id,
+                                          TeamName = accCar.TeamName
+                                      };
+                DbRepository.AddLeaderBoardLine(leaderBoardLine);
+            }
+        }
+
+        private static Session AddSession(int serverId, string filePath, AccSession accSession)
+        {
+            var session = new Session
+                   {
+                       BestLapMs = accSession.SessionResult.BestLap.ValidatedValue(),
+                       BestSector1Ms = accSession.SessionResult.BestSplits[0].ValidatedValue(),
+                       BestSector2Ms = accSession.SessionResult.BestSplits[1].ValidatedValue(),
+                       BestSector3Ms = accSession.SessionResult.BestSplits[2].ValidatedValue(),
+                       FilePath = filePath,
+                       IsWetSession = accSession.SessionResult.IsWetSession,
+                       MetaData = accSession.MetaData,
+                       RaceWeekendIndex = accSession.RaceWeekendIndex,
+                       ServerId = serverId,
+                       ServerName = accSession.ServerName,
+                       SessionIndex = accSession.SessionIndex,
+                       SessionType = accSession.SessionType,
+                       TimeStamp = GetTimestampFromFileName(filePath),
+                       TrackName = DbRepository.GetTrackNameByAccTrackId(accSession.TrackName)
+                   };
+
+
+            DbRepository.AddSession(session);
+            return session;
         }
 
         private static DateTime GetTimestampFromFileName(string filePath)
@@ -88,7 +139,7 @@ namespace Acc.Server.Results.Companion.Core.Services
             var second = elements[1]
                 .Substring(4, 2);
 
-            return new DateTime(int.Parse(year), int.Parse(month), int.Parse(day), int.Parse(hour), int.Parse(minute), int.Parse(second));
+            return new DateTime(int.Parse(year) + 2000, int.Parse(month), int.Parse(day), int.Parse(hour), int.Parse(minute), int.Parse(second));
         }
 
         private static void SyncFtpServerFiles(ServerDetails serverDetails)

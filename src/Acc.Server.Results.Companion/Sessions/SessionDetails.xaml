@@ -26,6 +26,11 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label Grid.Column="0"
@@ -54,50 +59,91 @@
 
         <Label Grid.Column="0"
                Grid.Row="3"
-               Content="Metadata:"
+               Content="Best Lap:"
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="3"
+               Content="{Binding Session.BestLap, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="4"
+               Content="Best Sector 1:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="4"
+               Content="{Binding Session.BestSector1, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="5"
+               Content="Best Sector 2:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="5"
+               Content="{Binding Session.BestSector2, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="6"
+               Content="Best Sector 3:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="6"
+               Content="{Binding Session.BestSector3, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="7"
+               Content="Wet Session:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="7"
+               Content="{Binding Session.IsWetSession, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+
+
+        <Label Grid.Column="0"
+               Grid.Row="8"
+               Content="Metadata:"
+               FontWeight="Bold" />
+        <Label Grid.Column="1"
+               Grid.Row="8"
                Content="{Binding Session.MetaData, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
 
         <Label Grid.Column="0"
-               Grid.Row="4"
+               Grid.Row="9"
                Content="Race Weekend Index:"
                FontWeight="Bold" />
         <Label Grid.Column="1"
-               Grid.Row="4"
+               Grid.Row="9"
                Content="{Binding Session.RaceWeekendIndex, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
 
         <Label Grid.Column="0"
-               Grid.Row="5"
+               Grid.Row="10"
                Content="Session Index:"
                FontWeight="Bold" />
         <Label Grid.Column="1"
-               Grid.Row="5"
+               Grid.Row="10"
                Content="{Binding Session.RaceWeekendIndex, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
 
         <Label Grid.Column="0"
-               Grid.Row="6"
+               Grid.Row="11"
                Content="Session Index:"
                FontWeight="Bold" />
         <Label Grid.Column="1"
-               Grid.Row="6"
+               Grid.Row="11"
                Content="{Binding Session.SessionIndex, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
 
         <Label Grid.Column="0"
-               Grid.Row="7"
+               Grid.Row="12"
                Content="Start Date/Time:"
                FontWeight="Bold" />
         <Label Grid.Column="1"
-               Grid.Row="7"
-               Content="{Binding Session.TimeStamp, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Grid.Row="12"
+               Content="{Binding Session.TimeStamp, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}, StringFormat=D}" />
 
         <Label Grid.Column="0"
-               Grid.Row="8"
+               Grid.Row="13"
                Content="Imported From:"
                FontWeight="Bold" />
         <Label Grid.Column="1"
-               Grid.Row="8"
+               Grid.Row="13"
                Content="{Binding Session.FilePath, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
     </Grid>
 </UserControl>

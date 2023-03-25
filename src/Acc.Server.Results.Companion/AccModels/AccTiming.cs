@@ -6,10 +6,8 @@ namespace Acc.Server.Results.Companion.AccModels;
 
 public class AccTiming
 {
-	public string AverageLapTime =>
-		(this.LapCount > 0? ((double)this.TotalTime.ValidatedValue()) / this.LapCount: 0)
-		.ToTimingString();
-
+    public double AverageLapTimeMs => (this.LapCount > 0? ((double)this.TotalTime.ValidatedValue()) / this.LapCount: 0);
+	public string AverageLapTime => this.AverageLapTimeMs.ToTimingString();
 	public string BestLapTime =>
 		this.BestLap.ValidatedValue()
 		    .ToTimingString();
