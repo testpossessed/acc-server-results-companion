@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Acc.Server.Results.Companion.Core.Services;
 using Acc.Server.Results.Companion.Database;
 using Acc.Server.Results.Companion.Database.Entities;
+using Acc.Server.Results.Companion.Server.ServerEditor;
+using Acc.Server.Results.Companion.Server.Sync;
 using Acc.Server.Results.Companion.ServerManagement.ServerEditor;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -21,14 +24,17 @@ internal class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         this.AddServer = new RelayCommand(this.HandleAddServer);
-
-        this.LoadServers();
     }
 
     public ICommand AddServer { get; }
     public ObservableCollection<LeaderBoardLine> LeaderBoardLines { get; } = new();
     public ObservableCollection<ServerDetails> Servers { get; } = new();
     public ObservableCollection<Session> Sessions { get; } = new();
+
+    internal void Init()
+    {
+        this.LoadServers();
+    }
 
     public bool IsInitialised
     {
@@ -42,6 +48,10 @@ internal class MainWindowViewModel : ObservableObject
         set
         {
             this.SetProperty(ref this.selectedServer, value);
+            if(value == null)
+            {
+                return;
+            }
             this.LoadServerSessions();
         }
     }
@@ -52,6 +62,10 @@ internal class MainWindowViewModel : ObservableObject
         set
         {
             this.SetProperty(ref this.selectedSession, value);
+            if(value == null)
+            {
+                return;
+            }
             this.LoadLeaderBoardLines();
         }
     }
@@ -108,11 +122,24 @@ internal class MainWindowViewModel : ObservableObject
         this.SelectedServer = lastServer ?? this.Servers[0];
     }
 
-    private void LoadServerSessions()
+    private async void LoadServerSessions()
     {
+        if(this.SelectedServer == null)
+        {
+            return;
+        }
+
         UserSettingsProvider.SetLastServerId(this.SelectedServer.Id);
 
-        ServerSynchroniser.Sync(this.selectedServer);
+        var serverSyncDialog = new ServerSyncDialog
+                               {
+                                   Owner = Application.Current.MainWindow
+                               };
+
+        var serverSyncViewModel = new ServerSyncDialogViewModel(serverSyncDialog);
+        serverSyncDialog.DataContext = serverSyncViewModel;
+        serverSyncDialog.Show();
+        await serverSyncViewModel.Start(this.SelectedServer);
 
         this.Sessions.Clear();
         var sessions = DbRepository.GetSessionsForServer(this.SelectedServer.Id);

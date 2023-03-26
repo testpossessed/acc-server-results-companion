@@ -11,50 +11,74 @@
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance local:MainWindowViewModel}">
     <Grid>
-        <DockPanel LastChildFill="True">
-            <ToolBar DockPanel.Dock="Top"
-                     OverflowMode="Never">
-                <Button ToolTip="Add a new ACC Server"
-                        Command="{Binding AddServer}"
-                        Height="32"
-                        Width="32">
-                    <Image Source="../Icons/server-add2.png" />
-                </Button>
-                <Label Content="Servers:"
-                       Margin="10 0 5 0"
-                       VerticalAlignment="Center"
-                       Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <ComboBox ItemsSource="{Binding Servers}"
-                          DisplayMemberPath="Name"
-                          SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
-                          VerticalAlignment="Center"
-                          Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            </ToolBar>
 
-            <StatusBar DockPanel.Dock="Bottom" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Column="0"
+                 Grid.Row="0"
+                 Grid.ColumnSpan="3"
+                 OverflowMode="Never">
+            <Button ToolTip="Add a new ACC Server"
+                    Command="{Binding AddServer}"
+                    Height="32"
+                    Width="32">
+                <Image Source="../Icons/server-add2.png" />
+            </Button>
+            <Label Content="Servers:"
+                   Margin="10 0 5 0"
+                   VerticalAlignment="Center"
+                   Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <ComboBox ItemsSource="{Binding Servers}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
+                      VerticalAlignment="Center"
+                      Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </ToolBar>
 
-            <ListBox DockPanel.Dock="Left"
-                     ItemsSource="{Binding Sessions}"
-                     SelectedItem="{Binding SelectedSession, Mode=TwoWay}"
-                     VerticalAlignment="Stretch"
-                     Width="300"
-                     DisplayMemberPath="DisplayName"
-                     Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <ListBox Grid.Column="0"
+                 Grid.Row="1"
+                 ItemsSource="{Binding Sessions}"
+                 SelectedItem="{Binding SelectedSession, Mode=TwoWay}"
+                 VerticalAlignment="Stretch"
+                 Width="300"
+                 DisplayMemberPath="DisplayName"
+                 Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-            <TabControl Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <TabItem Header="Details">
-                    <sessions:SessionDetails Session="{Binding SelectedSession}" />
-                </TabItem>
-                <TabItem Header="Leader Board">
-                    <sessions:LeaderBoard LeaderBoardLines="{Binding LeaderBoardLines}" />
-                </TabItem>
+        <GridSplitter Grid.Column="1"
+                      Grid.Row="1"
+                      Width="5"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Center"
+                      Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <TabControl Grid.Column="2"
+                    Grid.Row="1"
+                    Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    HorizontalAlignment="Stretch">
+            <TabItem Header="Details">
+                <sessions:SessionDetails Session="{Binding SelectedSession}" />
+            </TabItem>
+            <TabItem Header="Leader Board">
+                <sessions:LeaderBoard LeaderBoardLines="{Binding LeaderBoardLines}" />
+            </TabItem>
 
-                <TabItem Header="Laps" />
-            </TabControl>
+            <TabItem Header="Laps" />
+        </TabControl>
 
-            <welcome:WelcomeScreen
-                Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityInverseConverter}}" />
+        <welcome:WelcomeScreen Grid.Column="0"
+                               Grid.Row="1"
+                               Grid.ColumnSpan="3"
+                               Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityInverseConverter}}" />
 
-        </DockPanel>
+        <StatusBar Grid.Column="0"
+                   Grid.Row="2"
+                   Grid.ColumnSpan="3" />
     </Grid>
 </Window>

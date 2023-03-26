@@ -40,6 +40,11 @@ namespace Acc.Server.Results.Companion.Core.Services
 
         private static void SyncSessionsFromFolder(int serverId, string localFolderPath)
         {
+            if(!Directory.Exists(localFolderPath))
+            {
+                Directory.CreateDirectory(localFolderPath!);
+            }
+
             var filePaths = Directory.GetFiles(localFolderPath, "*.json");
             foreach(var filePath in filePaths)
             {
@@ -151,7 +156,7 @@ namespace Acc.Server.Results.Companion.Core.Services
 
             client.AutoConnect();
 
-            var listItems = client.GetListing("/");
+            var listItems = client.GetListing(serverDetails.FtpFolderPath);
             foreach(var item in listItems)
             {
                 if(item.Type != FtpObjectType.File)

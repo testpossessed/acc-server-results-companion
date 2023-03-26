@@ -27,6 +27,8 @@ namespace Acc.Server.Results.Companion
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            this.Reset();
+
             this.InitialiseApp();
             Configuration.Init();
             LogWriter.Init();
@@ -66,17 +68,32 @@ namespace Acc.Server.Results.Companion
                 Thread.Sleep(TimeSpan.FromSeconds(3));
                 splashScreen.Close(TimeSpan.FromMilliseconds(500));
 #endif
-                this.MainWindow = new MainWindow
-                                  {
-                                      DataContext = new MainWindowViewModel()
-                                  };
+            var mainWindowViewModel = new MainWindowViewModel();
+            this.MainWindow = new MainWindow
+                              {
+                                  DataContext = mainWindowViewModel
+                              };
                 this.MainWindow.Show();
+                mainWindowViewModel.Init();
 
                 LogWriter.LogInfo("ACC Server Results Companion started");
 
 #if RELEASE
             }
 #endif
+        }
+
+        private void Reset()
+        {
+            var dbFilePaths = Directory.GetFiles(PathProvider.AppDataFolderPath,
+                "AccServerResultsCompanion.db*");
+            
+            foreach(var dbFilePath in dbFilePaths)
+            {
+                File.Delete(dbFilePath);
+            }
+
+            Directory.Delete(PathProvider.DownloadedResultsFolderPath, true); 
         }
 
         private void EnsureAppDataFoldersExist()

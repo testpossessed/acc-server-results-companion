@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Acc.Server.Results.Companion.ServerManagement.ServerEditor"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:serverEditor="clr-namespace:Acc.Server.Results.Companion.Server.ServerEditor"
         mc:Ignorable="d"
         Title="Server Details"
         Height="300"
         Width="500"
         WindowStartupLocation="CenterOwner"
-        d:DataContext="{d:DesignInstance local:ServerEditorViewModel}">
+        d:DataContext="{d:DesignInstance serverEditor:ServerEditorViewModel}"
+        ShowInTaskbar="False">
     <Window.Resources>
         <local:ServerTypeConverter x:Key="ServerTypeConverter" />
         <local:ServerTypeVisibilityConverter x:Key="ServerTypeVisibilityConverter" />
@@ -76,7 +78,8 @@
                      Text="{Binding HostName, Mode=TwoWay}" />
             <Label Content="Port: "
                    Margin="10 0 5 0" />
-            <xctk:IntegerUpDown Width="100" Height="25"
+            <xctk:IntegerUpDown Width="100"
+                                Height="25"
                                 Text="{Binding HostPort, Mode=TwoWay}" />
         </StackPanel>
 
@@ -140,30 +143,34 @@
                  Text="{Binding Password, Mode=TwoWay}"
                  Visibility="{Binding ServerType, Converter={StaticResource ServerTypeVisibilityConverter}, ConverterParameter=FTP}" />
 
-
         <StackPanel Grid.Column="1"
                     Grid.Row="6"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom">
-            <Button IsCancel="True" Width="75">
+            <Button IsCancel="True"
+                    Width="75">
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Left">
                     <Image Source="../../Icons/cancel.png"
                            Height="24"
                            Width="24" />
-                    <TextBlock Text="Cancel" VerticalAlignment="Center" />
+                    <TextBlock Text="Cancel"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <Button IsDefault="True"
                     Command="{Binding Save}"
-                    Margin="10 0" Width="75">
+                    Margin="10 0"
+                    Width="75">
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Left">
                     <Image Source="../../Icons/save.png"
                            Height="24"
                            Width="24" />
-                    <TextBlock Text="Save" Margin="5 0 0 0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Save"
+                               Margin="5 0 0 0"
+                               VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
         </StackPanel>

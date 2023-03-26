@@ -1,36 +1,41 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Acc.Server.Results.Companion.Core.Services;
 using Acc.Server.Results.Companion.Database;
 using Acc.Server.Results.Companion.Database.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace Acc.Server.Results.Companion.ServerManagement.ServerEditor;
+namespace Acc.Server.Results.Companion.Server.ServerEditor;
 
 internal class ServerEditorViewModel : ObservableObject
 {
     private const string FolderServerType = "Folder";
     private const string FtpServerType = "FTP";
-    private readonly ServerEditor serverEditor;
+    private readonly ServerManagement.ServerEditor.ServerEditor serverEditor;
 
     private string ftpFolderPath;
     private string hostName;
     private string hostPort;
-
     private string localFolderPath;
     private string name;
     private string password;
     private string serverType;
     private string username;
 
-    public ServerEditorViewModel(ServerEditor serverEditor)
+    public ServerEditorViewModel(ServerManagement.ServerEditor.ServerEditor serverEditor)
     {
         this.serverEditor = serverEditor;
         this.Save = new RelayCommand(this.HandleSave, this.CanExecuteSave);
         this.SelectFolder = new RelayCommand(this.HandleSelectFolder);
         this.ServerType = FtpServerType;
         this.FtpFolderPath = "/";
+
+        this.HostName = "ftp.circuitcore.net";
+        this.HostPort = "53264";
+        this.Username = "ORL-ADMIN";
+        this.Password = "Z!zNTwQpWsb7Bc7";
     }
 
     public ICommand Save { get; }
@@ -114,6 +119,16 @@ internal class ServerEditorViewModel : ObservableObject
                    : $"ftp://{this.HostName}:{this.HostPort}";
     }
 
+    private string GetFtpFolderPath()
+    {
+        if(!this.FtpFolderPath.StartsWith("/"))
+        {
+            this.FtpFolderPath = $"/{this.FtpFolderPath}";
+        }
+
+        return this.FtpFolderPath;
+    }
+
     private void HandleSave()
     {
         var serverDetails = new ServerDetails
@@ -122,10 +137,12 @@ internal class ServerEditorViewModel : ObservableObject
                                 Address = this.GetAddress(),
                                 Username = this.Username,
                                 Password = this.Password,
-                                IsLocalFolder = this.ServerType == FolderServerType
+                                IsLocalFolder = this.ServerType == FolderServerType,
+                                FtpFolderPath = this.GetFtpFolderPath()
                             };
 
         DbRepository.AddServerDetails(serverDetails);
+        UserSettingsProvider.SetLastServerId(serverDetails.Id);
         this.serverEditor.DialogResult = true;
         this.serverEditor.Close();
     }

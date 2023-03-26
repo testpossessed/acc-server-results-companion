@@ -90,14 +90,6 @@ internal static class DbRepository
 
     internal static void Init()
     {
-        var dbFilePaths = Directory.GetFiles(PathProvider.AppDataFolderPath,
-            "AccServerResultsCompanion.db*");
-
-        foreach(var dbFilePath in dbFilePaths)
-        {
-            File.Delete(dbFilePath);
-        }
-
         LogWriter.LogInfo("Applying any changes to the database");
         var dbContext = GetDbContext();
         dbContext.Database.Migrate();

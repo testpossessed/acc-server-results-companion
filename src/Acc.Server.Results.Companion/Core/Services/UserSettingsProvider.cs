@@ -29,7 +29,7 @@ namespace Acc.Server.Results.Companion.Core.Services
 
         internal static void SetLastServerId(int serverId)
         {
-            currentSettings.LastServerId = serverId;
+            GetSettings().LastServerId = serverId;
             SaveCurrentSettings();
         }
 
