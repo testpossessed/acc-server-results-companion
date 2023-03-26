@@ -32,8 +32,6 @@ namespace Acc.Server.Results.Companion
             LogWriter.Init();
             DbRepository.Init();
 
-            DbRepository.ClearSessions();
-
 #if RELEASE
             SquirrelAwareApp.HandleEvents(this.OnAppInstall,
                 onAppUninstall: this.OnAppUninstall,

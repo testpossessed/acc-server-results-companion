@@ -3,5 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:c="clr-namespace:Acc.Server.Results.Companion.Core.Converters">
     <Application.Resources>
+        <c:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <c:BooleanToVisibilityInverseConverter x:Key="BooleanToVisibilityInverseConverter" />
     </Application.Resources>
 </Application>

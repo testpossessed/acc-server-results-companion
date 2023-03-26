@@ -27,6 +27,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -92,17 +93,31 @@
                     Visibility="{Binding ServerType, Converter={StaticResource ServerTypeVisibilityConverter}, ConverterParameter=Folder}">
             <TextBox Width="250"
                      Height="25"
-                     Text="{Binding FolderPath, Mode=TwoWay}" />
+                     Text="{Binding LocalFolderPath, Mode=TwoWay}" />
             <Button Content="Browse..."
                     Command="{Binding SelectFolder}" />
         </StackPanel>
 
         <Label Grid.Column="0"
                Grid.Row="3"
-               Content="Username"
+               Content="Folder Path"
                Visibility="{Binding ServerType, Converter={StaticResource ServerTypeVisibilityConverter}, ConverterParameter=FTP}" />
         <TextBox Grid.Column="1"
                  Grid.Row="3"
+                 Width="250"
+                 Text="{Binding FtpFolderPath, Mode=TwoWay}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 Margin="10 5"
+                 Height="25"
+                 Visibility="{Binding ServerType, Converter={StaticResource ServerTypeVisibilityConverter}, ConverterParameter=FTP}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="4"
+               Content="Username"
+               Visibility="{Binding ServerType, Converter={StaticResource ServerTypeVisibilityConverter}, ConverterParameter=FTP}" />
+        <TextBox Grid.Column="1"
+                 Grid.Row="4"
                  Width="250"
                  Text="{Binding Username, Mode=TwoWay}"
                  HorizontalAlignment="Left"
@@ -112,11 +127,11 @@
                  Visibility="{Binding ServerType, Converter={StaticResource ServerTypeVisibilityConverter}, ConverterParameter=FTP}" />
 
         <Label Grid.Column="0"
-               Grid.Row="4"
+               Grid.Row="5"
                Content="Password"
                Visibility="{Binding ServerType, Converter={StaticResource ServerTypeVisibilityConverter}, ConverterParameter=FTP}" />
         <TextBox Grid.Column="1"
-                 Grid.Row="4"
+                 Grid.Row="5"
                  Width="250"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Center"
@@ -125,8 +140,9 @@
                  Text="{Binding Password, Mode=TwoWay}"
                  Visibility="{Binding ServerType, Converter={StaticResource ServerTypeVisibilityConverter}, ConverterParameter=FTP}" />
 
+
         <StackPanel Grid.Column="1"
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom">

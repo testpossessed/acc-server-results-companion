@@ -14,6 +14,7 @@ namespace Acc.Server.Results.Companion;
 
 internal class MainWindowViewModel : ObservableObject
 {
+    private bool isInitialised;
     private ServerDetails selectedServer;
     private Session selectedSession;
 
@@ -25,9 +26,15 @@ internal class MainWindowViewModel : ObservableObject
     }
 
     public ICommand AddServer { get; }
+    public ObservableCollection<LeaderBoardLine> LeaderBoardLines { get; } = new();
     public ObservableCollection<ServerDetails> Servers { get; } = new();
     public ObservableCollection<Session> Sessions { get; } = new();
-    public ObservableCollection<LeaderBoardLine> LeaderBoardLines { get; } = new();
+
+    public bool IsInitialised
+    {
+        get => this.isInitialised;
+        set => this.SetProperty(ref this.isInitialised, value);
+    }
 
     public ServerDetails SelectedServer
     {
@@ -49,17 +56,6 @@ internal class MainWindowViewModel : ObservableObject
         }
     }
 
-    private void LoadLeaderBoardLines()
-    {
-        this.LeaderBoardLines.Clear();
-        var lines = DbRepository.GetLeaderBoardLines(this.SelectedSession.Id);
-
-        foreach(var leaderBoardLine in lines)
-        {
-            this.LeaderBoardLines.Add(leaderBoardLine);
-        }
-    }
-
     private void HandleAddServer()
     {
         var serverEditor = new ServerEditor()
@@ -78,11 +74,25 @@ internal class MainWindowViewModel : ObservableObject
         this.LoadServers();
     }
 
+    private void LoadLeaderBoardLines()
+    {
+        this.LeaderBoardLines.Clear();
+        var lines = DbRepository.GetLeaderBoardLines(this.SelectedSession.Id);
+
+        foreach(var leaderBoardLine in lines)
+        {
+            this.LeaderBoardLines.Add(leaderBoardLine);
+        }
+    }
+
     private void LoadServers()
     {
         this.Servers.Clear();
 
         var servers = DbRepository.GetServers();
+        
+        this.IsInitialised = servers.Any();
+
         foreach(var server in servers)
         {
             this.Servers.Add(server);

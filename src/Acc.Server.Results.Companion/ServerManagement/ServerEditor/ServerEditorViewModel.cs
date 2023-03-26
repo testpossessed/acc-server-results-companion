@@ -6,147 +6,154 @@ using Acc.Server.Results.Companion.Database.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace Acc.Server.Results.Companion.ServerManagement.ServerEditor
+namespace Acc.Server.Results.Companion.ServerManagement.ServerEditor;
+
+internal class ServerEditorViewModel : ObservableObject
 {
-    internal class ServerEditorViewModel : ObservableObject
+    private const string FolderServerType = "Folder";
+    private const string FtpServerType = "FTP";
+    private readonly ServerEditor serverEditor;
+
+    private string ftpFolderPath;
+    private string hostName;
+    private string hostPort;
+
+    private string localFolderPath;
+    private string name;
+    private string password;
+    private string serverType;
+    private string username;
+
+    public ServerEditorViewModel(ServerEditor serverEditor)
     {
-        private const string FolderServerType = "Folder";
-        private const string FtpServerType = "FTP";
-        private readonly ServerEditor serverEditor;
+        this.serverEditor = serverEditor;
+        this.Save = new RelayCommand(this.HandleSave, this.CanExecuteSave);
+        this.SelectFolder = new RelayCommand(this.HandleSelectFolder);
+        this.ServerType = FtpServerType;
+        this.FtpFolderPath = "/";
+    }
 
-        private string folderPath;
-        private string hostName;
-        private string hostPort;
-        private string name;
-        private string password;
-        private string serverType;
-        private string username;
+    public ICommand Save { get; }
 
-        public ServerEditorViewModel(ServerEditor serverEditor)
+    public ICommand SelectFolder { get; }
+
+    public string FtpFolderPath
+    {
+        get => this.ftpFolderPath;
+        set => this.SetProperty(ref this.ftpFolderPath, value);
+    }
+
+    public string HostName
+    {
+        get => this.hostName;
+        set
         {
-            this.serverEditor = serverEditor;
-            this.Save = new RelayCommand(this.HandleSave, this.CanExecuteSave);
-            this.SelectFolder = new RelayCommand(this.HandleSelectFolder);
-            this.ServerType = FtpServerType;
+            this.SetProperty(ref this.hostName, value);
+            this.NotifyCanExecuteSaveChanged();
         }
+    }
 
-        public ICommand Save { get; }
-
-        public ICommand SelectFolder { get; }
-
-        public string FolderPath
+    public string HostPort
+    {
+        get => this.hostPort;
+        set
         {
-            get => this.folderPath;
-            set
-            {
-                this.SetProperty(ref this.folderPath, value);
-                this.NotifyCanExecuteSaveChanged();
-            }
+            this.SetProperty(ref this.hostPort, value);
+            this.NotifyCanExecuteSaveChanged();
         }
+    }
 
-        public string HostName
+    public string LocalFolderPath
+    {
+        get => this.localFolderPath;
+        set
         {
-            get => this.hostName;
-            set
-            {
-                this.SetProperty(ref this.hostName, value);
-                this.NotifyCanExecuteSaveChanged();
-            }
+            this.SetProperty(ref this.localFolderPath, value);
+            this.NotifyCanExecuteSaveChanged();
         }
+    }
 
-        public string HostPort
+    public string Name
+    {
+        get => this.name;
+        set
         {
-            get => this.hostPort;
-            set
-            {
-                this.SetProperty(ref this.hostPort, value);
-                this.NotifyCanExecuteSaveChanged();
-            }
+            this.SetProperty(ref this.name, value);
+            this.NotifyCanExecuteSaveChanged();
         }
+    }
 
-        public string Name
+    public string Password
+    {
+        get => this.password;
+        set => this.SetProperty(ref this.password, value);
+    }
+
+    public string ServerType
+    {
+        get => this.serverType;
+        set => this.SetProperty(ref this.serverType, value);
+    }
+
+    public string Username
+    {
+        get => this.username;
+        set => this.SetProperty(ref this.username, value);
+    }
+
+    private bool CanExecuteSave()
+    {
+        return !string.IsNullOrWhiteSpace(this.Name)
+               && (this.HasValidFtpSettings() || this.HasValidFolderSettings());
+    }
+
+    private string GetAddress()
+    {
+        return this.ServerType == FolderServerType
+                   ? this.LocalFolderPath
+                   : $"ftp://{this.HostName}:{this.HostPort}";
+    }
+
+    private void HandleSave()
+    {
+        var serverDetails = new ServerDetails
+                            {
+                                Name = this.Name,
+                                Address = this.GetAddress(),
+                                Username = this.Username,
+                                Password = this.Password,
+                                IsLocalFolder = this.ServerType == FolderServerType
+                            };
+
+        DbRepository.AddServerDetails(serverDetails);
+        this.serverEditor.DialogResult = true;
+        this.serverEditor.Close();
+    }
+
+    private void HandleSelectFolder()
+    {
+        var selectFolderDialog = new FolderBrowserDialog();
+        var dialogResult = selectFolderDialog.ShowDialog();
+        if(dialogResult == DialogResult.OK)
         {
-            get => this.name;
-            set
-            {
-                this.SetProperty(ref this.name, value);
-                this.NotifyCanExecuteSaveChanged();
-            }
+            this.LocalFolderPath = selectFolderDialog.SelectedPath;
         }
+    }
 
-        public string Password
-        {
-            get => this.password;
-            set => this.SetProperty(ref this.password, value);
-        }
+    private bool HasValidFolderSettings()
+    {
+        return this.ServerType == FolderServerType
+               && !string.IsNullOrWhiteSpace(this.LocalFolderPath);
+    }
 
-        public string ServerType
-        {
-            get => this.serverType;
-            set => this.SetProperty(ref this.serverType, value);
-        }
+    private bool HasValidFtpSettings()
+    {
+        return this.ServerType == FtpServerType && (!string.IsNullOrWhiteSpace(this.HostName)
+                                                    && !string.IsNullOrWhiteSpace(this.HostPort));
+    }
 
-        public string Username
-        {
-            get => this.username;
-            set => this.SetProperty(ref this.username, value);
-        }
-
-        private bool CanExecuteSave()
-        {
-            return !string.IsNullOrWhiteSpace(this.Name)
-                   && (this.HasValidFtpSettings() || this.HasValidFolderSettings());
-        }
-
-        private string GetAddress()
-        {
-            return this.ServerType == FolderServerType
-                       ? this.FolderPath
-                       : $"ftp://{this.HostName}:{this.HostPort}";
-        }
-
-        private void HandleSave()
-        {
-            var serverDetails = new ServerDetails
-                                {
-                                    Name = this.Name,
-                                    Address = this.GetAddress(),
-                                    Username = this.Username,
-                                    Password = this.Password,
-                                    IsLocalFolder = this.ServerType == FolderServerType
-                                };
-
-            DbRepository.AddServerDetails(serverDetails);
-            this.serverEditor.DialogResult = true;
-            this.serverEditor.Close();
-        }
-
-        private void HandleSelectFolder()
-        {
-            var selectFolderDialog = new FolderBrowserDialog();
-            var dialogResult = selectFolderDialog.ShowDialog();
-            if(dialogResult == DialogResult.OK)
-            {
-                this.FolderPath = selectFolderDialog.SelectedPath;
-            }
-        }
-
-        private bool HasValidFolderSettings()
-        {
-            return this.ServerType == FolderServerType
-                   && !string.IsNullOrWhiteSpace(this.FolderPath);
-        }
-
-        private bool HasValidFtpSettings()
-        {
-            return this.ServerType == FtpServerType && (!string.IsNullOrWhiteSpace(this.HostName)
-                                                        && !string
-                                                            .IsNullOrWhiteSpace(this.HostPort));
-        }
-
-        private void NotifyCanExecuteSaveChanged()
-        {
-            ((RelayCommand)this.Save).NotifyCanExecuteChanged();
-        }
+    private void NotifyCanExecuteSaveChanged()
+    {
+        ((RelayCommand)this.Save).NotifyCanExecuteChanged();
     }
 }

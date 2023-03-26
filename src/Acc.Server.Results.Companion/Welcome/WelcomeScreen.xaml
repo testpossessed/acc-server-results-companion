@@ -1,0 +1,183 @@
+﻿<UserControl x:Class="Acc.Server.Results.Companion.Welcome.WelcomeScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Acc.Server.Results.Companion.Welcome">
+    <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                  VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical"
+                    Margin="25"
+                    MaxWidth="960"
+                    HorizontalAlignment="Center">
+            <Label Content="Welcome to ACC Server Results Companion"
+                   FontSize="20"
+                   HorizontalAlignment="Left" />
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                ACC Server Results Companion (SRC) is an application designed to import and collate result files
+                created by
+                Assetto Corsa Competizione (ACC) servers.
+                It can import results from a remote File Transfer Protocol (FTP) server or from a folder on the machine
+                where it runs.
+            </TextBlock>
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                To get started you first need to register a Server with details that this app will use to get result
+                files.
+                Within the context of SRC a Server is synonymous with an ACC Server instance and points to a single
+                folder
+                that contains result files.
+                This can be a folder on an FTP server or a local file system folder.
+            </TextBlock>
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                To register a Server with SRC simply click on the
+                <Image Source="../Icons/server-add2.png"
+                       Height="16"
+                       Width="16" />
+                button in the toolbar above.
+                This will open this window where you can enter the settings described below.
+            </TextBlock>
+            <Image Source="Images/ftp-settings.png"
+                   HorizontalAlignment="Center"
+                   Width="350"
+                   IsHitTestVisible="False"
+                   Margin="10" />
+            <Label Content="Friendly Name"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                This is required in both modes and will be used to provide a list of Servers you can switch between.
+            </TextBlock>
+
+            <Label Content="FTP Settings"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <Label Content="Type"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                This indicates whether the server is remote and accessible via FTP or a Folder on the local file
+                system.
+                Changing this setting will change the inputs available for providing settings.
+            </TextBlock>
+
+            <Label Content="Host"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                This is required in FTP mode and is the host name of the FTP server usually something like
+                ftp.domain.com.  If you
+                were
+                given an address something like ftp://ftp.domain.com:5678 you need to leave out the prefix and port
+                number,
+                which is entered separately.
+            </TextBlock>
+
+            <Label Content="Port"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                This is required in FTP mode and is the Port on the Host configured to respond to FTP requests.  FTP
+                defaults to 21
+                but
+                most providers will change this to use a custom port in a higher range e.g 5678
+            </TextBlock>
+
+            <Label Content="Folder Path"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                This defaults to the root of the server but your provider may have configured the server to expose
+                results
+                via a specific folder e.g. Results.
+                Ideally the path should start with /, but if you forget SRC will add it for you.
+            </TextBlock>
+
+            <Label Content="Username"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                This is the username your provider gave you to access the FTP server, if they did not provide any
+                credentials leave the field empty.
+            </TextBlock>
+
+            <Label Content="Password"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                This is the password your provider gave you to access the FTP server, if they did not provide any
+                credentials leave the field empty.
+            </TextBlock>
+
+            <Label Content="Folder Settings"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                When you switch the Type to Folder the window will change to look like this.
+            </TextBlock>
+            <Image Source="Images/folder-settings.png"
+                   HorizontalAlignment="Center"
+                   Width="350"
+                   IsHitTestVisible="False"
+                   Margin="10" />
+
+            <Label Content="Folder Path"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Margin="5 0 0 10"
+                       TextWrapping="WrapWithOverflow">
+                This is required as is the only setting for Folder mode, enter or select the full path to the result
+                files you want
+                SRC to
+                import.  If you are running an ACC Server instance locally this should point to the Results folder
+                within
+                the folder where the server is run from.  If you are manually downloading result files this should be
+                the
+                folder where you save the downloaded files.
+            </TextBlock>
+
+            <TextBlock Margin="5 20 0 0"
+                       TextWrapping="WrapWithOverflow">
+                Clicking the Save button will create the server and start importing files using the settings provided.
+                Once you create your first Server SRC will no longer show you this screen, instead it will
+                automatically
+                select the last Server you selected and import any new files.
+            </TextBlock>
+
+            <TextBlock Margin="5 20 0 0"
+                       TextWrapping="WrapWithOverflow">
+                Click the button now to create your first server.
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

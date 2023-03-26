@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Acc.Server.Results.Companion.Core.Services;
 using Acc.Server.Results.Companion.Database.Entities;
@@ -89,6 +90,14 @@ internal static class DbRepository
 
     internal static void Init()
     {
+        var dbFilePaths = Directory.GetFiles(PathProvider.AppDataFolderPath,
+            "AccServerResultsCompanion.db*");
+
+        foreach(var dbFilePath in dbFilePaths)
+        {
+            File.Delete(dbFilePath);
+        }
+
         LogWriter.LogInfo("Applying any changes to the database");
         var dbContext = GetDbContext();
         dbContext.Database.Migrate();

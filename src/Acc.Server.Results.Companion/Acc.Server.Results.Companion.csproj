@@ -19,6 +19,8 @@
 		<None Remove="Icons\server-edit.png" />
 		<None Remove="Icons\server.png" />
 		<None Remove="Splash.png" />
+		<None Remove="Welcome\Images\folder-settings.png" />
+		<None Remove="Welcome\Images\ftp-settings.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -54,6 +56,8 @@
 	<ItemGroup>
 	  <Resource Include="Icons\Logo.png" />
 	  <Resource Include="Splash.png" />
+	  <Resource Include="Welcome\Images\folder-settings.png" />
+	  <Resource Include="Welcome\Images\ftp-settings.png" />
 	</ItemGroup>
 
 	<ItemGroup>
