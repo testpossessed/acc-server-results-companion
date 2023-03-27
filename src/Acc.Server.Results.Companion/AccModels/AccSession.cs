@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace Acc.Server.Results.Companion.AccModels;
@@ -17,4 +18,18 @@ internal class AccSession
     public AccSessionResult SessionResult { get; set; }
     public string SessionType { get; set; }
     public string TrackName { get; set; }
+
+    internal AccCar GetCar(int carId)
+    {
+        var allCars = this.SessionResult.LeaderBoardLines.Select(l => l.Car)
+                          .ToList();
+        return allCars.FirstOrDefault(c => c.CarId == carId);
+    }
+
+    internal AccDriver GetDriver(int carId, int driverIndex)
+    {
+        var car = this.GetCar(carId);
+
+        return car?.Drivers.FirstOrDefault();
+    }
 }

@@ -31,11 +31,6 @@ internal class ServerEditorViewModel : ObservableObject
         this.SelectFolder = new RelayCommand(this.HandleSelectFolder);
         this.ServerType = FtpServerType;
         this.FtpFolderPath = "/";
-
-        this.HostName = "ftp.circuitcore.net";
-        this.HostPort = "53264";
-        this.Username = "ORL-ADMIN";
-        this.Password = "Z!zNTwQpWsb7Bc7";
     }
 
     public ICommand Save { get; }

@@ -12,5 +12,13 @@ internal class SessionConfiguration : IEntityTypeConfiguration<Session>
         builder.HasMany(x => x.LeaderBoardLines)
                .WithOne()
                .HasForeignKey(x => x.SessionId);
+
+        builder.HasMany(x => x.Laps)
+               .WithOne()
+               .HasForeignKey(x => x.SessionId);
+
+        builder.HasMany(x => x.Penalties)
+               .WithOne()
+               .HasForeignKey(x => x.SessionId);
     }
 }

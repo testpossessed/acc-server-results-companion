@@ -19,7 +19,10 @@ public class Session
     public long BestSector3Ms { get; set; }
     public string FilePath { get; set; }
     public bool IsWetSession { get; set; }
+    public ICollection<Lap> Laps { get; set; }
+    public ICollection<LeaderBoardLine> LeaderBoardLines { get; set; }
     public string MetaData { get; set; }
+    public ICollection<Penalty> Penalties { get; set; }
     public int RaceWeekendIndex { get; set; }
     public int ServerId { get; set; }
     public string ServerName { get; set; }
@@ -27,6 +30,4 @@ public class Session
     public string SessionType { get; set; }
     public DateTime TimeStamp { get; set; }
     public string TrackName { get; set; }
-
-    public ICollection<LeaderBoardLine> LeaderBoardLines { get; set; }
 }

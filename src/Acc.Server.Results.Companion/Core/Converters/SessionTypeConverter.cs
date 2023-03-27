@@ -12,7 +12,7 @@ public class SessionTypeConverter : IValueConverter
         return valueAsString switch
         {
             "Q" => "Qualifying",
-            "P" => "Practice",
+            "FP" => "Practice",
             _ => "Race"
         };
     }
@@ -23,7 +23,7 @@ public class SessionTypeConverter : IValueConverter
         return valueAsString switch
         {
             "Qualifying" => "Q",
-            "Practice" => "P",
+            "Practice" => "FP",
             _ => "R"
         };
     }

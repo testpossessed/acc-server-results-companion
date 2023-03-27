@@ -25,9 +25,9 @@ namespace Acc.Server.Results.Companion
             base.OnExit(eventArgs);
         }
 
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs eventArgs)
         {
-            this.Reset();
+            // this.Reset();
 
             this.InitialiseApp();
             Configuration.Init();

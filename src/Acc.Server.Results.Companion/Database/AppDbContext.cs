@@ -8,10 +8,12 @@ namespace Acc.Server.Results.Companion.Database;
 internal class AppDbContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
+    public DbSet<Lap> Laps { get; set; }
+    public DbSet<LeaderBoardLine> LeaderBoardLines { get; set; }
+    public DbSet<Penalty> Penalties { get; set; }
     public DbSet<ServerDetails> Servers { get; set; }
     public DbSet<Session> Sessions { get; set; }
     public DbSet<Track> Tracks { get; set; }
-    public DbSet<LeaderBoardLine> LeaderBoardLines { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
