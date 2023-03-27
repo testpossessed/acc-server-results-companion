@@ -9,6 +9,6 @@ internal class AccPenalty
     public string Reason { get; set; }
     public string Penalty { get; set; }
     public int PenaltyValue { get; set; }
-    public int ViolationOnLap { get; set; }
-    public int ClearedOnLap { get; set; }
+    public int ViolationInLap { get; set; }
+    public int ClearedInLap { get; set; }
 }

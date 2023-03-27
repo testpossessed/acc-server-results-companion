@@ -4,30 +4,56 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Acc.Server.Results.Companion.Sessions"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
     <Grid>
-        <DataGrid ItemsSource="{Binding Laps, RelativeSource={RelativeSource AncestorType={x:Type local:SessionLaps}}}"
-                  IsReadOnly="True"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <sf:SfDataGrid Grid.Column="0"
+                       Grid.Row="0"
+                       ItemsSource="{Binding ElementName=DataPager,Path=PagedSource}"
+                       IsReadOnly="True"
+                       AutoGenerateColumns="False">
+            <sf:SfDataGrid.Columns>
 
-                <DataGridTextColumn Header="Driver"
-                                    Binding="{Binding Driver}" />
-                <DataGridTextColumn Header="Car"
-                                    Binding="{Binding Car}" />
-                <DataGridTextColumn Header="Lap Time"
-                                    Binding="{Binding LapTime}" />
-                <DataGridTextColumn Header="Sector 1"
-                                    Binding="{Binding Sector1Time}" />
-                <DataGridTextColumn Header="Sector 2"
-                                    Binding="{Binding Sector2Time}" />
-                <DataGridTextColumn Header="Sector 3"
-                                    Binding="{Binding Sector3Time}" />
-                <DataGridTextColumn Header="Valid"
-                                    Binding="{Binding IsValid}" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <sf:GridTextColumn HeaderText="Driver"
+                                   MappingName="Driver" />
+                <sf:GridTextColumn HeaderText="Car"
+                                   MappingName="Car" />
+                <sf:GridTextColumn HeaderText="Lap Time"
+                                   MappingName="LapTime" />
+                <sf:GridTextColumn HeaderText="Sector 1"
+                                   MappingName="Sector1Time" />
+                <sf:GridTextColumn HeaderText="Sector 2"
+                                   MappingName="Sector2Time" />
+                <sf:GridTextColumn HeaderText="Sector 3"
+                                   MappingName="Sector3Time" />
+                <sf:GridTextColumn HeaderText="Valid"
+                                   MappingName="IsValid" />
+            </sf:SfDataGrid.Columns>
+        </sf:SfDataGrid>
+        <StackPanel Grid.Column="0"
+                    Grid.Row="1"
+                    Orientation="Horizontal" HorizontalAlignment="Right">
+            <sf:ComboBoxAdv Name="PageSizeSelector" VerticalAlignment="Center" Width="50" SelectedValuePath="Content">
+                <sf:ComboBoxItemAdv Content="5"  />
+                <sf:ComboBoxItemAdv Content="10" />
+                <sf:ComboBoxItemAdv Content="15" />
+                <sf:ComboBoxItemAdv Content="20" />
+                <sf:ComboBoxItemAdv Content="25" />
+                <sf:ComboBoxItemAdv Content="30" IsSelected="True"/>
+                <sf:ComboBoxItemAdv Content="35" />
+                <sf:ComboBoxItemAdv Content="40" />
+                <sf:ComboBoxItemAdv Content="45" />
+                <sf:ComboBoxItemAdv Content="50" />
+            </sf:ComboBoxAdv>
+            <sf:SfDataPager Name="DataPager"
+                            Source="{Binding Laps, RelativeSource={RelativeSource AncestorType={x:Type local:SessionLaps}}}"
+                            PageSize="{Binding SelectedValue, ElementName=PageSizeSelector}" HorizontalAlignment="Right" DisplayMode="FirstLastPreviousNextNumeric" />
+        </StackPanel>
     </Grid>
 </UserControl>

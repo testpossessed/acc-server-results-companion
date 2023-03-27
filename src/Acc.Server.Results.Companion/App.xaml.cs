@@ -12,6 +12,7 @@ using NLog;
 using NuGet.Versioning;
 using Squirrel;
 using Squirrel.Sources;
+using Syncfusion.SfSkinManager;
 
 // Do not remove dimmed usings without first switching to release mode
 
@@ -33,6 +34,9 @@ namespace Acc.Server.Results.Companion
             Configuration.Init();
             LogWriter.Init();
             DbRepository.Init();
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTQ4MjExMUAzMjMxMmUzMTJlMzMzNVJZSVc0MVJZZUo1aGhpOU04Tnc1SHRVYm5XZkJIdFNYQ1JMa2JCb2k3ckk9");
+            SfSkinManager.ApplyStylesOnApplication = true;
+
 
 #if RELEASE
             SquirrelAwareApp.HandleEvents(this.OnAppInstall,
@@ -73,6 +77,7 @@ namespace Acc.Server.Results.Companion
                               {
                                   DataContext = mainWindowViewModel
                               };
+            SfSkinManager.SetTheme(this.MainWindow, new Theme("Blend"));
                 this.MainWindow.Show();
                 mainWindowViewModel.Init();
 

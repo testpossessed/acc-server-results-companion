@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Acc.Server.Results.Companion.Sessions"
              xmlns:converters="clr-namespace:Acc.Server.Results.Companion.Core.Converters"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -12,37 +13,37 @@
         <converters:MissingMandatoryPitStopConverter x:Key="MissingMandatoryPitStopConverter" />
     </UserControl.Resources>
     <Grid>
-        <DataGrid
+        <sf:SfDataGrid
             ItemsSource="{Binding LeaderBoardLines, RelativeSource={RelativeSource AncestorType={x:Type local:LeaderBoard}}}"
             IsReadOnly="True"
             AutoGenerateColumns="False">
-            <DataGrid.Columns>
+            <sf:SfDataGrid.Columns>
 
-                <DataGridTextColumn Header="Position"
-                                    Binding="{Binding Position}" />
-                <DataGridTextColumn Header="Driver"
-                                    Binding="{Binding DriverName}" />
-                <DataGridTextColumn Header="Short Name"
-                                    Binding="{Binding DriverShortName}" />
-                <DataGridTextColumn Header="Car"
-                                    Binding="{Binding CarName}" />
-                <DataGridTextColumn Header="Class"
-                                    Binding="{Binding CarClass}" />
-                <DataGridTextColumn Header="Team"
-                                    Binding="{Binding TeamName}" />
-                <DataGridTextColumn Header="Avg. Lap"
-                                    Binding="{Binding AverageLapTime}" />
-                <DataGridTextColumn Header="Best Lap"
-                                    Binding="{Binding BestLapTime}" />
-                <DataGridTextColumn Header="Best Sector 1"
-                                    Binding="{Binding BestSector1Time}" />
-                <DataGridTextColumn Header="Best Sector 2"
-                                    Binding="{Binding BestSector2Time}" />
-                <DataGridTextColumn Header="Best Sector 3"
-                                    Binding="{Binding BestSector3Time}" />
-                <DataGridTextColumn Header="Missed Stop/s"
-                                    Binding="{Binding MissingMandatoryPitStop, Converter={StaticResource MissingMandatoryPitStopConverter}}" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <sf:GridTextColumn HeaderText="Position"
+                                   MappingName="Position" />
+                <sf:GridTextColumn HeaderText="Driver"
+                                   MappingName="DriverName" />
+                <sf:GridTextColumn HeaderText="Short Name"
+                                   MappingName="DriverShortName" />
+                <sf:GridTextColumn HeaderText="Car"
+                                   MappingName="CarName" />
+                <sf:GridTextColumn HeaderText="Class"
+                                   MappingName="CarClass" />
+                <sf:GridTextColumn HeaderText="Team"
+                                   MappingName="TeamName" />
+                <sf:GridTextColumn HeaderText="Avg. Lap"
+                                   MappingName="AverageLapTime" />
+                <sf:GridTextColumn HeaderText="Best Lap"
+                                   MappingName="BestLapTime" />
+                <sf:GridTextColumn HeaderText="Best Sector 1"
+                                   MappingName="BestSector1Time" />
+                <sf:GridTextColumn HeaderText="Best Sector 2"
+                                   MappingName="BestSector2Time" />
+                <sf:GridTextColumn HeaderText="Best Sector 3"
+                                   MappingName="BestSector3Time" />
+                <sf:GridTextColumn HeaderText="Missed Stop/s"
+                                   ValueBinding="{Binding MissingMandatoryPitStop, Converter={StaticResource MissingMandatoryPitStopConverter}}" />
+            </sf:SfDataGrid.Columns>
+        </sf:SfDataGrid>
     </Grid>
 </UserControl>

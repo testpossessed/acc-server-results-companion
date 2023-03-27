@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Windows;
+using Syncfusion.Windows.Shared;
 
 namespace Acc.Server.Results.Companion;
 
-public partial class MainWindow : Window
+public partial class MainWindow : ChromelessWindow
 {
     public MainWindow()
     {

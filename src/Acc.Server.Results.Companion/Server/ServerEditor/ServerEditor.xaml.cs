@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Windows;
+using Syncfusion.Windows.Shared;
 
-namespace Acc.Server.Results.Companion.ServerManagement.ServerEditor
+namespace Acc.Server.Results.Companion.Server.ServerEditor;
+
+public partial class ServerEditor : ChromelessWindow
 {
-    public partial class ServerEditor : Window
+    public ServerEditor()
     {
-        public ServerEditor()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

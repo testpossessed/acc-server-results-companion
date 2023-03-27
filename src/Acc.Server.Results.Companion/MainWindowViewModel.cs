@@ -120,7 +120,7 @@ internal class MainWindowViewModel : ObservableObject
 
     private void LoadPenalties()
     {
-        this.Laps.Clear();
+        this.Penalties.Clear();
 
         if(this.SelectedSession == null)
         {

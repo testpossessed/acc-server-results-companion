@@ -13,7 +13,7 @@ internal class ServerEditorViewModel : ObservableObject
 {
     private const string FolderServerType = "Folder";
     private const string FtpServerType = "FTP";
-    private readonly ServerManagement.ServerEditor.ServerEditor serverEditor;
+    private readonly ServerEditor serverEditor;
 
     private string ftpFolderPath;
     private string hostName;
@@ -24,7 +24,7 @@ internal class ServerEditorViewModel : ObservableObject
     private string serverType;
     private string username;
 
-    public ServerEditorViewModel(ServerManagement.ServerEditor.ServerEditor serverEditor)
+    public ServerEditorViewModel(ServerEditor serverEditor)
     {
         this.serverEditor = serverEditor;
         this.Save = new RelayCommand(this.HandleSave, this.CanExecuteSave);

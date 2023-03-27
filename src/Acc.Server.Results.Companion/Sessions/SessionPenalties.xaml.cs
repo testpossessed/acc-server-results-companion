@@ -22,6 +22,9 @@ public partial class SessionPenalties : UserControl
     public ObservableCollection<Penalty> Penalties
     {
         get => (ObservableCollection<Penalty>)this.GetValue(PenaltiesProperty);
-        set => this.SetValue(PenaltiesProperty, value);
+        set
+        {
+            this.SetValue(PenaltiesProperty, value);
+        }
     }
 }

@@ -105,6 +105,7 @@ public class ServerSyncDialogViewModel : ObservableObject
                       {
                           Car = carName,
                           Driver = driverName,
+                          IsValid = accSessionLap.IsValidForBest,
                           LapTime = accSessionLap.GetLapTime(),
                           LapTimeMs = accSessionLap.LapTime,
                           Sector1Time = accSessionLap.Sector1Time,
@@ -140,13 +141,13 @@ public class ServerSyncDialogViewModel : ObservableObject
                       {
                           Car = carName,
                           Driver = driverName,
-                          ClearedOnLap = accPenalty.ClearedOnLap,
+                          ClearedOnLap = accPenalty.ClearedInLap,
                           IsPostRacePenalty = false,
                           PenaltyCode = accPenalty.Penalty,
                           PenaltyValue = accPenalty.PenaltyValue,
                           Reason = accPenalty.Reason,
                           SessionId = session.Id,
-                          ViolationOnLap = accPenalty.ViolationOnLap
+                          ViolationOnLap = accPenalty.ViolationInLap
                       };
             DbRepository.AddPenalty(penalty);
         }
@@ -161,13 +162,13 @@ public class ServerSyncDialogViewModel : ObservableObject
                           {
                               Car = carName,
                               Driver = driverName,
-                              ClearedOnLap = accPenalty.ClearedOnLap,
+                              ClearedOnLap = accPenalty.ClearedInLap,
                               IsPostRacePenalty = true,
                               PenaltyCode = accPenalty.Penalty,
                               PenaltyValue = accPenalty.PenaltyValue,
                               Reason = accPenalty.Reason,
                               SessionId = session.Id,
-                              ViolationOnLap = accPenalty.ViolationOnLap
+                              ViolationOnLap = accPenalty.ViolationInLap
                           };
             DbRepository.AddPenalty(penalty);
         }
@@ -348,6 +349,9 @@ public class ServerSyncDialogViewModel : ObservableObject
             await client.DownloadFile(localFilePath, item.FullName);
             this.ProgressValue++;
         }
+
+        await client.Disconnect();
+        client.Dispose();
     }
 
     private void SyncSessionsFromFolder(int serverId, string localFolderPath)
