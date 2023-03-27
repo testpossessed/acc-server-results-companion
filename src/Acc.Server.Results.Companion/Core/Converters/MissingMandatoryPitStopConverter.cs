@@ -10,7 +10,7 @@ internal class MissingMandatoryPitStopConverter : IValueConverter
     {
         var intValue = (int)value;
 
-        return intValue > -1? "Yes": "No";
+        return intValue > 0? "Yes": "No";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

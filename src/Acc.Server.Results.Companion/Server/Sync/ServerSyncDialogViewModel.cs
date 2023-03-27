@@ -364,7 +364,7 @@ public class ServerSyncDialogViewModel : ObservableObject
         var sessionFilePaths = sessions.Select(s => s.FilePath)
                                        .ToList();
 
-        var newFilePaths = filePaths.Where(p => !sessionFilePaths.Contains(p))
+        var newFilePaths = filePaths.Where(p => !p.Contains(EntryListKey) && !sessionFilePaths.Contains(p))
                                     .ToList();
         this.ProgressValue = 0;
         this.ProgressMaximum = newFilePaths.Count;
@@ -373,7 +373,7 @@ public class ServerSyncDialogViewModel : ObservableObject
             this.Action = $"Importing {Path.GetFileName(filePath)}...";
             var json = this.NormalisedContent(filePath);
             var accSession = JsonConvert.DeserializeObject<AccSession>(json);
-            if(accSession == null || accSession.Laps.Count == 0)
+            if(accSession == null || accSession.Laps?.Any() is false)
             {
                 this.Action = $"{Path.GetFileName(filePath)} did not contain any laps, ignoring it";
                 continue;
