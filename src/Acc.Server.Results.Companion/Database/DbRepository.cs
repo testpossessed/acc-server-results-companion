@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Acc.Server.Results.Companion.Core.Services;
 using Acc.Server.Results.Companion.Database.Entities;
@@ -10,13 +9,12 @@ namespace Acc.Server.Results.Companion.Database;
 
 internal static class DbRepository
 {
-    internal static List<Session> GetSessionsForServer(int serverId)
+    internal static void AddLap(Lap lap)
     {
         var dbContext = GetDbContext();
 
-        return dbContext.Sessions.Where(s => s.ServerId == serverId)
-                        .OrderByDescending(s => s.TimeStamp)
-                        .ToList();
+        dbContext.Laps.Add(lap);
+        dbContext.SaveChanges();
     }
 
     internal static void AddLeaderBoardLine(LeaderBoardLine leaderBoardLine)
@@ -24,6 +22,14 @@ internal static class DbRepository
         var dbContext = GetDbContext();
 
         dbContext.LeaderBoardLines.Add(leaderBoardLine);
+        dbContext.SaveChanges();
+    }
+
+    internal static void AddPenalty(Penalty penalty)
+    {
+        var dbContext = GetDbContext();
+
+        dbContext.Penalties.Add(penalty);
         dbContext.SaveChanges();
     }
 
@@ -77,6 +83,15 @@ internal static class DbRepository
         var dbContext = GetDbContext();
 
         return dbContext.Servers.ToList();
+    }
+
+    internal static List<Session> GetSessionsForServer(int serverId)
+    {
+        var dbContext = GetDbContext();
+
+        return dbContext.Sessions.Where(s => s.ServerId == serverId)
+                        .OrderByDescending(s => s.TimeStamp)
+                        .ToList();
     }
 
     internal static string GetTrackNameByAccTrackId(string trackName)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,15 +19,24 @@ namespace Acc.Server.Results.Companion.Server.Sync;
 public class ServerSyncDialogViewModel : ObservableObject
 {
     private const string EntryListKey = "_entrylist";
-    private readonly Window window;
-    private int newResultFilesFound;
-    private ServerDetails serverDetails;
 
-    private string statusMessage;
+    private readonly Window window;
+    private string action;
+    private int newResultFilesFound;
+    private double progressMaximum;
+    private double progressValue;
+    private ServerDetails serverDetails;
+    private string stage;
 
     public ServerSyncDialogViewModel(Window window)
     {
         this.window = window;
+    }
+
+    public string Action
+    {
+        get => this.action;
+        set => this.SetProperty(ref this.action, value);
     }
 
     public int NewResultFilesFound
@@ -35,13 +45,11 @@ public class ServerSyncDialogViewModel : ObservableObject
         set => this.SetProperty(ref this.newResultFilesFound, value);
     }
 
-    public ServerDetails ServerDetails
+    public double ProgressMaximum
     {
-        get => this.serverDetails;
-        set => this.SetProperty(ref this.serverDetails, value);
+        get => this.progressMaximum;
+        set => this.SetProperty(ref this.progressMaximum, value);
     }
-
-    private double progressValue;
 
     public double ProgressValue
     {
@@ -49,18 +57,16 @@ public class ServerSyncDialogViewModel : ObservableObject
         set => this.SetProperty(ref this.progressValue, value);
     }
 
-    private double progressMaximum;
-
-    public double ProgressMaximum
+    public ServerDetails ServerDetails
     {
-        get => this.progressMaximum;
-        set => this.SetProperty(ref this.progressMaximum, value);
+        get => this.serverDetails;
+        set => this.SetProperty(ref this.serverDetails, value);
     }
 
-    public string StatusMessage
+    public string Stage
     {
-        get => this.statusMessage;
-        set => this.SetProperty(ref this.statusMessage, value);
+        get => this.stage;
+        set => this.SetProperty(ref this.stage, value);
     }
 
     public async Task Start(ServerDetails serverDetails)
@@ -75,15 +81,108 @@ public class ServerSyncDialogViewModel : ObservableObject
         {
             await this.SyncFtpServer(serverDetails);
         }
+
         this.window.Close();
         this.window.Owner.Activate();
     }
 
+    private void AddLaps(Session session, AccSession accSession)
+    {
+        if(accSession?.Laps?.Any() is false)
+        {
+            return;
+        }
+
+        this.Action = $"Importing Laps from {session.DisplayName}...";
+
+        foreach(var accSessionLap in accSession!.Laps!)
+        {
+            var car = accSession.GetCar(accSessionLap.CarId);
+            var carName = DbRepository.GetCarNameByAccModelId(car.CarModel);
+            var driver = accSession.GetDriver(accSessionLap.CarId, accSessionLap.DriverId);
+            var driverName = driver.DisplayName;
+            var lap = new Lap
+                      {
+                          Car = carName,
+                          Driver = driverName,
+                          LapTime = accSessionLap.GetLapTime(),
+                          LapTimeMs = accSessionLap.LapTime,
+                          Sector1Time = accSessionLap.Sector1Time,
+                          Sector1TimeMs = accSessionLap.Splits[0].ValidatedValue(),
+                          Sector2Time = accSessionLap.Sector2Time,
+                          Sector2TimeMs = accSessionLap.Splits[1]
+                                                       .ValidatedValue(),
+                          Sector3Time = accSessionLap.Sector3Time,
+                          Sector3TimeMs = accSessionLap.Splits[2]
+                                                       .ValidatedValue(),
+                          SessionId = session.Id
+                      };
+            DbRepository.AddLap(lap);
+        }
+    }
+
+    private void AddPenalties(Session session, AccSession accSession)
+    {
+        if(accSession?.Penalties?.Any() is false && accSession?.PostRacePenalties?.Any() is false)
+        {
+            return;
+        }
+
+        this.Action = $"Importing Penalties from {session.DisplayName}...";
+
+        foreach(var accPenalty in accSession!.Penalties!)
+        {
+            var car = accSession.GetCar(accPenalty.CarId);
+            var carName = DbRepository.GetCarNameByAccModelId(car.CarModel);
+            var driver = accSession.GetDriver(accPenalty.CarId, accPenalty.DriverIndex);
+            var driverName = driver.DisplayName;
+            var penalty = new Penalty
+                      {
+                          Car = carName,
+                          Driver = driverName,
+                          ClearedOnLap = accPenalty.ClearedOnLap,
+                          IsPostRacePenalty = false,
+                          PenaltyCode = accPenalty.Penalty,
+                          PenaltyValue = accPenalty.PenaltyValue,
+                          Reason = accPenalty.Reason,
+                          SessionId = session.Id,
+                          ViolationOnLap = accPenalty.ViolationOnLap
+                      };
+            DbRepository.AddPenalty(penalty);
+        }
+
+        foreach(var accPenalty in accSession!.PostRacePenalties!)
+        {
+            var car = accSession.GetCar(accPenalty.CarId);
+            var carName = DbRepository.GetCarNameByAccModelId(car.CarModel);
+            var driver = accSession.GetDriver(accPenalty.CarId, accPenalty.DriverIndex);
+            var driverName = driver.DisplayName;
+            var penalty = new Penalty
+                          {
+                              Car = carName,
+                              Driver = driverName,
+                              ClearedOnLap = accPenalty.ClearedOnLap,
+                              IsPostRacePenalty = true,
+                              PenaltyCode = accPenalty.Penalty,
+                              PenaltyValue = accPenalty.PenaltyValue,
+                              Reason = accPenalty.Reason,
+                              SessionId = session.Id,
+                              ViolationOnLap = accPenalty.ViolationOnLap
+                          };
+            DbRepository.AddPenalty(penalty);
+        }
+    }
+
     private void AddLeaderBoardLines(Session session, AccSession accSession)
     {
-        this.StatusMessage = $"Importing Leader Board Lines from {session.DisplayName}...";
+        if(accSession.SessionResult.LeaderBoardLines?.Any() is false)
+        {
+            return;
+        }
+
+        this.Action = $"Importing Leader Board Lines from {session.DisplayName}...";
         var position = 1;
-        foreach(var accLeaderBoardLine in accSession.SessionResult.LeaderBoardLines)
+        foreach(var accLeaderBoardLine in accSession.SessionResult.LeaderBoardLines!)
         {
             var accTiming = accLeaderBoardLine.Timing;
             var currentDriver = accLeaderBoardLine.CurrentDriver;
@@ -146,6 +245,16 @@ public class ServerSyncDialogViewModel : ObservableObject
         return session;
     }
 
+    private List<FtpListItem> GetFilesToDownload(IEnumerable<string> localFiles,
+        IEnumerable<FtpListItem> listItems)
+    {
+        var localFileNames = localFiles.Select(Path.GetFileName)
+                                       .ToList();
+        return listItems
+               .Where(i => i.Type == FtpObjectType.File && !localFileNames.Contains(i.Name))
+               .ToList();
+    }
+
     private DateTime GetTimestampFromFileName(string filePath)
     {
         var fileName = Path.GetFileNameWithoutExtension(filePath);
@@ -196,9 +305,11 @@ public class ServerSyncDialogViewModel : ObservableObject
 
     private async Task SyncFtpServerFiles(ServerDetails serverDetails)
     {
+        this.Stage = "Download Result Files";
+
         var url = new Uri(serverDetails.Address, UriKind.Absolute);
 
-        this.StatusMessage = $"Connecting to FTP server {serverDetails.Address}";
+        this.Action = $"Connecting to FTP server {serverDetails.Address}";
 
         var client = new AsyncFtpClient(url.Host,
             serverDetails.Username,
@@ -206,41 +317,34 @@ public class ServerSyncDialogViewModel : ObservableObject
             url.Port);
         client.ValidateCertificate += (client, args) => { args.Accept = true; };
 
-       await client.AutoConnect();
+        await client.AutoConnect();
 
-        this.StatusMessage = "Getting list of results...";
+        this.Action = "Getting list of results...";
         var localFolderPath =
             Path.Combine(PathProvider.DownloadedResultsFolderPath, serverDetails.Name);
         if(!Directory.Exists(localFolderPath))
         {
             Directory.CreateDirectory(localFolderPath!);
         }
+
         var localFiles = Directory.GetFiles(localFolderPath);
         var listItems = await client.GetListing(serverDetails.FtpFolderPath);
 
-        var localResultCount = localFiles.Count(f => !f.Contains(EntryListKey));
-        var remoteResultCount = listItems.Count(i => !i.Name.Contains(EntryListKey));
-        this.NewResultFilesFound = remoteResultCount - localResultCount;
+        var itemsToDownload = this.GetFilesToDownload(localFiles, listItems);
 
-        this.ProgressMaximum = this.NewResultFilesFound * 2;
+        var itemsToDownloadCount = itemsToDownload.Count();
+        this.NewResultFilesFound = itemsToDownloadCount;
+
+        this.ProgressMaximum = itemsToDownloadCount;
         this.ProgressValue = 0;
 
-        foreach(var item in listItems)
+        foreach(var item in itemsToDownload)
         {
-            if(item.Type != FtpObjectType.File)
-            {
-                continue;
-            }
-
             var localFilePath = Path.Combine(PathProvider.DownloadedResultsFolderPath,
                 serverDetails.Name,
                 item.Name);
-            if(File.Exists(localFilePath))
-            {
-                continue;
-            }
 
-            this.StatusMessage = $"Downloading {item.Name}...";
+            this.Action = $"Downloading {item.Name}...";
             await client.DownloadFile(localFilePath, item.FullName);
             this.ProgressValue++;
         }
@@ -248,31 +352,38 @@ public class ServerSyncDialogViewModel : ObservableObject
 
     private void SyncSessionsFromFolder(int serverId, string localFolderPath)
     {
+        this.Stage = "Import New Results";
+
         if(!Directory.Exists(localFolderPath))
         {
             Directory.CreateDirectory(localFolderPath!);
         }
 
         var filePaths = Directory.GetFiles(localFolderPath, "*.json");
-        foreach(var filePath in filePaths)
-        {
-            if(filePath.Contains(EntryListKey) || DbRepository.SessionExists(filePath))
-            {
-                continue;
-            }
+        var sessions = DbRepository.GetSessionsForServer(serverId);
+        var sessionFilePaths = sessions.Select(s => s.FilePath)
+                                       .ToList();
 
-            this.StatusMessage = $"Importing {Path.GetFileName(filePath)}...";
+        var newFilePaths = filePaths.Where(p => !sessionFilePaths.Contains(p))
+                                    .ToList();
+        this.ProgressValue = 0;
+        this.ProgressMaximum = newFilePaths.Count;
+        foreach(var filePath in newFilePaths)
+        {
+            this.Action = $"Importing {Path.GetFileName(filePath)}...";
             var json = this.NormalisedContent(filePath);
             var accSession = JsonConvert.DeserializeObject<AccSession>(json);
             if(accSession == null || accSession.Laps.Count == 0)
             {
-                this.StatusMessage = $"{Path.GetFileName(filePath)} did not contain any laps, ignoring it";
+                this.Action = $"{Path.GetFileName(filePath)} did not contain any laps, ignoring it";
                 continue;
             }
 
             var session = this.AddSession(serverId, filePath, accSession);
 
             this.AddLeaderBoardLines(session, accSession);
+            this.AddLaps(session, accSession);
+            this.AddPenalties(session, accSession);
             this.ProgressValue++;
         }
     }

@@ -24,6 +24,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Column="0"
@@ -47,14 +48,22 @@
 
         <Label Grid.Column="0"
                Grid.Row="2"
-               Content="Status"
+               Content="Stage"
                FontWeight="SemiBold" />
         <Label Grid.Column="1"
                Grid.Row="2"
-               Content="{Binding StatusMessage}" />
+               Content="{Binding Stage}" />
+
+        <Label Grid.Column="0"
+               Grid.Row="3"
+               Content="Action"
+               FontWeight="SemiBold" />
+        <Label Grid.Column="1"
+               Grid.Row="3"
+               Content="{Binding Action}" />
 
         <ProgressBar Grid.Column="0"
-                     Grid.Row="3"
+                     Grid.Row="4"
                      Grid.ColumnSpan="2"
                      HorizontalAlignment="Stretch"
                      Height="10"
