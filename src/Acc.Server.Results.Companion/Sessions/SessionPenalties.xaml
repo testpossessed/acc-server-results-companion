@@ -8,9 +8,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <sf:SfDataGrid ItemsSource="{Binding Penalties, RelativeSource={RelativeSource AncestorType={x:Type local:SessionPenalties}}}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <sf:ButtonAdv Grid.Column="0"
+                      Grid.Row="0"
+                      SmallIcon="../Icons/export-to-excel.png"
+                      Label="Export to Excel"
+                      Click="HandleExportToExcel"
+                      HorizontalAlignment="Left"
+                      Margin="5 10 0 10" />
+
+        <sf:SfDataGrid Grid.Row="1" Name="DataGrid" ItemsSource="{Binding Penalties, RelativeSource={RelativeSource AncestorType={x:Type local:SessionPenalties}}}"
                   IsReadOnly="True"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False" AllowFiltering="True">
             <sf:SfDataGrid.Columns>
                 <sf:GridTextColumn HeaderText="Driver" 
                                     MappingName="Driver" />

@@ -13,10 +13,24 @@
         <converters:MissingMandatoryPitStopConverter x:Key="MissingMandatoryPitStopConverter" />
     </UserControl.Resources>
     <Grid>
-        <sf:SfDataGrid
-            ItemsSource="{Binding LeaderBoardLines, RelativeSource={RelativeSource AncestorType={x:Type local:LeaderBoard}}}"
-            IsReadOnly="True"
-            AutoGenerateColumns="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <sf:ButtonAdv Grid.Column="0"
+                      Grid.Row="0"
+                      SmallIcon="../Icons/export-to-excel.png"
+                      Label="Export to Excel"
+                      Click="HandleExportToExcel"
+                      HorizontalAlignment="Left"
+                      Margin="5 10 0 10" />
+
+        <sf:SfDataGrid Grid.Row="1"
+                       Name="DataGrid"
+                       ItemsSource="{Binding LeaderBoardLines, RelativeSource={RelativeSource AncestorType={x:Type local:LeaderBoard}}}"
+                       IsReadOnly="True"
+                       AutoGenerateColumns="False">
             <sf:SfDataGrid.Columns>
 
                 <sf:GridTextColumn HeaderText="Position"

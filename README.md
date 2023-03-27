@@ -13,12 +13,13 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
-## v1.0.0-alpha.5 2003-03-27
+## v1.0.0-beta.1 2003-03-27
 
 ### Added
 - Laps tab
 - Penalties tab
 - Switched to SynFusion WPF controls
+- Export to Excel for all tabs
 
 ### Changed
 - Resolved issues with different types of result files
