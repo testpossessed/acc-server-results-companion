@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Acc.Server.Results.Companion"
-        xmlns:sessions="clr-namespace:Acc.Server.Results.Companion.Sessions"
+        xmlns:s="clr-namespace:Acc.Server.Results.Companion.Sessions"
         xmlns:welcome="clr-namespace:Acc.Server.Results.Companion.Welcome"
         mc:Ignorable="d"
         Title="ACC Server Results Companion"
@@ -63,13 +63,17 @@
                     Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}"
                     HorizontalAlignment="Stretch">
             <TabItem Header="Details">
-                <sessions:SessionDetails Session="{Binding SelectedSession}" />
+                <s:SessionDetails Session="{Binding SelectedSession}" />
             </TabItem>
             <TabItem Header="Leader Board">
-                <sessions:LeaderBoard LeaderBoardLines="{Binding LeaderBoardLines}" />
+                <s:LeaderBoard LeaderBoardLines="{Binding LeaderBoardLines}" />
             </TabItem>
-
-            <TabItem Header="Laps" />
+            <TabItem Header="Laps">
+                <s:SessionLaps Laps="{Binding Laps}" />
+            </TabItem>
+            <TabItem Header="Penalties">
+                <s:SessionPenalties Penalties="{Binding Penalties}" />
+            </TabItem>
         </TabControl>
 
         <welcome:WelcomeScreen Grid.Column="0"

@@ -22,9 +22,6 @@ public partial class LeaderBoard : UserControl
     public ObservableCollection<LeaderBoardLine> LeaderBoardLines
     {
         get => (ObservableCollection<LeaderBoardLine>)this.GetValue(LeaderBoardLinesProperty);
-        set
-        {
-            this.SetValue(LeaderBoardLinesProperty, value);
-        }
+        set => this.SetValue(LeaderBoardLinesProperty, value);
     }
 }

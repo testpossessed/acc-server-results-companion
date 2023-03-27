@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Acc.Server.Results.Companion.Core.Services;
@@ -27,14 +26,11 @@ internal class MainWindowViewModel : ObservableObject
     }
 
     public ICommand AddServer { get; }
+    public ObservableCollection<Lap> Laps { get; } = new();
     public ObservableCollection<LeaderBoardLine> LeaderBoardLines { get; } = new();
+    public ObservableCollection<Penalty> Penalties { get; } = new();
     public ObservableCollection<ServerDetails> Servers { get; } = new();
     public ObservableCollection<Session> Sessions { get; } = new();
-
-    internal void Init()
-    {
-        this.LoadServers();
-    }
 
     public bool IsInitialised
     {
@@ -52,6 +48,7 @@ internal class MainWindowViewModel : ObservableObject
             {
                 return;
             }
+
             this.LoadServerSessions();
         }
     }
@@ -66,8 +63,14 @@ internal class MainWindowViewModel : ObservableObject
             {
                 return;
             }
+
             this.LoadLeaderBoardLines();
         }
+    }
+
+    internal void Init()
+    {
+        this.LoadServers();
     }
 
     private void HandleAddServer()
@@ -104,7 +107,7 @@ internal class MainWindowViewModel : ObservableObject
         this.Servers.Clear();
 
         var servers = DbRepository.GetServers();
-        
+
         this.IsInitialised = servers.Any();
 
         foreach(var server in servers)
