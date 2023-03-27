@@ -22,6 +22,9 @@ public partial class SessionLaps : UserControl
     public ObservableCollection<Lap> Laps
     {
         get => (ObservableCollection<Lap>)this.GetValue(LapsProperty);
-        set => this.SetValue(LapsProperty, value);
+        set
+        {
+            this.SetValue(LapsProperty, value);
+        }
     }
 }

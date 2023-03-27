@@ -7,6 +7,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <DataGrid ItemsSource="{Binding Penalties, RelativeSource={RelativeSource AncestorType={x:Type local:SessionPenalties}}}"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Driver"
+                                    Binding="{Binding Driver}" />
+                <DataGridTextColumn Header="Car"
+                                    Binding="{Binding Car}" />
+                <DataGridTextColumn Header="Reason"
+                                    Binding="{Binding Reason}" />
+                <DataGridTextColumn Header="Penalty Code"
+                                    Binding="{Binding PenaltyCode}" />
+                <DataGridTextColumn Header="Penalty Value"
+                                    Binding="{Binding PenaltyValue}" />
+                <DataGridTextColumn Header="Violation Lap"
+                                    Binding="{Binding ViolationOnLap}" />
+                <DataGridTextColumn Header="Cleared Lap"
+                                    Binding="{Binding ClearedOnLap}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

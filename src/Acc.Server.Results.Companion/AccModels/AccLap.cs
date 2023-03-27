@@ -23,6 +23,7 @@ public class AccLap
     public int DriverId { get; set; }
     public int Flags { get; set; }
     public double Fuel { get; set; }
+    public bool IsValidForBest { get; set; }
     public long LapTime { get; set; }
     public List<long> Splits { get; set; }
     public double TimestampMS { get; set; }

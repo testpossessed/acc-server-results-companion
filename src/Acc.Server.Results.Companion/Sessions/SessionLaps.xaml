@@ -1,12 +1,33 @@
 ﻿<UserControl x:Class="Acc.Server.Results.Companion.Sessions.SessionLaps"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Acc.Server.Results.Companion.Sessions"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <Grid>
-            
+        <DataGrid ItemsSource="{Binding Laps, RelativeSource={RelativeSource AncestorType={x:Type local:SessionLaps}}}"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Driver"
+                                    Binding="{Binding Driver}" />
+                <DataGridTextColumn Header="Car"
+                                    Binding="{Binding Car}" />
+                <DataGridTextColumn Header="Lap Time"
+                                    Binding="{Binding LapTime}" />
+                <DataGridTextColumn Header="Sector 1"
+                                    Binding="{Binding Sector1Time}" />
+                <DataGridTextColumn Header="Sector 2"
+                                    Binding="{Binding Sector2Time}" />
+                <DataGridTextColumn Header="Sector 3"
+                                    Binding="{Binding Sector3Time}" />
+                <DataGridTextColumn Header="Valid"
+                                    Binding="{Binding IsValid}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

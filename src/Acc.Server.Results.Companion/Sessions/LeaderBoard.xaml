@@ -14,7 +14,8 @@
     <Grid>
         <DataGrid
             ItemsSource="{Binding LeaderBoardLines, RelativeSource={RelativeSource AncestorType={x:Type local:LeaderBoard}}}"
-            IsReadOnly="True" AutoGenerateColumns="False">
+            IsReadOnly="True"
+            AutoGenerateColumns="False">
             <DataGrid.Columns>
 
                 <DataGridTextColumn Header="Position"

@@ -70,11 +70,25 @@ internal static class DbRepository
         return car?.Name ?? "Unknown Car";
     }
 
+    internal static List<Lap> GetLaps(int sessionId)
+    {
+        var dbContext = GetDbContext();
+        return dbContext.Laps.Where(l => l.SessionId == sessionId)
+                        .ToList();
+    }
+
     internal static List<LeaderBoardLine> GetLeaderBoardLines(int sessionId)
     {
         var dbContext = GetDbContext();
 
         return dbContext.LeaderBoardLines.Where(l => l.SessionId == sessionId)
+                        .ToList();
+    }
+
+    internal static List<Penalty> GetPenalties(int sessionId)
+    {
+        var dbContext = GetDbContext();
+        return dbContext.Penalties.Where(p => p.SessionId == sessionId)
                         .ToList();
     }
 

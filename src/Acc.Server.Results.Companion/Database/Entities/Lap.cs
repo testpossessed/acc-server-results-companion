@@ -7,6 +7,7 @@ public class Lap
     public int Id { get; set; }
     public string Car { get; set; }
     public string Driver { get; set; }
+    public bool IsValid { get; set; }
     public string LapTime { get; set; }
     public long LapTimeMs { get; set; }
     public string Sector1Time { get; set; }

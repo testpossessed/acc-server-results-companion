@@ -59,12 +59,7 @@ internal class MainWindowViewModel : ObservableObject
         set
         {
             this.SetProperty(ref this.selectedSession, value);
-            if(value == null)
-            {
-                return;
-            }
-
-            this.LoadLeaderBoardLines();
+            this.LoadSession();
         }
     }
 
@@ -91,14 +86,52 @@ internal class MainWindowViewModel : ObservableObject
         this.LoadServers();
     }
 
+    private void LoadLaps()
+    {
+        this.Laps.Clear();
+        if(this.SelectedSession == null)
+        {
+            return;
+        }
+
+        var sessionLaps = DbRepository.GetLaps(this.SelectedSession.Id);
+
+        foreach(var lap in sessionLaps)
+        {
+            this.Laps.Add(lap);
+        }
+    }
+
     private void LoadLeaderBoardLines()
     {
         this.LeaderBoardLines.Clear();
+        if(this.SelectedSession == null)
+        {
+            return;
+        }
+
         var lines = DbRepository.GetLeaderBoardLines(this.SelectedSession.Id);
 
         foreach(var leaderBoardLine in lines)
         {
             this.LeaderBoardLines.Add(leaderBoardLine);
+        }
+    }
+
+    private void LoadPenalties()
+    {
+        this.Laps.Clear();
+
+        if(this.SelectedSession == null)
+        {
+            return;
+        }
+
+        var sessionPenalties = DbRepository.GetPenalties(this.SelectedSession.Id);
+
+        foreach(var penalty in sessionPenalties)
+        {
+            this.Penalties.Add(penalty);
         }
     }
 
@@ -158,5 +191,12 @@ internal class MainWindowViewModel : ObservableObject
         }
 
         this.SelectedSession = this.Sessions[0];
+    }
+
+    private void LoadSession()
+    {
+        this.LoadLeaderBoardLines();
+        this.LoadLaps();
+        this.LoadPenalties();
     }
 }
