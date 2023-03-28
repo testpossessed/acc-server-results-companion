@@ -13,6 +13,12 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.0.0-beta.2 2003-03-28
+
+### Added
+- Capture of driver details from entry lists
+- Display of driver category and country in data grids
+
 ## v1.0.0-beta.1 2003-03-27
 
 ### Added
