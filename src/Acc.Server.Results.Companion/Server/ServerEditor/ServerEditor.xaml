@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Acc.Server.Results.Companion.ServerManagement.ServerEditor"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:se="clr-namespace:Acc.Server.Results.Companion.Server.ServerEditor"
         xmlns:sf="http://schemas.syncfusion.com/wpf"
+        xmlns:sfs="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+        sfs:SfSkinManager.VisualStyle="Blend"
         mc:Ignorable="d"
         Title="Server Details"
         Height="300"
@@ -81,7 +82,7 @@
                    Margin="10 0 5 0" />
             <sf:UpDown Width="100"
                                 Height="25"
-                                Value="{Binding HostPort, Mode=TwoWay}" />
+                                Value="{Binding HostPort, Mode=TwoWay}"  NumberDecimalDigits="0"/>
         </StackPanel>
 
         <Label Grid.Column="0"

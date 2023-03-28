@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Acc.Server.Results.Companion.Server.Sync"
         xmlns:sf="http://schemas.syncfusion.com/wpf"
+        xmlns:sfs="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+        sfs:SfSkinManager.VisualStyle="Blend"
         mc:Ignorable="d"
         Title="Synchronise Server"
         Height="150"
@@ -13,8 +15,7 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance local:ServerSyncDialogViewModel}"
-        ShowInTaskbar="False"
-        Background="LightBlue">
+        ShowInTaskbar="False">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />

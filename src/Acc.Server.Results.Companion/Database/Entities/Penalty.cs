@@ -8,7 +8,10 @@ public class Penalty
     public string Car { get; set; }
     public int ClearedOnLap { get; set; }
     public string Driver { get; set; }
+    public string DriverCategory { get; set; }
     public bool IsPostRacePenalty { get; set; }
+    public string Nationality { get; set; }
+    public int NationalityCode { get; set; }
     public string PenaltyCode { get; set; }
     public int PenaltyValue { get; set; }
     public string Reason { get; set; }

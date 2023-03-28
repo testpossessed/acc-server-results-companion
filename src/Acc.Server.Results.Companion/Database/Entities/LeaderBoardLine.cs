@@ -17,9 +17,12 @@ public class LeaderBoardLine
     public long BestSector3TimeMs { get; set; }
     public string CarClass { get; set; }
     public string CarName { get; set; }
+    public string DriverCategory { get; set; }
     public string DriverName { get; set; }
     public string DriverShortName { get; set; }
     public int MissingMandatoryPitStop { get; set; }
+    public string Nationality { get; set; }
+    public int NationalityCode { get; set; }
     public int Position { get; set; }
     public int SessionId { get; set; }
     public string TeamName { get; set; }

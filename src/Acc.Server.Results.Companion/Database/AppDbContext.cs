@@ -8,6 +8,7 @@ namespace Acc.Server.Results.Companion.Database;
 internal class AppDbContext : DbContext
 {
     public DbSet<Car> Cars { get; set; }
+    public DbSet<Driver> Drivers { get; set; }
     public DbSet<Lap> Laps { get; set; }
     public DbSet<LeaderBoardLine> LeaderBoardLines { get; set; }
     public DbSet<Penalty> Penalties { get; set; }

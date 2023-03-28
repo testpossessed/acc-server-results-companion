@@ -17,7 +17,7 @@ internal class ServerEditorViewModel : ObservableObject
 
     private string ftpFolderPath;
     private string hostName;
-    private string hostPort;
+    private int hostPort;
     private string localFolderPath;
     private string name;
     private string password;
@@ -31,6 +31,7 @@ internal class ServerEditorViewModel : ObservableObject
         this.SelectFolder = new RelayCommand(this.HandleSelectFolder);
         this.ServerType = FtpServerType;
         this.FtpFolderPath = "/";
+        this.HostPort = 21;
     }
 
     public ICommand Save { get; }
@@ -53,7 +54,7 @@ internal class ServerEditorViewModel : ObservableObject
         }
     }
 
-    public string HostPort
+    public int HostPort
     {
         get => this.hostPort;
         set
@@ -161,7 +162,7 @@ internal class ServerEditorViewModel : ObservableObject
     private bool HasValidFtpSettings()
     {
         return this.ServerType == FtpServerType && (!string.IsNullOrWhiteSpace(this.HostName)
-                                                    && !string.IsNullOrWhiteSpace(this.HostPort));
+                                                    && this.HostPort > 0);
     }
 
     private void NotifyCanExecuteSaveChanged()
