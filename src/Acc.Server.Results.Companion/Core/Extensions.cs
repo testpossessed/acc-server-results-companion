@@ -1,4 +1,5 @@
 ﻿using System;
+using Acc.Server.Results.Companion.AccEnums;
 
 namespace Acc.Server.Results.Companion.Core
 {
@@ -45,48 +46,27 @@ namespace Acc.Server.Results.Companion.Core
             return TimeSpan.FromMilliseconds(timingMs)
                            .ToString(Constants.TimingFormat);
         }
-        // internal static string ToFriendlyName(this RaceSessionType sessionType)
-        // {
-        //     return sessionType switch
-        //            {
-        //                RaceSessionType.HotlapSuperpole => "Hotlap Superpole"
-        //              , _ => sessionType.ToString()
-        //            };
-        // }
-        //
-        // internal static string ToFriendlyName(this SessionPhase sessionType)
-        // {
-        //  return sessionType switch
-        //         {
-        //          SessionPhase.FormationLap => "Formation Lap",
-        //                SessionPhase.PostSession => "Post Session",
-        //                SessionPhase.PreFormation => "Pre Formation",
-        //                SessionPhase.PreSession => "Pre Session",
-        //                SessionPhase.SessionOver => "Session Over",
-        //          _ => sessionType.ToString()
-        //         };
-        // }
-        //
-        // internal static string ToFriendlyName(this Nationality nationality)
-        // {
-        //     return nationality switch
-        //            {
-        //                Nationality.ChineseTaipei => "Chinese Taipei",
-        //                Nationality.CzechReinternal => "Czech Reinternal",
-        //                Nationality.GreatBritain => "Great Britain",
-        //                Nationality.HongKong => "Hong Kong",
-        //                Nationality.NewCaledonia => "New Caledonia",
-        //                Nationality.NewZealand => "New Zealand",
-        //                Nationality.NorthernIreland => "Northern Ireland",
-        //                Nationality.PapuaNewGuinea => "Papua New Guinea",
-        //                Nationality.PuertoRico => "Puerto Rico",
-        //                Nationality.SanMarino => "San Marino",
-        //                Nationality.SaudiArabia => "Saudi Arabia",
-        //                Nationality.SouthAfrica => "South Africa",
-        //                Nationality.SouthKorea => "South Korea",
-        //                _ => nationality.ToString()
-        //            };
-        // }
+
+        internal static string ToFriendlyName(this AccNationality nationality)
+        {
+            return nationality switch
+                   {
+                       AccNationality.ChineseTaipei => "Chinese Taipei",
+                       AccNationality.CzechRepublic => "Czech Republic",
+                       AccNationality.GreatBritain => "Great Britain",
+                       AccNationality.HongKong => "Hong Kong",
+                       AccNationality.NewCaledonia => "New Caledonia",
+                       AccNationality.NewZealand => "New Zealand",
+                       AccNationality.NorthernIreland => "Northern Ireland",
+                       AccNationality.PapuaNewGuinea => "Papua New Guinea",
+                       AccNationality.PuertoRico => "Puerto Rico",
+                       AccNationality.SanMarino => "San Marino",
+                       AccNationality.SaudiArabia => "Saudi Arabia",
+                       AccNationality.SouthAfrica => "South Africa",
+                       AccNationality.SouthKorea => "South Korea",
+                       _ => nationality.ToString()
+                   };
+        }
 
         internal static long ValidatedValue(this long longValue)
         {
