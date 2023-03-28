@@ -27,6 +27,10 @@
             <sf:SfDataGrid.Columns>
                 <sf:GridTextColumn HeaderText="Driver" 
                                     MappingName="Driver" />
+                <sf:GridTextColumn HeaderText="Driver Category"
+                                   MappingName="DriverCategory" />
+                <sf:GridTextColumn HeaderText="Country"
+                                   MappingName="Nationality" />
                 <sf:GridTextColumn HeaderText="Car"
                                     MappingName="Car" />
                 <sf:GridTextColumn HeaderText="Reason"
