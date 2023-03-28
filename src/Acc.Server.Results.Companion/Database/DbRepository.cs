@@ -9,6 +9,13 @@ namespace Acc.Server.Results.Companion.Database;
 
 internal static class DbRepository
 {
+    internal static void AddDriver(Driver driver)
+    {
+        var dbContext = GetDbContext();
+        dbContext.Drivers.Add(driver);
+        dbContext.SaveChanges();
+    }
+
     internal static void AddLap(Lap lap)
     {
         var dbContext = GetDbContext();
@@ -70,6 +77,13 @@ internal static class DbRepository
         return car?.Name ?? "Unknown Car";
     }
 
+    internal static Driver GetDriver(string playerId)
+    {
+        var dbContext = GetDbContext();
+
+        return dbContext.Drivers.FirstOrDefault(d => d.Id == playerId);
+    }
+
     internal static List<Lap> GetLaps(int sessionId)
     {
         var dbContext = GetDbContext();
@@ -89,6 +103,14 @@ internal static class DbRepository
     {
         var dbContext = GetDbContext();
         return dbContext.Penalties.Where(p => p.SessionId == sessionId)
+                        .ToList();
+    }
+
+    internal static List<string> GetProcessedEntryLists()
+    {
+        var dbContext = GetDbContext();
+
+        return dbContext.Drivers.Select(d => d.LastUpdateFilePath)
                         .ToList();
     }
 
@@ -129,6 +151,13 @@ internal static class DbRepository
         var dbContext = GetDbContext();
 
         return dbContext.Sessions.Any(s => s.FilePath == filePath);
+    }
+
+    internal static void UpdateDriver(Driver driver)
+    {
+        var dbContext = GetDbContext();
+        dbContext.Drivers.Update(driver);
+        dbContext.SaveChanges();
     }
 
     private static AppDbContext GetDbContext()
