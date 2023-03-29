@@ -23,6 +23,7 @@ public class LeaderBoardLine
     public int MissingMandatoryPitStop { get; set; }
     public string Nationality { get; set; }
     public int NationalityCode { get; set; }
+    public string OurCategory { get; set; }
     public int Position { get; set; }
     public int SessionId { get; set; }
     public string TeamName { get; set; }

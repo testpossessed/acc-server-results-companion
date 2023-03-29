@@ -10,6 +10,8 @@ namespace Acc.Server.Results.Companion.Drivers;
 
 public class DriverManagerViewModel : ObservableObject
 {
+    internal event EventHandler DriversChanged;
+
     public DriverManagerViewModel()
     {
         this.AddDriver = new RelayCommand(this.HandleAddDriver);
@@ -27,10 +29,13 @@ public class DriverManagerViewModel : ObservableObject
         viewModel.SetExistingDriver(driver.Driver);
         window.DataContext = viewModel;
         var dialogResult = window.ShowDialog();
-        if(dialogResult == true)
+        if(dialogResult != true)
         {
-            this.LoadDrivers();
+            return;
         }
+
+        this.LoadDrivers();
+        this.DriversChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public ICommand AddDriver { get; }
@@ -47,10 +52,13 @@ public class DriverManagerViewModel : ObservableObject
         var viewModel = new DriverEditorViewModel(window);
         window.DataContext = viewModel;
         var dialogResult = window.ShowDialog();
-        if(dialogResult == true)
+        if(dialogResult != true)
         {
-            this.LoadDrivers();
+            return;
         }
+
+        this.LoadDrivers();
+        this.DriversChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void LoadDrivers()
@@ -62,5 +70,10 @@ public class DriverManagerViewModel : ObservableObject
         {
             this.Drivers.Add(new DriverViewModel(driver));
         }
+    }
+
+    public void Refresh()
+    {
+        this.LoadDrivers();
     }
 }

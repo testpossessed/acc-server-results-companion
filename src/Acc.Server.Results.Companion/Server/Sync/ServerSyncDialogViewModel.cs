@@ -100,24 +100,24 @@ public class ServerSyncDialogViewModel : ObservableObject
         {
             var car = accSession.GetCar(accSessionLap.CarId);
             var carName = DbRepository.GetCarNameByAccModelId(car.CarModel);
-            var driver = accSession.GetDriver(accSessionLap.CarId, accSessionLap.DriverId); ;
+            var driver = accSession.GetDriver(accSessionLap.CarId, accSessionLap.DriverId);
+            ;
             var dbDriver = DbRepository.GetDriver(driver.PlayerId);
             var driverName = driver.DisplayName;
             var lap = new Lap
                       {
                           Car = carName,
-                          Driver = driverName,
+                          Driver = this.GetDriverName(driver, dbDriver),
                           DriverCategory = dbDriver?.DriverCategory,
+                          OurCategory = dbDriver?.OurCategory,
                           IsValid = accSessionLap.IsValidForBest,
                           LapTime = accSessionLap.GetLapTime(),
                           LapTimeMs = accSessionLap.LapTime,
-                          NationalityCode = dbDriver?.NationalityCode ?? 0,
-                          Nationality =
-                              dbDriver != null
-                                  ? ((AccNationality)dbDriver.NationalityCode).ToFriendlyName()
-                                  : null,
+                          NationalityCode = this.GetNationalityCode(car, dbDriver),
+                          Nationality = this.GetNationality(car, dbDriver),
                           Sector1Time = accSessionLap.Sector1Time,
-                          Sector1TimeMs = accSessionLap.Splits[0].ValidatedValue(),
+                          Sector1TimeMs = accSessionLap.Splits[0]
+                                                       .ValidatedValue(),
                           Sector2Time = accSessionLap.Sector2Time,
                           Sector2TimeMs = accSessionLap.Splits[1]
                                                        .ValidatedValue(),
@@ -127,72 +127,6 @@ public class ServerSyncDialogViewModel : ObservableObject
                           SessionId = session.Id
                       };
             DbRepository.AddLap(lap);
-        }
-    }
-
-    private void AddPenalties(Session session, AccSession accSession)
-    {
-        if(accSession?.Penalties?.Any() is false && accSession?.PostRacePenalties?.Any() is false)
-        {
-            return;
-        }
-
-        this.Action = $"Importing Penalties from {session.DisplayName}...";
-
-        foreach(var accPenalty in accSession!.Penalties!)
-        {
-            var car = accSession.GetCar(accPenalty.CarId);
-            var carName = DbRepository.GetCarNameByAccModelId(car.CarModel);
-            var driver = accSession.GetDriver(accPenalty.CarId, accPenalty.DriverIndex);
-            var dbDriver = DbRepository.GetDriver(driver.PlayerId);
-            var driverName = driver.DisplayName;
-            var penalty = new Penalty
-                      {
-                          Car = carName,
-                          Driver = driverName,
-                          DriverCategory = dbDriver?.DriverCategory,
-                          ClearedOnLap = accPenalty.ClearedInLap,
-                          IsPostRacePenalty = false,
-                          NationalityCode = dbDriver?.NationalityCode ?? 0,
-                          Nationality =
-                              dbDriver != null
-                                  ? ((AccNationality)dbDriver.NationalityCode).ToFriendlyName()
-                                  : null,
-                          PenaltyCode = accPenalty.Penalty,
-                          PenaltyValue = accPenalty.PenaltyValue,
-                          Reason = accPenalty.Reason,
-                          SessionId = session.Id,
-                          ViolationOnLap = accPenalty.ViolationInLap
-                      };
-            DbRepository.AddPenalty(penalty);
-        }
-
-        foreach(var accPenalty in accSession!.PostRacePenalties!)
-        {
-            var car = accSession.GetCar(accPenalty.CarId);
-            var carName = DbRepository.GetCarNameByAccModelId(car.CarModel);
-            var driver = accSession.GetDriver(accPenalty.CarId, accPenalty.DriverIndex);
-            var dbDriver = DbRepository.GetDriver(driver.PlayerId);
-            var driverName = driver.DisplayName;
-            var penalty = new Penalty
-                          {
-                              Car = carName,
-                              Driver = driverName,
-                              DriverCategory = dbDriver?.DriverCategory,
-                              ClearedOnLap = accPenalty.ClearedInLap,
-                              IsPostRacePenalty = true,
-                              NationalityCode = dbDriver?.NationalityCode ?? 0,
-                              Nationality =
-                                  dbDriver != null
-                                      ? ((AccNationality)dbDriver.NationalityCode).ToFriendlyName()
-                                      : null,
-                              PenaltyCode = accPenalty.Penalty,
-                              PenaltyValue = accPenalty.PenaltyValue,
-                              Reason = accPenalty.Reason,
-                              SessionId = session.Id,
-                              ViolationOnLap = accPenalty.ViolationInLap
-                          };
-            DbRepository.AddPenalty(penalty);
         }
     }
 
@@ -232,17 +166,77 @@ public class ServerSyncDialogViewModel : ObservableObject
                                           DbRepository.GetCarNameByAccModelId(accCar.CarModel),
                                       CarClass = accCar.CarGroup,
                                       DriverCategory = dbDriver?.DriverCategory,
-                                      DriverName = currentDriver.DisplayName,
+                                      DriverName = this.GetDriverName(currentDriver, dbDriver),
                                       DriverShortName = currentDriver.ShortName,
                                       MissingMandatoryPitStop =
                                           accLeaderBoardLine.MissingMandatoryPitstop,
-                                      NationalityCode = dbDriver?.NationalityCode ?? 0,
-                                      Nationality = dbDriver != null? ((AccNationality)dbDriver.NationalityCode).ToFriendlyName(): null,
+                                      NationalityCode = this.GetNationalityCode(accCar, dbDriver),
+                                      Nationality = this.GetNationality(accCar, dbDriver),
+                                      OurCategory = dbDriver?.OurCategory,
                                       Position = position++,
                                       SessionId = session.Id,
                                       TeamName = accCar.TeamName
                                   };
             DbRepository.AddLeaderBoardLine(leaderBoardLine);
+        }
+    }
+
+    private void AddPenalties(Session session, AccSession accSession)
+    {
+        if(accSession?.Penalties?.Any() is false && accSession?.PostRacePenalties?.Any() is false)
+        {
+            return;
+        }
+
+        this.Action = $"Importing Penalties from {session.DisplayName}...";
+
+        foreach(var accPenalty in accSession!.Penalties!)
+        {
+            var car = accSession.GetCar(accPenalty.CarId);
+            var carName = DbRepository.GetCarNameByAccModelId(car.CarModel);
+            var driver = accSession.GetDriver(accPenalty.CarId, accPenalty.DriverIndex);
+            var dbDriver = DbRepository.GetDriver(driver.PlayerId);
+            var penalty = new Penalty
+                          {
+                              Car = carName,
+                              Driver = this.GetDriverName(driver, dbDriver),
+                              DriverCategory = dbDriver?.DriverCategory,
+                              OurCategory = dbDriver?.OurCategory,
+                              ClearedOnLap = accPenalty.ClearedInLap,
+                              IsPostRacePenalty = false,
+                              NationalityCode = this.GetNationalityCode(car, dbDriver),
+                              Nationality = this.GetNationality(car, dbDriver),
+                              PenaltyCode = accPenalty.Penalty,
+                              PenaltyValue = accPenalty.PenaltyValue,
+                              Reason = accPenalty.Reason,
+                              SessionId = session.Id,
+                              ViolationOnLap = accPenalty.ViolationInLap
+                          };
+            DbRepository.AddPenalty(penalty);
+        }
+
+        foreach(var accPenalty in accSession!.PostRacePenalties!)
+        {
+            var car = accSession.GetCar(accPenalty.CarId);
+            var carName = DbRepository.GetCarNameByAccModelId(car.CarModel);
+            var driver = accSession.GetDriver(accPenalty.CarId, accPenalty.DriverIndex);
+            var dbDriver = DbRepository.GetDriver(driver.PlayerId);
+            var penalty = new Penalty
+                          {
+                              Car = carName,
+                              Driver = this.GetDriverName(driver, dbDriver),
+                              DriverCategory = dbDriver?.DriverCategory,
+                              ClearedOnLap = accPenalty.ClearedInLap,
+                              IsPostRacePenalty = true,
+                              NationalityCode = this.GetNationalityCode(car, dbDriver),
+                              Nationality = this.GetNationality(car, dbDriver),
+                              PenaltyCode = accPenalty.Penalty,
+                              PenaltyValue = accPenalty.PenaltyValue,
+                              Reason = accPenalty.Reason,
+                              SessionId = session.Id,
+                              ViolationOnLap = accPenalty.ViolationInLap
+                          };
+            DbRepository.AddPenalty(penalty);
         }
     }
 
@@ -273,6 +267,31 @@ public class ServerSyncDialogViewModel : ObservableObject
         return session;
     }
 
+    private string GetDriverFirstName(Driver driver)
+    {
+        if(!string.IsNullOrWhiteSpace(driver.FirstNameOverride))
+        {
+            return driver.FirstNameOverride[..1];
+        }
+
+        return !string.IsNullOrWhiteSpace(driver.FirstName)? driver.FirstName[..1]: "**";
+    }
+
+    private string GetDriverLastName(Driver driver)
+    {
+        if(!string.IsNullOrWhiteSpace(driver.LastNameOverride))
+        {
+            return driver.LastNameOverride;
+        }
+
+        return !string.IsNullOrWhiteSpace(driver.LastName)? driver.LastName: "**";
+    }
+
+    private string GetDriverName(AccDriver accDriver, Driver driver)
+    {
+        return driver == null? accDriver.DisplayName: $"{this.GetDriverFirstName(driver)}. {this.GetDriverLastName(driver)}";
+    }
+
     private List<FtpListItem> GetFilesToDownload(IEnumerable<string> localFiles,
         IEnumerable<FtpListItem> listItems)
     {
@@ -281,6 +300,21 @@ public class ServerSyncDialogViewModel : ObservableObject
         return listItems
                .Where(i => i.Type == FtpObjectType.File && !localFileNames.Contains(i.Name))
                .ToList();
+    }
+
+    private string GetNationality(AccCar accCar, Driver driver)
+    {
+        return ((AccNationality)this.GetNationalityCode(accCar, driver)).ToFriendlyName();
+    }
+
+    private int GetNationalityCode(AccCar accCar, Driver driver)
+    {
+        if(driver == null)
+        {
+            return accCar.Nationality;
+        }
+
+        return driver.NationalityCodeOverride ?? driver.NationalityCode;
     }
 
     private DateTime GetTimestampFromFileName(string filePath)
@@ -306,6 +340,54 @@ public class ServerSyncDialogViewModel : ObservableObject
             int.Parse(hour),
             int.Parse(minute),
             int.Parse(second));
+    }
+
+    private void ImportEntryList(string json, string filePath)
+    {
+        var entryList = JsonConvert.DeserializeObject<AccEntryList>(json);
+        var drivers = entryList.Entries.SelectMany(l => l.Drivers);
+        foreach(var driver in drivers)
+        {
+            var dbDriver = DbRepository.GetDriver(driver.PlayerId) ?? new Driver
+                               {
+                                   DriverCategoryCode = (int)driver.DriverCategory,
+                                   DriverCategory = driver.DriverCategory.ToString(),
+                                   LastUpdateFilePath = filePath,
+                                   FirstName = driver.FirstName,
+                                   LastName = driver.LastName,
+                                   Nationality = driver.Nationality.ToFriendlyName(),
+                                   NationalityCode = (int)driver.DriverCategory,
+                                   ShortName = driver.ShortName,
+                                   IsImported = true
+                               };
+
+            if(string.IsNullOrWhiteSpace(dbDriver.Id))
+            {
+                dbDriver.Id = driver.PlayerId;
+                DbRepository.AddDriver(dbDriver);
+            }
+            else
+            {
+                DbRepository.UpdateDriver(dbDriver);
+            }
+        }
+    }
+
+    private void ImportSession(int serverId, string json, string filePath)
+    {
+        var accSession = JsonConvert.DeserializeObject<AccSession>(json);
+        if(accSession == null || accSession.Laps?.Any() is false)
+        {
+            this.Action = $"{Path.GetFileName(filePath)} did not contain any laps, ignoring it";
+            return;
+        }
+
+        var session = this.AddSession(serverId, filePath, accSession);
+
+        this.AddLeaderBoardLines(session, accSession);
+        this.AddLaps(session, accSession);
+        this.AddPenalties(session, accSession);
+        this.ProgressValue++;
     }
 
     private string NormalisedContent(string filePath)
@@ -396,8 +478,10 @@ public class ServerSyncDialogViewModel : ObservableObject
                                        .ToList();
         var entryListFilePaths = DbRepository.GetProcessedEntryLists();
 
-        var newFilePaths = filePaths.Where(p => !entryListFilePaths.Contains(p) && !sessionFilePaths.Contains(p))
-                                    .ToList();
+        var newFilePaths = filePaths
+                           .Where(p => !entryListFilePaths.Contains(p)
+                                       && !sessionFilePaths.Contains(p))
+                           .ToList();
 
         this.ProgressValue = 0;
         this.ProgressMaximum = newFilePaths.Count;
@@ -414,52 +498,5 @@ public class ServerSyncDialogViewModel : ObservableObject
 
             this.ImportSession(serverId, json, filePath);
         }
-    }
-
-    private void ImportEntryList(string json, string filePath)
-    {
-        var entryList = JsonConvert.DeserializeObject<AccEntryList>(json);
-        var drivers = entryList.Entries.SelectMany(l => l.Drivers);
-        foreach(var driver in drivers)
-        {
-            var dbDriver = DbRepository.GetDriver(driver.PlayerId) ?? new Driver
-                               {
-                                   DriverCategoryCode = (int)driver.DriverCategory,
-                                   DriverCategory = driver.DriverCategory.ToString(),
-                                   LastUpdateFilePath = filePath,
-                                   FirstName = driver.FirstName,
-                                   LastName = driver.LastName,
-                                   Nationality = driver.Nationality.ToFriendlyName(),
-                                   NationalityCode = (int)driver.DriverCategory,
-                                   ShortName = driver.ShortName
-                               };
-
-            if(string.IsNullOrWhiteSpace(dbDriver.Id))
-            {
-                dbDriver.Id = driver.PlayerId;
-                DbRepository.AddDriver(dbDriver);
-            }
-            else
-            {
-                DbRepository.UpdateDriver(dbDriver);
-            }
-        }
-    }
-
-    private void ImportSession(int serverId, string json, string filePath)
-    {
-        var accSession = JsonConvert.DeserializeObject<AccSession>(json);
-        if(accSession == null || accSession.Laps?.Any() is false)
-        {
-            this.Action = $"{Path.GetFileName(filePath)} did not contain any laps, ignoring it";
-            return;
-        }
-
-        var session = this.AddSession(serverId, filePath, accSession);
-
-        this.AddLeaderBoardLines(session, accSession);
-        this.AddLaps(session, accSession);
-        this.AddPenalties(session, accSession);
-        this.ProgressValue++;
     }
 }

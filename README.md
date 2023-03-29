@@ -13,6 +13,16 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.0.0-beta.3 2003-03-29
+
+### Added
+- Driver Manager
+- Support for overriding First Name, Last Name and Nationality
+- Support for assigning own driver category e.g. PRO, AM
+
+### Changed
+- All data grids to user driver overrides
+
 ## v1.0.0-beta.2 2003-03-28
 
 ### Added

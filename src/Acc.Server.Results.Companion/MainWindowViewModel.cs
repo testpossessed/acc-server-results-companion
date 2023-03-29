@@ -51,6 +51,12 @@ internal class MainWindowViewModel : ObservableObject
     internal void Init()
     {
         this.LoadServers();
+        this.DriverManagerViewModel.DriversChanged += this.HandleDriversChanged;
+    }
+
+    private void HandleDriversChanged(object sender, EventArgs eventArgs)
+    {
+        this.DataViewerViewModel.Refresh();
     }
 
     private void HandleAddServer()
@@ -69,6 +75,7 @@ internal class MainWindowViewModel : ObservableObject
         }
 
         this.LoadServers();
+        this.DriverManagerViewModel.Refresh();
     }
 
     private void LoadServers()

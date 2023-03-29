@@ -123,4 +123,9 @@ public class DataViewerViewModel : ObservableObject
         this.LoadLaps();
         this.LoadPenalties();
     }
+
+    public void Refresh()
+    {
+        this.LoadSession();
+    }
 }
