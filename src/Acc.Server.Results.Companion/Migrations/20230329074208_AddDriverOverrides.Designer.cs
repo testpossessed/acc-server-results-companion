@@ -3,6 +3,7 @@ using System;
 using Acc.Server.Results.Companion.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acc.Server.Results.Companion.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230329074208_AddDriverOverrides")]
+    partial class AddDriverOverrides
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
@@ -535,6 +538,9 @@ namespace Acc.Server.Results.Companion.Migrations
                     b.Property<int>("DriverCategoryCode")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("DriverNationalityCodeOverride")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("TEXT");
 
@@ -558,12 +564,6 @@ namespace Acc.Server.Results.Companion.Migrations
 
                     b.Property<int>("NationalityCode")
                         .HasColumnType("INTEGER");
-
-                    b.Property<int?>("NationalityCodeOverride")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("NationalityOverride")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("OurCategory")
                         .HasColumnType("TEXT");

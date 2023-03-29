@@ -151,6 +151,7 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom">
             <sf:ButtonAdv IsCancel="True"
+                          Command="{Binding Cancel}"
                           Width="75"
                           Label="Cancel"
                           SmallIcon="../../Icons/cancel.png" />

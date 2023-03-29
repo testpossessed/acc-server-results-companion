@@ -69,6 +69,12 @@ internal static class DbRepository
         dbContext.SaveChanges();
     }
 
+    internal static bool DriverExists(string steamId)
+    {
+        var dbContext = GetDbContext();
+        return dbContext.Drivers.Any(d => d.Id == steamId);
+    }
+
     internal static string GetCarNameByAccModelId(int modelId)
     {
         var dbContext = GetDbContext();
@@ -82,6 +88,14 @@ internal static class DbRepository
         var dbContext = GetDbContext();
 
         return dbContext.Drivers.FirstOrDefault(d => d.Id == playerId);
+    }
+
+    internal static List<Driver> GetDrivers()
+    {
+        var dbContext = GetDbContext();
+        return dbContext.Drivers.OrderBy(d => d.FirstName)
+                        .ThenBy(d => d.LastName)
+                        .ToList();
     }
 
     internal static List<Lap> GetLaps(int sessionId)

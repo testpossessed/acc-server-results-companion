@@ -6,5 +6,6 @@
         <c:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <c:BooleanToVisibilityInverseConverter x:Key="BooleanToVisibilityInverseConverter" />
         <c:BooleanToServerTypeConverter x:Key="BooleanToServerTypeConverter" />
+        <c:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
     </Application.Resources>
 </Application>

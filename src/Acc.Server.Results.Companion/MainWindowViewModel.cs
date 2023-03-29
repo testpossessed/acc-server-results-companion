@@ -7,6 +7,7 @@ using Acc.Server.Results.Companion.Core.Services;
 using Acc.Server.Results.Companion.Database;
 using Acc.Server.Results.Companion.Database.Entities;
 using Acc.Server.Results.Companion.DataView;
+using Acc.Server.Results.Companion.Drivers;
 using Acc.Server.Results.Companion.Server.ServerEditor;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -26,6 +27,8 @@ internal class MainWindowViewModel : ObservableObject
     public ICommand AddServer { get; }
 
     public DataViewerViewModel DataViewerViewModel { get; } = new();
+    // public EventManagerViewModel EventManagerViewModel { get; } = new();
+    public DriverManagerViewModel DriverManagerViewModel { get; } = new();
     public ObservableCollection<ServerDetails> Servers { get; } = new();
 
     public bool IsInitialised
@@ -40,10 +43,8 @@ internal class MainWindowViewModel : ObservableObject
         set
         {
             this.SetProperty(ref this.selectedServer, value);
-            if(value == null)
-            {
-                return;
-            }
+            this.DataViewerViewModel.SetServerDetails(this.SelectedServer);
+            // this.EventManagerViewModel.SetServerDetails(this.SelectedServer);
         }
     }
 
@@ -92,6 +93,5 @@ internal class MainWindowViewModel : ObservableObject
         var lastServer = this.Servers.FirstOrDefault(s => s.Id == userSettings.LastServerId);
         this.SelectedServer = lastServer ?? this.Servers[0];
         UserSettingsProvider.SetLastServerId(this.SelectedServer.Id);
-        this.DataViewerViewModel.SetServerDetails(this.SelectedServer);
     }
 }

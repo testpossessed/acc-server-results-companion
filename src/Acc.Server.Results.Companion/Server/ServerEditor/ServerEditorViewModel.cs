@@ -27,12 +27,15 @@ internal class ServerEditorViewModel : ObservableObject
     public ServerEditorViewModel(ServerEditor serverEditor)
     {
         this.serverEditor = serverEditor;
+        this.Cancel = new RelayCommand(this.HandleCancel);
         this.Save = new RelayCommand(this.HandleSave, this.CanExecuteSave);
         this.SelectFolder = new RelayCommand(this.HandleSelectFolder);
         this.ServerType = FtpServerType;
         this.FtpFolderPath = "/";
         this.HostPort = 21;
     }
+
+    public ICommand Cancel { get; }
 
     public ICommand Save { get; }
 
@@ -123,6 +126,12 @@ internal class ServerEditorViewModel : ObservableObject
         }
 
         return this.FtpFolderPath;
+    }
+
+    private void HandleCancel()
+    {
+        this.serverEditor.DialogResult = false;
+        this.serverEditor.Close();
     }
 
     private void HandleSave()

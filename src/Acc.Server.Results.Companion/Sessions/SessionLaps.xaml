@@ -31,8 +31,10 @@
 
                 <sf:GridTextColumn HeaderText="Driver"
                                    MappingName="Driver" />
-                <sf:GridTextColumn HeaderText="Driver Category"
+                <sf:GridTextColumn HeaderText="ACC Category"
                                    MappingName="DriverCategory" />
+                <sf:GridTextColumn HeaderText="Our Category"
+                                   MappingName="OurCategory" />
                 <sf:GridTextColumn HeaderText="Country"
                                    MappingName="Nationality" />
                 <sf:GridTextColumn HeaderText="Car"

@@ -14,17 +14,19 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <sf:ButtonAdv Grid.Column="0"
-                      Grid.Row="0"
-                      SmallIcon="../Icons/export-to-excel.png"
-                      Label="Export to Excel"
-                      Click="HandleExportToExcel"
-                      HorizontalAlignment="Left"
-                      Margin="5 10 0 10" />
+        <Button Click="HandleExportToExcel"
+                Margin="10 0 "
+                Height="32">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                <Image Source="../Icons/export-to-excel.png" />
+                <TextBlock Text="Export to Excel" />
+            </StackPanel>
+        </Button>
 
         <sf:SfDataGrid Grid.Row="1"
                        Name="DataGrid"
@@ -39,8 +41,10 @@
                                    MappingName="DriverName" />
                 <sf:GridTextColumn HeaderText="Short Name"
                                    MappingName="DriverShortName" />
-                <sf:GridTextColumn HeaderText="Driver Category"
+                <sf:GridTextColumn HeaderText="ACC Category"
                                    MappingName="DriverCategory" />
+                <sf:GridTextColumn HeaderText="Our Category"
+                                   MappingName="OurCategory" />
                 <sf:GridTextColumn HeaderText="Country"
                                    MappingName="Nationality" />
                 <sf:GridTextColumn HeaderText="Car"

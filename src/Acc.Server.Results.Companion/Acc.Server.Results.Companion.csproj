@@ -19,6 +19,8 @@
 		<None Remove="Icons\server-add2.png" />
 		<None Remove="Icons\server-edit.png" />
 		<None Remove="Icons\server.png" />
+		<None Remove="Icons\user_symbol_blue-add.png" />
+		<None Remove="Icons\user_symbol_blue-edit.png" />
 		<None Remove="Splash.png" />
 		<None Remove="Welcome\Images\folder-settings.png" />
 		<None Remove="Welcome\Images\ftp-settings.png" />
@@ -64,6 +66,8 @@
 
 	<ItemGroup>
 	  <Resource Include="Icons\Logo.png" />
+	  <Resource Include="Icons\user_symbol_blue-add.png" />
+	  <Resource Include="Icons\user_symbol_blue-edit.png" />
 	  <Resource Include="Splash.png" />
 	  <Resource Include="Welcome\Images\folder-settings.png" />
 	  <Resource Include="Welcome\Images\ftp-settings.png" />
