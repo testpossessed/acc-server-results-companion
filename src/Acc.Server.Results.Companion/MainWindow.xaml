@@ -7,6 +7,7 @@
                      xmlns:s="clr-namespace:Acc.Server.Results.Companion.Sessions"
                      xmlns:welcome="clr-namespace:Acc.Server.Results.Companion.Welcome"
                      xmlns:sf="http://schemas.syncfusion.com/wpf"
+                     xmlns:dv="clr-namespace:Acc.Server.Results.Companion.DataView"
                      mc:Ignorable="d"
                      Title="ACC Server Results Companion"
                      WindowStartupLocation="CenterScreen"
@@ -18,11 +19,13 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <sf:ToolBarAdv Grid.Column="0"
                        Grid.Row="0"
                        Grid.ColumnSpan="3"
@@ -46,49 +49,23 @@
                       Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </sf:ToolBarAdv>
 
-        <Grid Grid.Column="0"
-              Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <Label Content="Sessions"
-                   Grid.Column="0"
-                   Grid.Row="0" Margin="5 9 0 0" FontWeight="Bold" />
-            <ListBox Grid.Column="0"
-                     Grid.Row="1"
-                     ItemsSource="{Binding Sessions}"
-                     SelectedItem="{Binding SelectedSession, Mode=TwoWay}"
-                     VerticalAlignment="Stretch"
-                     Width="300"
-                     DisplayMemberPath="DisplayName"
-                     Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        </Grid>
-
-        <GridSplitter Grid.Column="1"
-                      Grid.Row="1"
-                      Width="5"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Center"
-                      Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <sf:TabControlExt Grid.Column="2"
                           Grid.Row="1"
                           Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          HorizontalAlignment="Stretch">
-            <sf:TabItemExt Header="Details">
-                <s:SessionDetails Session="{Binding SelectedSession}" />
+                          HorizontalAlignment="Stretch" CloseButtonType="Hide" ShowTabItemContextMenu="False">
+
+            <sf:TabItemExt Header="Data Viewer">
+                <dv:DataViewer DataContext="{Binding DataViewerViewModel}" />
             </sf:TabItemExt>
-            <sf:TabItemExt Header="Leader Board">
-                <s:LeaderBoard LeaderBoardLines="{Binding LeaderBoardLines}" />
+
+            <sf:TabItemExt Header="Event Management">
+
             </sf:TabItemExt>
-            <sf:TabItemExt Header="Laps">
-                <s:SessionLaps Laps="{Binding Laps}" />
-            </sf:TabItemExt>
-            <sf:TabItemExt Header="Penalties">
-                <s:SessionPenalties Penalties="{Binding Penalties}" />
-            </sf:TabItemExt>
+
         </sf:TabControlExt>
+
+
+      
 
         <welcome:WelcomeScreen Grid.Column="0"
                                Grid.Row="1"

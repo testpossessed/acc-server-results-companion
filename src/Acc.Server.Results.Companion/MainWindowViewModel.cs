@@ -6,9 +6,8 @@ using System.Windows.Input;
 using Acc.Server.Results.Companion.Core.Services;
 using Acc.Server.Results.Companion.Database;
 using Acc.Server.Results.Companion.Database.Entities;
+using Acc.Server.Results.Companion.DataView;
 using Acc.Server.Results.Companion.Server.ServerEditor;
-using Acc.Server.Results.Companion.Server.Sync;
-using Acc.Server.Results.Companion.ServerManagement.ServerEditor;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -18,7 +17,6 @@ internal class MainWindowViewModel : ObservableObject
 {
     private bool isInitialised;
     private ServerDetails selectedServer;
-    private Session selectedSession;
 
     public MainWindowViewModel()
     {
@@ -26,11 +24,9 @@ internal class MainWindowViewModel : ObservableObject
     }
 
     public ICommand AddServer { get; }
-    public ObservableCollection<Lap> Laps { get; } = new();
-    public ObservableCollection<LeaderBoardLine> LeaderBoardLines { get; } = new();
-    public ObservableCollection<Penalty> Penalties { get; } = new();
+
+    public DataViewerViewModel DataViewerViewModel { get; } = new();
     public ObservableCollection<ServerDetails> Servers { get; } = new();
-    public ObservableCollection<Session> Sessions { get; } = new();
 
     public bool IsInitialised
     {
@@ -48,18 +44,6 @@ internal class MainWindowViewModel : ObservableObject
             {
                 return;
             }
-
-            this.LoadServerSessions();
-        }
-    }
-
-    public Session SelectedSession
-    {
-        get => this.selectedSession;
-        set
-        {
-            this.SetProperty(ref this.selectedSession, value);
-            this.LoadSession();
         }
     }
 
@@ -86,55 +70,6 @@ internal class MainWindowViewModel : ObservableObject
         this.LoadServers();
     }
 
-    private void LoadLaps()
-    {
-        this.Laps.Clear();
-        if(this.SelectedSession == null)
-        {
-            return;
-        }
-
-        var sessionLaps = DbRepository.GetLaps(this.SelectedSession.Id);
-
-        foreach(var lap in sessionLaps)
-        {
-            this.Laps.Add(lap);
-        }
-    }
-
-    private void LoadLeaderBoardLines()
-    {
-        this.LeaderBoardLines.Clear();
-        if(this.SelectedSession == null)
-        {
-            return;
-        }
-
-        var lines = DbRepository.GetLeaderBoardLines(this.SelectedSession.Id);
-
-        foreach(var leaderBoardLine in lines)
-        {
-            this.LeaderBoardLines.Add(leaderBoardLine);
-        }
-    }
-
-    private void LoadPenalties()
-    {
-        this.Penalties.Clear();
-
-        if(this.SelectedSession == null)
-        {
-            return;
-        }
-
-        var sessionPenalties = DbRepository.GetPenalties(this.SelectedSession.Id);
-
-        foreach(var penalty in sessionPenalties)
-        {
-            this.Penalties.Add(penalty);
-        }
-    }
-
     private void LoadServers()
     {
         this.Servers.Clear();
@@ -156,47 +91,7 @@ internal class MainWindowViewModel : ObservableObject
         var userSettings = UserSettingsProvider.GetSettings();
         var lastServer = this.Servers.FirstOrDefault(s => s.Id == userSettings.LastServerId);
         this.SelectedServer = lastServer ?? this.Servers[0];
-    }
-
-    private async void LoadServerSessions()
-    {
-        if(this.SelectedServer == null)
-        {
-            return;
-        }
-
         UserSettingsProvider.SetLastServerId(this.SelectedServer.Id);
-
-        var serverSyncDialog = new ServerSyncDialog
-                               {
-                                   Owner = Application.Current.MainWindow
-                               };
-
-        var serverSyncViewModel = new ServerSyncDialogViewModel(serverSyncDialog);
-        serverSyncDialog.DataContext = serverSyncViewModel;
-        serverSyncDialog.Show();
-        await serverSyncViewModel.Start(this.SelectedServer);
-
-        this.Sessions.Clear();
-        var sessions = DbRepository.GetSessionsForServer(this.SelectedServer.Id);
-
-        foreach(var session in sessions)
-        {
-            this.Sessions.Add(session);
-        }
-
-        if(!this.Sessions.Any())
-        {
-            return;
-        }
-
-        this.SelectedSession = this.Sessions[0];
-    }
-
-    private void LoadSession()
-    {
-        this.LoadLeaderBoardLines();
-        this.LoadLaps();
-        this.LoadPenalties();
+        this.DataViewerViewModel.SetServerDetails(this.SelectedServer);
     }
 }
