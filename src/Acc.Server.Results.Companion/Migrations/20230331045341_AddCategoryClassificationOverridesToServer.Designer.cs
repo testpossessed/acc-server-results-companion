@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acc.Server.Results.Companion.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230331035904_AddCategoryClassificationOverridesToServer")]
+    [Migration("20230331045341_AddCategoryClassificationOverridesToServer")]
     partial class AddCategoryClassificationOverridesToServer
     {
         /// <inheritdoc />
@@ -781,13 +781,19 @@ namespace Acc.Server.Results.Companion.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BronzeClassification")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("'AM'");
 
                     b.Property<string>("FtpFolderPath")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("GoldClassification")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("'PRO'");
 
                     b.Property<bool>("IsLocalFolder")
                         .HasColumnType("INTEGER");
@@ -799,10 +805,16 @@ namespace Acc.Server.Results.Companion.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PlatinumClassification")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("'PRO'");
 
                     b.Property<string>("SilverClassification")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("'PRO-AM'");
 
                     b.Property<string>("Username")
                         .HasColumnType("TEXT");

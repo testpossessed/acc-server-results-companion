@@ -13,8 +13,12 @@ internal class ServerEditorViewModel : ObservableObject
 {
     private const string FolderServerType = "Folder";
     private const string FtpServerType = "FTP";
+    private const string ProClassification = "PRO";
+    private const string ProAmClassification = "PRO-AM";
+    private const string AmClassification = "AM";
     private readonly ServerEditor serverEditor;
     private string bronzeClassification;
+    private ServerDetails existingServer;
     private string ftpFolderPath;
     private string goldClassification;
     private string hostName;
@@ -36,10 +40,10 @@ internal class ServerEditorViewModel : ObservableObject
         this.ServerType = FtpServerType;
         this.FtpFolderPath = "/";
         this.HostPort = 21;
-        this.BronzeClassification = "AM";
-        this.SilverClassification = "PRO-AM";
-        this.GoldClassification = "PRO";
-        this.PlatinumClassification = "PRO";
+        this.BronzeClassification = AmClassification;
+        this.SilverClassification = ProAmClassification;
+        this.GoldClassification = ProClassification;
+        this.PlatinumClassification = ProClassification;
     }
 
     public ICommand Cancel { get; }
@@ -136,6 +140,33 @@ internal class ServerEditorViewModel : ObservableObject
         set => this.SetProperty(ref this.username, value);
     }
 
+    internal void SetServer(ServerDetails server)
+    {
+        this.existingServer = server;
+        this.BronzeClassification = server.BronzeClassification;
+        this.FtpFolderPath = server.FtpFolderPath;
+        this.GoldClassification = server.GoldClassification;
+        this.Name = server.Name;
+        this.Password = server.Password;
+        this.PlatinumClassification = server.PlatinumClassification;
+        this.SilverClassification = server.SilverClassification;
+        this.Username = server.Username;
+
+        if(server.IsLocalFolder)
+        {
+            this.LocalFolderPath = server.Address;
+            this.ServerType = FolderServerType;
+        }
+        else
+        {
+            var url = new Uri(server.Address);
+            this.FtpFolderPath = server.FtpFolderPath;
+            this.HostName = url.Host;
+            this.HostPort = url.Port;
+            this.ServerType = FtpServerType;
+        }
+    }
+
     private bool CanExecuteSave()
     {
         return !string.IsNullOrWhiteSpace(this.Name)
@@ -149,6 +180,13 @@ internal class ServerEditorViewModel : ObservableObject
                    : $"ftp://{this.HostName}:{this.HostPort}";
     }
 
+    private string GetBronzeClassificationOrDefault()
+    {
+        return string.IsNullOrWhiteSpace(this.BronzeClassification)
+                   ? AmClassification
+                   : this.BronzeClassification;
+    }
+
     private string GetFtpFolderPath()
     {
         if(!this.FtpFolderPath.StartsWith("/"))
@@ -159,6 +197,27 @@ internal class ServerEditorViewModel : ObservableObject
         return this.FtpFolderPath;
     }
 
+    private string GetGoldClassificationOrDefault()
+    {
+        return string.IsNullOrWhiteSpace(this.GoldClassification)
+                   ? ProClassification
+                   : this.GoldClassification;
+    }
+
+    private string GetPlatinumClassificationOrDefault()
+    {
+        return string.IsNullOrWhiteSpace(this.PlatinumClassification)
+                   ? ProClassification
+                   : this.PlatinumClassification;
+    }
+
+    private string GetSilverClassificationOrDefault()
+    {
+        return string.IsNullOrWhiteSpace(this.SilverClassification)
+                   ? ProAmClassification
+                   : this.SilverClassification;
+    }
+
     private void HandleCancel()
     {
         this.serverEditor.DialogResult = false;
@@ -167,21 +226,29 @@ internal class ServerEditorViewModel : ObservableObject
 
     private void HandleSave()
     {
-        var serverDetails = new ServerDetails
-                            {
-                                Name = this.Name,
-                                Address = this.GetAddress(),
-                                Username = this.Username,
-                                Password = this.Password,
-                                IsLocalFolder = this.ServerType == FolderServerType,
-                                FtpFolderPath = this.GetFtpFolderPath(),
-                                BronzeClassification = this.BronzeClassification,
-                                SilverClassification = this.SilverClassification,
-                                GoldClassification = this.GoldClassification,
-                                PlatinumClassification = this.PlatinumClassification
-                            };
+        var serverDetails = this.existingServer ?? new ServerDetails();
 
-        DbRepository.AddServerDetails(serverDetails);
+        serverDetails.Name = this.Name;
+        serverDetails.Address = this.GetAddress();
+        serverDetails.Username = this.Username;
+        serverDetails.Password = this.Password;
+        serverDetails.IsLocalFolder = this.ServerType == FolderServerType;
+        serverDetails.FtpFolderPath = this.GetFtpFolderPath();
+        serverDetails.BronzeClassification = this.GetBronzeClassificationOrDefault();
+        serverDetails.SilverClassification = this.GetSilverClassificationOrDefault();
+        serverDetails.GoldClassification = this.GetGoldClassificationOrDefault();
+        serverDetails.PlatinumClassification =
+            this.GetPlatinumClassificationOrDefault();
+
+        if(this.existingServer != null)
+        {
+            DbRepository.UpdateServerDetails(serverDetails);
+        }
+        else
+        {
+            DbRepository.AddServerDetails(serverDetails);
+        }
+
         UserSettingsProvider.SetLastServerId(serverDetails.Id);
         this.serverEditor.DialogResult = true;
         this.serverEditor.Close();

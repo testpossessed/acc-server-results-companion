@@ -174,6 +174,14 @@ internal static class DbRepository
         dbContext.SaveChanges();
     }
 
+    internal static void UpdateServerDetails(ServerDetails serverDetails)
+    {
+        var dbContext = GetDbContext();
+
+        dbContext.Servers.Update(serverDetails);
+        dbContext.SaveChanges();
+    }
+
     private static AppDbContext GetDbContext()
     {
         return new AppDbContext();

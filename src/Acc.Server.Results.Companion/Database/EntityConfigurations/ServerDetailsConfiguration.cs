@@ -12,5 +12,21 @@ internal class ServerDetailsConfiguration : IEntityTypeConfiguration<ServerDetai
         builder.HasMany(x => x.Sessions)
                .WithOne()
                .HasForeignKey(x => x.ServerId);
+
+        builder.Property(e => e.BronzeClassification)
+               .IsRequired()
+               .HasDefaultValueSql("'AM'");
+
+        builder.Property(e => e.SilverClassification)
+               .IsRequired()
+               .HasDefaultValueSql("'PRO-AM'");
+
+        builder.Property(e => e.GoldClassification)
+               .IsRequired()
+               .HasDefaultValueSql("'PRO'");
+
+        builder.Property(e => e.PlatinumClassification)
+               .IsRequired()
+               .HasDefaultValueSql("'PRO'");
     }
 }

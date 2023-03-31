@@ -22,13 +22,14 @@ internal class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         this.AddServer = new RelayCommand(this.HandleAddServer);
+        this.EditServer = new RelayCommand(this.HandleEditServer, this.CanExecuteEditServer);
     }
 
     public ICommand AddServer { get; }
-
     public DataViewerViewModel DataViewerViewModel { get; } = new();
     // public EventManagerViewModel EventManagerViewModel { get; } = new();
     public DriverManagerViewModel DriverManagerViewModel { get; } = new();
+    public ICommand EditServer { get; }
     public ObservableCollection<ServerDetails> Servers { get; } = new();
 
     public bool IsInitialised
@@ -44,6 +45,7 @@ internal class MainWindowViewModel : ObservableObject
         {
             this.SetProperty(ref this.selectedServer, value);
             this.DataViewerViewModel.SetServerDetails(this.SelectedServer);
+            this.NotifyCanExecuteEditServerChanged();
             // this.EventManagerViewModel.SetServerDetails(this.SelectedServer);
         }
     }
@@ -54,9 +56,9 @@ internal class MainWindowViewModel : ObservableObject
         this.DriverManagerViewModel.DriversChanged += this.HandleDriversChanged;
     }
 
-    private void HandleDriversChanged(object sender, EventArgs eventArgs)
+    private bool CanExecuteEditServer()
     {
-        this.DataViewerViewModel.Refresh();
+        return this.SelectedServer != null;
     }
 
     private void HandleAddServer()
@@ -66,6 +68,31 @@ internal class MainWindowViewModel : ObservableObject
                                Owner = Application.Current.MainWindow
                            };
         var viewModel = new ServerEditorViewModel(serverEditor);
+
+        serverEditor.DataContext = viewModel;
+        var dialogResult = serverEditor.ShowDialog();
+        if(dialogResult is false)
+        {
+            return;
+        }
+
+        this.LoadServers();
+        this.DriverManagerViewModel.Refresh();
+    }
+
+    private void HandleDriversChanged(object sender, EventArgs eventArgs)
+    {
+        this.DataViewerViewModel.Refresh();
+    }
+
+    private void HandleEditServer()
+    {
+        var serverEditor = new ServerEditor()
+                           {
+                               Owner = Application.Current.MainWindow
+                           };
+        var viewModel = new ServerEditorViewModel(serverEditor);
+        viewModel.SetServer(this.SelectedServer);
 
         serverEditor.DataContext = viewModel;
         var dialogResult = serverEditor.ShowDialog();
@@ -100,5 +127,10 @@ internal class MainWindowViewModel : ObservableObject
         var lastServer = this.Servers.FirstOrDefault(s => s.Id == userSettings.LastServerId);
         this.SelectedServer = lastServer ?? this.Servers[0];
         UserSettingsProvider.SetLastServerId(this.SelectedServer.Id);
+    }
+
+    private void NotifyCanExecuteEditServerChanged()
+    {
+        ((RelayCommand)this.EditServer).NotifyCanExecuteChanged();
     }
 }

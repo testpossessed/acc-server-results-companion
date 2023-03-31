@@ -48,6 +48,13 @@
                       SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
                       VerticalAlignment="Center"
                       Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+            <Button ToolTip="Edit the selected Server"
+                    Command="{Binding EditServer}"
+                    Height="32"
+                    Width="32" Margin="5 0">
+                <Image Source="../Icons/server-edit.png" />
+            </Button>
         </sf:ToolBarAdv>
 
         <sf:TabControlExt Grid.Column="2"

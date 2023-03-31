@@ -10,7 +10,7 @@
         sfs:SfSkinManager.VisualStyle="Blend"
         mc:Ignorable="d"
         Title="Server Details"
-        Height="400"
+        Height="500"
         Width="500"
         WindowStartupLocation="CenterOwner"
         d:DataContext="{d:DesignInstance se:ServerEditorViewModel}"
@@ -148,7 +148,8 @@
 
         <GroupBox Grid.Column="0"
                   Grid.Row="6"
-                  Header="Category Classifications">
+                  Grid.ColumnSpan="2"
+                  Header="Driver Category Classification">
 
             <Grid>
                 <Grid.ColumnDefinitions>

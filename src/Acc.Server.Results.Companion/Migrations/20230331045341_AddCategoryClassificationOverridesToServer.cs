@@ -15,26 +15,28 @@ namespace Acc.Server.Results.Companion.Migrations
                 table: "Servers",
                 type: "TEXT",
                 nullable: false,
-                defaultValueSql: "AM");
+                defaultValueSql: "'AM'");
 
             migrationBuilder.AddColumn<string>(
                 name: "GoldClassification",
                 table: "Servers",
                 type: "TEXT",
                 nullable: false,
-                defaultValueSql: "PRO");
+                defaultValueSql: "'PRO'");
 
             migrationBuilder.AddColumn<string>(
                 name: "PlatinumClassification",
                 table: "Servers",
                 type: "TEXT",
-                nullable: false, defaultValueSql: "PRO");
+                nullable: false,
+                defaultValueSql: "'PRO'");
 
             migrationBuilder.AddColumn<string>(
                 name: "SilverClassification",
                 table: "Servers",
                 type: "TEXT",
-                nullable: false, defaultValueSql: "PRO-AM");
+                nullable: false,
+                defaultValueSql: "'PRO-AM'");
         }
 
         /// <inheritdoc />
