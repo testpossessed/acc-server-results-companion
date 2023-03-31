@@ -14,14 +14,17 @@ internal class ServerEditorViewModel : ObservableObject
     private const string FolderServerType = "Folder";
     private const string FtpServerType = "FTP";
     private readonly ServerEditor serverEditor;
-
+    private string bronzeClassification;
     private string ftpFolderPath;
+    private string goldClassification;
     private string hostName;
     private int hostPort;
     private string localFolderPath;
     private string name;
     private string password;
+    private string platinumClassification;
     private string serverType;
+    private string silverClassification;
     private string username;
 
     public ServerEditorViewModel(ServerEditor serverEditor)
@@ -33,6 +36,10 @@ internal class ServerEditorViewModel : ObservableObject
         this.ServerType = FtpServerType;
         this.FtpFolderPath = "/";
         this.HostPort = 21;
+        this.BronzeClassification = "AM";
+        this.SilverClassification = "PRO-AM";
+        this.GoldClassification = "PRO";
+        this.PlatinumClassification = "PRO";
     }
 
     public ICommand Cancel { get; }
@@ -41,10 +48,22 @@ internal class ServerEditorViewModel : ObservableObject
 
     public ICommand SelectFolder { get; }
 
+    public string BronzeClassification
+    {
+        get => this.bronzeClassification;
+        set => this.SetProperty(ref this.bronzeClassification, value);
+    }
+
     public string FtpFolderPath
     {
         get => this.ftpFolderPath;
         set => this.SetProperty(ref this.ftpFolderPath, value);
+    }
+
+    public string GoldClassification
+    {
+        get => this.goldClassification;
+        set => this.SetProperty(ref this.goldClassification, value);
     }
 
     public string HostName
@@ -93,10 +112,22 @@ internal class ServerEditorViewModel : ObservableObject
         set => this.SetProperty(ref this.password, value);
     }
 
+    public string PlatinumClassification
+    {
+        get => this.platinumClassification;
+        set => this.SetProperty(ref this.platinumClassification, value);
+    }
+
     public string ServerType
     {
         get => this.serverType;
         set => this.SetProperty(ref this.serverType, value);
+    }
+
+    public string SilverClassification
+    {
+        get => this.silverClassification;
+        set => this.SetProperty(ref this.silverClassification, value);
     }
 
     public string Username
@@ -143,7 +174,11 @@ internal class ServerEditorViewModel : ObservableObject
                                 Username = this.Username,
                                 Password = this.Password,
                                 IsLocalFolder = this.ServerType == FolderServerType,
-                                FtpFolderPath = this.GetFtpFolderPath()
+                                FtpFolderPath = this.GetFtpFolderPath(),
+                                BronzeClassification = this.BronzeClassification,
+                                SilverClassification = this.SilverClassification,
+                                GoldClassification = this.GoldClassification,
+                                PlatinumClassification = this.PlatinumClassification
                             };
 
         DbRepository.AddServerDetails(serverDetails);

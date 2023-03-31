@@ -13,4 +13,8 @@ public class ServerDetails
     public string Password { get; set; }
     public ICollection<Session> Sessions { get; set; }
     public string Username { get; set; }
+    public string BronzeClassification { get; set; }
+    public string SilverClassification { get; set; }
+    public string GoldClassification { get; set; }
+    public string PlatinumClassification { get; set; }
 }
