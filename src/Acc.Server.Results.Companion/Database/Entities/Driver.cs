@@ -5,7 +5,6 @@ namespace Acc.Server.Results.Companion.Database.Entities;
 public class Driver
 {
     public string Id { get; set; }
-    public string DriverCategory { get; set; }
     public int DriverCategoryCode { get; set; }
     public string FirstName { get; set; }
     public string FirstNameOverride { get; set; }
@@ -17,6 +16,5 @@ public class Driver
     public int NationalityCode { get; set; }
     public int? NationalityCodeOverride { get; set; }
     public string NationalityOverride { get; set; }
-    public string OurCategory { get; set; }
     public string ShortName { get; set; }
 }

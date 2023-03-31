@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using Acc.Server.Results.Companion.Core.Models;
 using Acc.Server.Results.Companion.Database.Entities;
 using Microsoft.Win32;
 using Syncfusion.UI.Xaml.Grid.Converter;
@@ -13,18 +14,18 @@ public partial class LeaderBoard : UserControl
 {
     public static readonly DependencyProperty LeaderBoardLinesProperty =
         DependencyProperty.Register(nameof(LeaderBoardLines),
-            typeof(ObservableCollection<LeaderBoardLine>),
+            typeof(ObservableCollection<LeaderBoardLineViewModel>),
             typeof(LeaderBoard),
-            new PropertyMetadata(default(ObservableCollection<LeaderBoardLine>)));
+            new PropertyMetadata(default(ObservableCollection<LeaderBoardLineViewModel>)));
 
     public LeaderBoard()
     {
         this.InitializeComponent();
     }
 
-    public ObservableCollection<LeaderBoardLine> LeaderBoardLines
+    public ObservableCollection<LeaderBoardLineViewModel> LeaderBoardLines
     {
-        get => (ObservableCollection<LeaderBoardLine>)this.GetValue(LeaderBoardLinesProperty);
+        get => (ObservableCollection<LeaderBoardLineViewModel>)this.GetValue(LeaderBoardLinesProperty);
         set => this.SetValue(LeaderBoardLinesProperty, value);
     }
 

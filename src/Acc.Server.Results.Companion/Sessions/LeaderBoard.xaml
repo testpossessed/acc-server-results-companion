@@ -41,10 +41,10 @@
                                    MappingName="DriverName" />
                 <sf:GridTextColumn HeaderText="Short Name"
                                    MappingName="DriverShortName" />
-                <sf:GridTextColumn HeaderText="ACC Category"
+                <sf:GridTextColumn HeaderText="Driver Category"
                                    MappingName="DriverCategory" />
-                <sf:GridTextColumn HeaderText="Our Category"
-                                   MappingName="OurCategory" />
+                <sf:GridTextColumn HeaderText="Driver Class"
+                                   MappingName="DriverClass" />
                 <sf:GridTextColumn HeaderText="Country"
                                    MappingName="Nationality" />
                 <sf:GridTextColumn HeaderText="Car"

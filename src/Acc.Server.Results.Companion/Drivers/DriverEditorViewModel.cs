@@ -23,7 +23,6 @@ public class DriverEditorViewModel : ObservableObject
     private bool isImportedDriver;
     private string lastName;
     private string lastNameOverride;
-    private string ourCategory;
     private AccDriverCategoryListItem selectedAccCategory;
     private AccNationalityListItem selectedNationality;
     private AccNationalityListItem selectedNationalityOverride;
@@ -92,12 +91,6 @@ public class DriverEditorViewModel : ObservableObject
         set => this.SetProperty(ref this.lastNameOverride, value);
     }
 
-    public string OurCategory
-    {
-        get => this.ourCategory;
-        set => this.SetProperty(ref this.ourCategory, value);
-    }
-
     public AccDriverCategoryListItem SelectedAccCategory
     {
         get => this.selectedAccCategory;
@@ -140,7 +133,6 @@ public class DriverEditorViewModel : ObservableObject
         this.SelectedAccCategory =
             this.AccCategories.FirstOrDefault(
                 c => c.Category == (AccDriverCategory)driver.DriverCategoryCode);
-        this.OurCategory = driver.OurCategory;
         this.SelectedNationality =
             this.Nationalities.FirstOrDefault(
                 c => c.Nationality == (AccNationality)driver.NationalityCode);
@@ -197,7 +189,6 @@ public class DriverEditorViewModel : ObservableObject
             {
                 this.existingDriver.FirstName = this.FirstName;
                 this.existingDriver.LastName = this.LastName;
-                this.existingDriver.DriverCategory = this.SelectedAccCategory.DisplayText;
                 this.existingDriver.DriverCategoryCode = (int)this.SelectedAccCategory.Category;
                 this.existingDriver.Nationality = this.SelectedNationality.DisplayText;
                 this.existingDriver.NationalityCode = (int)this.SelectedNationality.Nationality;
@@ -206,7 +197,6 @@ public class DriverEditorViewModel : ObservableObject
 
             this.existingDriver.FirstNameOverride = this.FirstNameOverride;
             this.existingDriver.LastNameOverride = this.LastNameOverride;
-            this.existingDriver.OurCategory = this.OurCategory;
             if(this.SelectedNationalityOverride != null)
             {
                 this.existingDriver.NationalityCodeOverride =
@@ -227,11 +217,9 @@ public class DriverEditorViewModel : ObservableObject
                              LastName = this.LastName,
                              ShortName = this.ShortName,
                              DriverCategoryCode = (int)this.SelectedAccCategory.Category,
-                             DriverCategory = this.SelectedAccCategory.DisplayText,
                              NationalityCode = (int)this.SelectedNationality.Nationality,
                              Nationality = this.SelectedNationality.DisplayText,
                              IsImported = false,
-                             OurCategory = this.ourCategory
                          };
             DbRepository.AddDriver(driver);
         }

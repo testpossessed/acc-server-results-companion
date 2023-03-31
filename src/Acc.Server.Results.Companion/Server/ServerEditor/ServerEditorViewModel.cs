@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Acc.Server.Results.Companion.Core;
 using Acc.Server.Results.Companion.Core.Services;
 using Acc.Server.Results.Companion.Database;
 using Acc.Server.Results.Companion.Database.Entities;
@@ -11,11 +12,7 @@ namespace Acc.Server.Results.Companion.Server.ServerEditor;
 
 internal class ServerEditorViewModel : ObservableObject
 {
-    private const string FolderServerType = "Folder";
-    private const string FtpServerType = "FTP";
-    private const string ProClassification = "PRO";
-    private const string ProAmClassification = "PRO-AM";
-    private const string AmClassification = "AM";
+    
     private readonly ServerEditor serverEditor;
     private string bronzeClassification;
     private ServerDetails existingServer;
@@ -37,13 +34,13 @@ internal class ServerEditorViewModel : ObservableObject
         this.Cancel = new RelayCommand(this.HandleCancel);
         this.Save = new RelayCommand(this.HandleSave, this.CanExecuteSave);
         this.SelectFolder = new RelayCommand(this.HandleSelectFolder);
-        this.ServerType = FtpServerType;
+        this.ServerType = Constants.FtpServerType;
         this.FtpFolderPath = "/";
         this.HostPort = 21;
-        this.BronzeClassification = AmClassification;
-        this.SilverClassification = ProAmClassification;
-        this.GoldClassification = ProClassification;
-        this.PlatinumClassification = ProClassification;
+        this.BronzeClassification = Constants.DriverClassAm;
+        this.SilverClassification = Constants.DriverClassProAm;
+        this.GoldClassification = Constants.DriverClassPro;
+        this.PlatinumClassification = Constants.DriverClassPro;
     }
 
     public ICommand Cancel { get; }
@@ -155,7 +152,7 @@ internal class ServerEditorViewModel : ObservableObject
         if(server.IsLocalFolder)
         {
             this.LocalFolderPath = server.Address;
-            this.ServerType = FolderServerType;
+            this.ServerType = Constants.FolderServerType;
         }
         else
         {
@@ -163,7 +160,7 @@ internal class ServerEditorViewModel : ObservableObject
             this.FtpFolderPath = server.FtpFolderPath;
             this.HostName = url.Host;
             this.HostPort = url.Port;
-            this.ServerType = FtpServerType;
+            this.ServerType = Constants.FtpServerType;
         }
     }
 
@@ -175,7 +172,7 @@ internal class ServerEditorViewModel : ObservableObject
 
     private string GetAddress()
     {
-        return this.ServerType == FolderServerType
+        return this.ServerType == Constants.FtpServerType
                    ? this.LocalFolderPath
                    : $"ftp://{this.HostName}:{this.HostPort}";
     }
@@ -183,7 +180,7 @@ internal class ServerEditorViewModel : ObservableObject
     private string GetBronzeClassificationOrDefault()
     {
         return string.IsNullOrWhiteSpace(this.BronzeClassification)
-                   ? AmClassification
+                   ? Constants.DriverClassAm
                    : this.BronzeClassification;
     }
 
@@ -200,21 +197,21 @@ internal class ServerEditorViewModel : ObservableObject
     private string GetGoldClassificationOrDefault()
     {
         return string.IsNullOrWhiteSpace(this.GoldClassification)
-                   ? ProClassification
+                   ? Constants.DriverClassPro
                    : this.GoldClassification;
     }
 
     private string GetPlatinumClassificationOrDefault()
     {
         return string.IsNullOrWhiteSpace(this.PlatinumClassification)
-                   ? ProClassification
+                   ? Constants.DriverClassPro
                    : this.PlatinumClassification;
     }
 
     private string GetSilverClassificationOrDefault()
     {
         return string.IsNullOrWhiteSpace(this.SilverClassification)
-                   ? ProAmClassification
+                   ? Constants.DriverClassProAm
                    : this.SilverClassification;
     }
 
@@ -232,13 +229,12 @@ internal class ServerEditorViewModel : ObservableObject
         serverDetails.Address = this.GetAddress();
         serverDetails.Username = this.Username;
         serverDetails.Password = this.Password;
-        serverDetails.IsLocalFolder = this.ServerType == FolderServerType;
+        serverDetails.IsLocalFolder = this.ServerType == Constants.FolderServerType;
         serverDetails.FtpFolderPath = this.GetFtpFolderPath();
         serverDetails.BronzeClassification = this.GetBronzeClassificationOrDefault();
         serverDetails.SilverClassification = this.GetSilverClassificationOrDefault();
         serverDetails.GoldClassification = this.GetGoldClassificationOrDefault();
-        serverDetails.PlatinumClassification =
-            this.GetPlatinumClassificationOrDefault();
+        serverDetails.PlatinumClassification = this.GetPlatinumClassificationOrDefault();
 
         if(this.existingServer != null)
         {
@@ -266,13 +262,13 @@ internal class ServerEditorViewModel : ObservableObject
 
     private bool HasValidFolderSettings()
     {
-        return this.ServerType == FolderServerType
+        return this.ServerType == Constants.FolderServerType
                && !string.IsNullOrWhiteSpace(this.LocalFolderPath);
     }
 
     private bool HasValidFtpSettings()
     {
-        return this.ServerType == FtpServerType && (!string.IsNullOrWhiteSpace(this.HostName)
+        return this.ServerType == Constants.FtpServerType && (!string.IsNullOrWhiteSpace(this.HostName)
                                                     && this.HostPort > 0);
     }
 

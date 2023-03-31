@@ -19,8 +19,6 @@ namespace Acc.Server.Results.Companion.Server.Sync;
 
 public class ServerSyncDialogViewModel : ObservableObject
 {
-    private const string EntryListKey = "_entrylist";
-
     private readonly Window window;
     private string action;
     private int newResultFilesFound;
@@ -108,8 +106,6 @@ public class ServerSyncDialogViewModel : ObservableObject
                       {
                           Car = carName,
                           Driver = this.GetDriverName(driver, dbDriver),
-                          DriverCategory = dbDriver?.DriverCategory,
-                          OurCategory = dbDriver?.OurCategory,
                           IsValid = accSessionLap.IsValidForBest,
                           LapTime = accSessionLap.GetLapTime(),
                           LapTimeMs = accSessionLap.LapTime,
@@ -165,14 +161,12 @@ public class ServerSyncDialogViewModel : ObservableObject
                                       CarName =
                                           DbRepository.GetCarNameByAccModelId(accCar.CarModel),
                                       CarClass = accCar.CarGroup,
-                                      DriverCategory = dbDriver?.DriverCategory,
                                       DriverName = this.GetDriverName(currentDriver, dbDriver),
                                       DriverShortName = currentDriver.ShortName,
                                       MissingMandatoryPitStop =
                                           accLeaderBoardLine.MissingMandatoryPitstop,
                                       NationalityCode = this.GetNationalityCode(accCar, dbDriver),
                                       Nationality = this.GetNationality(accCar, dbDriver),
-                                      OurCategory = dbDriver?.OurCategory,
                                       Position = position++,
                                       SessionId = session.Id,
                                       TeamName = accCar.TeamName
@@ -200,8 +194,6 @@ public class ServerSyncDialogViewModel : ObservableObject
                           {
                               Car = carName,
                               Driver = this.GetDriverName(driver, dbDriver),
-                              DriverCategory = dbDriver?.DriverCategory,
-                              OurCategory = dbDriver?.OurCategory,
                               ClearedOnLap = accPenalty.ClearedInLap,
                               IsPostRacePenalty = false,
                               NationalityCode = this.GetNationalityCode(car, dbDriver),
@@ -225,7 +217,7 @@ public class ServerSyncDialogViewModel : ObservableObject
                           {
                               Car = carName,
                               Driver = this.GetDriverName(driver, dbDriver),
-                              DriverCategory = dbDriver?.DriverCategory,
+                              DriverCategory = this.GetDriverCategory(dbDriver),
                               ClearedOnLap = accPenalty.ClearedInLap,
                               IsPostRacePenalty = true,
                               NationalityCode = this.GetNationalityCode(car, dbDriver),
@@ -238,6 +230,22 @@ public class ServerSyncDialogViewModel : ObservableObject
                           };
             DbRepository.AddPenalty(penalty);
         }
+    }
+
+    private string GetDriverCategory(Driver dbDriver)
+    {
+        switch((AccDriverCategory)dbDriver.DriverCategoryCode)
+        {
+            case AccDriverCategory.Platinum:
+                return "PRO";
+            case AccDriverCategory.Gold:
+                break;
+            case AccDriverCategory.Silver:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        return null;
     }
 
     private Session AddSession(int serverId, string filePath, AccSession accSession)
@@ -351,7 +359,6 @@ public class ServerSyncDialogViewModel : ObservableObject
             var dbDriver = DbRepository.GetDriver(driver.PlayerId) ?? new Driver
                                {
                                    DriverCategoryCode = (int)driver.DriverCategory,
-                                   DriverCategory = driver.DriverCategory.ToString(),
                                    LastUpdateFilePath = filePath,
                                    FirstName = driver.FirstName,
                                    LastName = driver.LastName,
@@ -490,7 +497,7 @@ public class ServerSyncDialogViewModel : ObservableObject
             this.Action = $"Importing {Path.GetFileName(filePath)}...";
             var json = this.NormalisedContent(filePath);
 
-            if(filePath.Contains(EntryListKey))
+            if(filePath.Contains(Constants.EntryListKey))
             {
                 this.ImportEntryList(json, filePath);
                 continue;

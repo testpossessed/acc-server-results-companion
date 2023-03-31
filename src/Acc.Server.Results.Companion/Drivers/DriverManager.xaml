@@ -53,10 +53,10 @@
                                    MappingName="ShortName" />
                 <sf:GridTextColumn HeaderText="Country"
                                    MappingName="Nationality" />
-                <sf:GridTextColumn HeaderText="ACC Category"
+                <sf:GridTextColumn HeaderText="Category"
                                    MappingName="DriverCategory" />
-                <sf:GridTextColumn HeaderText="Our Category"
-                                   MappingName="OurCategory" />
+                <sf:GridTextColumn HeaderText="Class"
+                                   MappingName="DriverClass" />
                 <sf:GridTextColumn HeaderText="Imported"
                                    MappingName="IsImported" />
                 <sf:GridTemplateColumn HeaderText=""  MappingName="Id" IsReadOnly="True" AllowFiltering="False" AllowEditing="False" AllowFocus="False">

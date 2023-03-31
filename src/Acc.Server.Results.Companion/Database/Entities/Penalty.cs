@@ -12,7 +12,6 @@ public class Penalty
     public bool IsPostRacePenalty { get; set; }
     public string Nationality { get; set; }
     public int NationalityCode { get; set; }
-    public string OurCategory { get; set; }
     public string PenaltyCode { get; set; }
     public int PenaltyValue { get; set; }
     public string Reason { get; set; }

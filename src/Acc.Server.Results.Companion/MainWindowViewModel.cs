@@ -45,6 +45,7 @@ internal class MainWindowViewModel : ObservableObject
         {
             this.SetProperty(ref this.selectedServer, value);
             this.DataViewerViewModel.SetServerDetails(this.SelectedServer);
+            this.DriverManagerViewModel.SetServerDetails(this.SelectedServer);
             this.NotifyCanExecuteEditServerChanged();
             // this.EventManagerViewModel.SetServerDetails(this.SelectedServer);
         }

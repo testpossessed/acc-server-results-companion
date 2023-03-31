@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using Acc.Server.Results.Companion.Database.Entities;
+using Acc.Server.Results.Companion.Core.Models;
 using Microsoft.Win32;
 using Syncfusion.UI.Xaml.Grid.Converter;
 using Syncfusion.XlsIO;
@@ -13,21 +13,20 @@ public partial class SessionPenalties : UserControl
 {
     public static readonly DependencyProperty PenaltiesProperty = DependencyProperty.Register(
         nameof(Penalties),
-        typeof(ObservableCollection<Penalty>),
+        typeof(ObservableCollection<PenaltyViewModel>),
         typeof(SessionPenalties),
-        new PropertyMetadata(default(ObservableCollection<Penalty>)));
+        new PropertyMetadata(default(ObservableCollection<PenaltyViewModel>)));
 
     public SessionPenalties()
     {
         this.InitializeComponent();
     }
 
-    public ObservableCollection<Penalty> Penalties
+    public ObservableCollection<PenaltyViewModel> Penalties
     {
-        get => (ObservableCollection<Penalty>)this.GetValue(PenaltiesProperty);
+        get => (ObservableCollection<PenaltyViewModel>)this.GetValue(PenaltiesProperty);
         set => this.SetValue(PenaltiesProperty, value);
     }
-
 
     private void HandleExportToExcel(object sender, RoutedEventArgs eventArgs)
     {

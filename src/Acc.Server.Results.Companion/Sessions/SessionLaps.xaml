@@ -30,16 +30,16 @@
                        ItemsSource="{Binding ElementName=DataPager,Path=PagedSource}"
                        IsReadOnly="True"
                        AutoGenerateColumns="False"
-                       FilterRowPosition="Top"
+                       FilterRowPosition="None"
                        AllowFiltering="True">
             <sf:SfDataGrid.Columns>
 
                 <sf:GridTextColumn HeaderText="Driver"
                                    MappingName="Driver" />
-                <sf:GridTextColumn HeaderText="ACC Category"
+                <sf:GridTextColumn HeaderText="Driver Category"
                                    MappingName="DriverCategory" />
-                <sf:GridTextColumn HeaderText="Our Category"
-                                   MappingName="OurCategory" />
+                <sf:GridTextColumn HeaderText="Driver Class"
+                                   MappingName="DriverClass" />
                 <sf:GridTextColumn HeaderText="Country"
                                    MappingName="Nationality" />
                 <sf:GridTextColumn HeaderText="Car"

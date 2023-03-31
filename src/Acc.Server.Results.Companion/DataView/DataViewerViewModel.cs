@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using Acc.Server.Results.Companion.Core.Models;
 using Acc.Server.Results.Companion.Database;
 using Acc.Server.Results.Companion.Database.Entities;
 using Acc.Server.Results.Companion.Server.Sync;
@@ -14,9 +15,9 @@ public class DataViewerViewModel : ObservableObject
     private Session selectedSession;
     private ServerDetails serverDetails;
 
-    public ObservableCollection<Lap> Laps { get; } = new();
-    public ObservableCollection<LeaderBoardLine> LeaderBoardLines { get; } = new();
-    public ObservableCollection<Penalty> Penalties { get; } = new();
+    public ObservableCollection<LapViewModel> Laps { get; } = new();
+    public ObservableCollection<LeaderBoardLineViewModel> LeaderBoardLines { get; } = new();
+    public ObservableCollection<PenaltyViewModel> Penalties { get; } = new();
     public ObservableCollection<Session> Sessions { get; } = new();
 
     public Session SelectedSession
@@ -27,6 +28,11 @@ public class DataViewerViewModel : ObservableObject
             this.SetProperty(ref this.selectedSession, value);
             this.LoadSession();
         }
+    }
+
+    public void Refresh()
+    {
+        this.LoadSession();
     }
 
     internal void SetServerDetails(ServerDetails serverDetails)
@@ -47,7 +53,7 @@ public class DataViewerViewModel : ObservableObject
 
         foreach(var lap in sessionLaps)
         {
-            this.Laps.Add(lap);
+            this.Laps.Add(new LapViewModel(lap, this.serverDetails));
         }
     }
 
@@ -63,7 +69,8 @@ public class DataViewerViewModel : ObservableObject
 
         foreach(var leaderBoardLine in lines)
         {
-            this.LeaderBoardLines.Add(leaderBoardLine);
+            this.LeaderBoardLines.Add(
+                new LeaderBoardLineViewModel(leaderBoardLine, this.serverDetails));
         }
     }
 
@@ -80,7 +87,7 @@ public class DataViewerViewModel : ObservableObject
 
         foreach(var penalty in sessionPenalties)
         {
-            this.Penalties.Add(penalty);
+            this.Penalties.Add(new PenaltyViewModel(penalty, this.serverDetails));
         }
     }
 
@@ -122,10 +129,5 @@ public class DataViewerViewModel : ObservableObject
         this.LoadLeaderBoardLines();
         this.LoadLaps();
         this.LoadPenalties();
-    }
-
-    public void Refresh()
-    {
-        this.LoadSession();
     }
 }

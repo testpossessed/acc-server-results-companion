@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using Acc.Server.Results.Companion.Core.Models;
 using Acc.Server.Results.Companion.Database.Entities;
 using Microsoft.Win32;
 using Syncfusion.UI.Xaml.Grid.Converter;
@@ -14,7 +15,7 @@ public partial class SessionLaps : UserControl
 {
     public static readonly DependencyProperty LapsProperty = DependencyProperty.Register(
         nameof(Laps),
-        typeof(ObservableCollection<Lap>),
+        typeof(ObservableCollection<LapViewModel>),
         typeof(SessionLaps),
         new PropertyMetadata(default(ObservableCollection<Lap>)));
 
@@ -23,9 +24,9 @@ public partial class SessionLaps : UserControl
         this.InitializeComponent();
     }
 
-    public ObservableCollection<Lap> Laps
+    public ObservableCollection<LapViewModel> Laps
     {
-        get => (ObservableCollection<Lap>)this.GetValue(LapsProperty);
+        get => (ObservableCollection<LapViewModel>)this.GetValue(LapsProperty);
         set => this.SetValue(LapsProperty, value);
     }
 
