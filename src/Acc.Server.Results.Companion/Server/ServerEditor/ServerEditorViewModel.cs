@@ -172,7 +172,7 @@ internal class ServerEditorViewModel : ObservableObject
 
     private string GetAddress()
     {
-        return this.ServerType == Constants.FtpServerType
+        return this.ServerType == Constants.FolderServerType
                    ? this.LocalFolderPath
                    : $"ftp://{this.HostName}:{this.HostPort}";
     }

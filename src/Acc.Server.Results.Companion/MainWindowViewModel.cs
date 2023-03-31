@@ -55,6 +55,7 @@ internal class MainWindowViewModel : ObservableObject
     {
         this.LoadServers();
         this.DriverManagerViewModel.DriversChanged += this.HandleDriversChanged;
+        this.DataViewerViewModel.SynchronisationCompleted += this.HandleSynchronisationCompleted;
     }
 
     private bool CanExecuteEditServer()
@@ -78,7 +79,6 @@ internal class MainWindowViewModel : ObservableObject
         }
 
         this.LoadServers();
-        this.DriverManagerViewModel.Refresh();
     }
 
     private void HandleDriversChanged(object sender, EventArgs eventArgs)
@@ -103,6 +103,10 @@ internal class MainWindowViewModel : ObservableObject
         }
 
         this.LoadServers();
+    }
+
+    private void HandleSynchronisationCompleted(object sender, EventArgs eventArgs)
+    {
         this.DriverManagerViewModel.Refresh();
     }
 

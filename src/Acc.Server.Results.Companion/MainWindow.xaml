@@ -52,7 +52,8 @@
             <Button ToolTip="Edit the selected Server"
                     Command="{Binding EditServer}"
                     Height="32"
-                    Width="32" Margin="5 0">
+                    Width="32" Margin="5 0"
+                    Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Image Source="../Icons/server-edit.png" />
             </Button>
         </sf:ToolBarAdv>

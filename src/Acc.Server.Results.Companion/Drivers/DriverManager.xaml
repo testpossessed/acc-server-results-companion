@@ -52,7 +52,7 @@
                 <sf:GridTextColumn HeaderText="Short Name"
                                    MappingName="ShortName" />
                 <sf:GridTextColumn HeaderText="Country"
-                                   MappingName="Nationality" />
+                                   ValueBinding="{Binding Nationality, Converter={StaticResource NationalityConverter}}" />
                 <sf:GridTextColumn HeaderText="Category"
                                    MappingName="DriverCategory" />
                 <sf:GridTextColumn HeaderText="Class"

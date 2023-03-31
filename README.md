@@ -13,6 +13,11 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.0.0-beta.5 2003-03-31
+
+### Fixed
+- Timing issue where entry list files were not always being processed before related session files
+
 ## v1.0.0-beta.4 2003-03-31
 
 ### Changed

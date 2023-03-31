@@ -12,6 +12,8 @@ namespace Acc.Server.Results.Companion.DataView;
 
 public class DataViewerViewModel : ObservableObject
 {
+    internal event EventHandler SynchronisationCompleted;
+
     private Session selectedSession;
     private ServerDetails serverDetails;
 

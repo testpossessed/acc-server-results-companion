@@ -106,6 +106,7 @@ public class ServerSyncDialogViewModel : ObservableObject
                       {
                           Car = carName,
                           Driver = this.GetDriverName(driver, dbDriver),
+                          DriverCategory = this.GetDriverCategory(dbDriver),
                           IsValid = accSessionLap.IsValidForBest,
                           LapTime = accSessionLap.GetLapTime(),
                           LapTimeMs = accSessionLap.LapTime,
@@ -163,6 +164,7 @@ public class ServerSyncDialogViewModel : ObservableObject
                                       CarClass = accCar.CarGroup,
                                       DriverName = this.GetDriverName(currentDriver, dbDriver),
                                       DriverShortName = currentDriver.ShortName,
+                                      DriverCategory = this.GetDriverCategory(dbDriver),
                                       MissingMandatoryPitStop =
                                           accLeaderBoardLine.MissingMandatoryPitstop,
                                       NationalityCode = this.GetNationalityCode(accCar, dbDriver),
@@ -194,6 +196,7 @@ public class ServerSyncDialogViewModel : ObservableObject
                           {
                               Car = carName,
                               Driver = this.GetDriverName(driver, dbDriver),
+                              DriverCategory = this.GetDriverCategory(dbDriver),
                               ClearedOnLap = accPenalty.ClearedInLap,
                               IsPostRacePenalty = false,
                               NationalityCode = this.GetNationalityCode(car, dbDriver),
@@ -232,22 +235,6 @@ public class ServerSyncDialogViewModel : ObservableObject
         }
     }
 
-    private string GetDriverCategory(Driver dbDriver)
-    {
-        switch((AccDriverCategory)dbDriver.DriverCategoryCode)
-        {
-            case AccDriverCategory.Platinum:
-                return "PRO";
-            case AccDriverCategory.Gold:
-                break;
-            case AccDriverCategory.Silver:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-        return null;
-    }
-
     private Session AddSession(int serverId, string filePath, AccSession accSession)
     {
         var session = new Session
@@ -275,6 +262,12 @@ public class ServerSyncDialogViewModel : ObservableObject
         return session;
     }
 
+    private string GetDriverCategory(Driver dbDriver)
+    {
+        var category = dbDriver?.DriverCategoryCode ?? 0;
+        return ((AccDriverCategory)category).ToString();
+    }
+
     private string GetDriverFirstName(Driver driver)
     {
         if(!string.IsNullOrWhiteSpace(driver.FirstNameOverride))
@@ -297,7 +290,9 @@ public class ServerSyncDialogViewModel : ObservableObject
 
     private string GetDriverName(AccDriver accDriver, Driver driver)
     {
-        return driver == null? accDriver.DisplayName: $"{this.GetDriverFirstName(driver)}. {this.GetDriverLastName(driver)}";
+        return driver == null
+                   ? accDriver.DisplayName
+                   : $"{this.GetDriverFirstName(driver)}. {this.GetDriverLastName(driver)}";
     }
 
     private List<FtpListItem> GetFilesToDownload(IEnumerable<string> localFiles,
@@ -479,31 +474,38 @@ public class ServerSyncDialogViewModel : ObservableObject
             Directory.CreateDirectory(localFolderPath!);
         }
 
-        var filePaths = Directory.GetFiles(localFolderPath, "*.json");
         var sessions = DbRepository.GetSessionsForServer(serverId);
-        var sessionFilePaths = sessions.Select(s => s.FilePath)
-                                       .ToList();
         var entryListFilePaths = DbRepository.GetProcessedEntryLists();
 
+        var sessionFilePaths = sessions.Select(s => s.FilePath)
+                                       .ToList();
+
+        var filePaths = Directory.GetFiles(localFolderPath, "*.json");
         var newFilePaths = filePaths
                            .Where(p => !entryListFilePaths.Contains(p)
                                        && !sessionFilePaths.Contains(p))
                            .ToList();
 
+        var newFilesToProcess = newFilePaths.Select(p => new ImportFileInfo(p))
+                                            .OrderBy(i => i.TimeStamp)
+                                            .ThenBy(i => i.SortIndex)
+                                            .ToList();
+
         this.ProgressValue = 0;
         this.ProgressMaximum = newFilePaths.Count;
-        foreach(var filePath in newFilePaths)
+        foreach(var importFileInfo in newFilesToProcess)
         {
-            this.Action = $"Importing {Path.GetFileName(filePath)}...";
-            var json = this.NormalisedContent(filePath);
+            this.Action = $"Importing {Path.GetFileName(importFileInfo.FilePath)}...";
+            LogWriter.LogDebug(this.Action);
+            var json = this.NormalisedContent(importFileInfo.FilePath);
 
-            if(filePath.Contains(Constants.EntryListKey))
+            if(importFileInfo.IsEntryList)
             {
-                this.ImportEntryList(json, filePath);
+                this.ImportEntryList(json, importFileInfo.FilePath);
                 continue;
             }
 
-            this.ImportSession(serverId, json, filePath);
+            this.ImportSession(serverId, json, importFileInfo.FilePath);
         }
     }
 }
