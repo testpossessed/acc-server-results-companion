@@ -13,6 +13,13 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.0.0-beta.4 2003-03-31
+
+### Changed
+- Added driver category to class mapping override to server editor
+- Removed Our Category override throughout
+- Updated all grids to show driver class using server mapping
+
 ## v1.0.0-beta.3 2003-03-29
 
 ### Added
