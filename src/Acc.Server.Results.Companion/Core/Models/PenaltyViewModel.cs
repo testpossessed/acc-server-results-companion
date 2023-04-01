@@ -17,7 +17,7 @@ public class PenaltyViewModel
         this.PenaltyCode = penalty.PenaltyCode;
         this.PenaltyValue = penalty.PenaltyValue;
         this.Reason = penalty.Reason;
-        this.ViolationOnLap = this.ViolationOnLap;
+        this.ViolationOnLap = penalty.ViolationOnLap;
     }
 
     private string GetDriverClass(Penalty penalty, ServerDetails serverDetails)

@@ -13,6 +13,14 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.0.0-beta.6 2003-04-01
+
+### Added
+- Refresh button on toolbar to reload all data grids
+
+### Fixed
+- Issue where driver manager was not refreshing after sync.
+
 ## v1.0.0-beta.5 2003-03-31
 
 ### Fixed

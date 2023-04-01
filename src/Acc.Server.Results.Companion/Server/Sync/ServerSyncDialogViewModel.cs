@@ -99,9 +99,8 @@ public class ServerSyncDialogViewModel : ObservableObject
             var car = accSession.GetCar(accSessionLap.CarId);
             var carName = DbRepository.GetCarNameByAccModelId(car.CarModel);
             var driver = accSession.GetDriver(accSessionLap.CarId, accSessionLap.DriverId);
-            ;
             var dbDriver = DbRepository.GetDriver(driver.PlayerId);
-            var driverName = driver.DisplayName;
+            this.UpdateDriverDetails(dbDriver, driver);
             var lap = new Lap
                       {
                           Car = carName,
@@ -124,6 +123,40 @@ public class ServerSyncDialogViewModel : ObservableObject
                           SessionId = session.Id
                       };
             DbRepository.AddLap(lap);
+        }
+    }
+
+    private void UpdateDriverDetails(Driver driver, AccDriver accDriver)
+    {
+        if(driver == null)
+        {
+            return;
+        }
+
+        var update = false;
+        if(string.IsNullOrWhiteSpace(driver.FirstName) && !string.IsNullOrWhiteSpace(accDriver.FirstName))
+        {
+            driver.FirstName = accDriver.FirstName;
+            update = true;
+        }
+
+        if(string.IsNullOrWhiteSpace(driver.LastName)
+           && !string.IsNullOrWhiteSpace(accDriver.FirstName))
+        {
+            driver.LastName = accDriver.LastName;
+            update = true;
+        }
+
+        if(string.IsNullOrWhiteSpace(driver.ShortName)
+           && !string.IsNullOrWhiteSpace(accDriver.ShortName))
+        {
+            driver.ShortName = accDriver.ShortName;
+            update = true;
+        }
+
+        if(update)
+        {
+            DbRepository.UpdateDriver(driver);
         }
     }
 

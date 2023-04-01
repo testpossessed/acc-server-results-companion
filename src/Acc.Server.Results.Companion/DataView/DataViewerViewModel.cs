@@ -112,6 +112,7 @@ public class DataViewerViewModel : ObservableObject
 
         this.Sessions.Clear();
         var sessions = DbRepository.GetSessionsForServer(this.serverDetails.Id);
+        this.SynchronisationCompleted?.Invoke(this, EventArgs.Empty);
 
         foreach(var session in sessions)
         {

@@ -29,7 +29,7 @@ internal class MainWindowViewModel : ObservableObject
     private void HandleRefresh()
     {
         this.DriverManagerViewModel.Refresh();
-        this.DriverManagerViewModel.Refresh();
+        this.DataViewerViewModel.Refresh();
     }
 
     public ICommand Refresh { get; }
