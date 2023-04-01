@@ -56,6 +56,14 @@
                     Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Image Source="../Icons/server-edit.png" />
             </Button>
+            <Button ToolTip="Update all data tables"
+                    Command="{Binding Refresh}"
+                    Height="32"
+                    Width="32"
+                    Margin="5 0"
+                    Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Image Source="../Icons/refresh.png" />
+            </Button>
         </sf:ToolBarAdv>
 
         <sf:TabControlExt Grid.Column="2"

@@ -15,6 +15,7 @@
 		<None Remove="Icons\export-to-excel.png" />
 		<None Remove="Icons\Icon.png" />
 		<None Remove="Icons\Logo.png" />
+		<None Remove="Icons\refresh.png" />
 		<None Remove="Icons\save.png" />
 		<None Remove="Icons\server-add2.png" />
 		<None Remove="Icons\server-edit.png" />
@@ -58,6 +59,7 @@
 		<Resource Include="Icons\cancel.png" />
 		<Resource Include="Icons\export-to-excel.png" />
 		<Resource Include="Icons\Icon.png" />
+		<Resource Include="Icons\refresh.png" />
 		<Resource Include="Icons\save.png" />
 		<Resource Include="Icons\server-add2.png" />
 		<Resource Include="Icons\server-edit.png" />

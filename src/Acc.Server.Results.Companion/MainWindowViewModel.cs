@@ -23,8 +23,16 @@ internal class MainWindowViewModel : ObservableObject
     {
         this.AddServer = new RelayCommand(this.HandleAddServer);
         this.EditServer = new RelayCommand(this.HandleEditServer, this.CanExecuteEditServer);
+        this.Refresh = new RelayCommand(this.HandleRefresh);
     }
 
+    private void HandleRefresh()
+    {
+        this.DriverManagerViewModel.Refresh();
+        this.DriverManagerViewModel.Refresh();
+    }
+
+    public ICommand Refresh { get; }
     public ICommand AddServer { get; }
     public DataViewerViewModel DataViewerViewModel { get; } = new();
     // public EventManagerViewModel EventManagerViewModel { get; } = new();
