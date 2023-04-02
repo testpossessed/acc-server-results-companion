@@ -18,7 +18,8 @@ public partial class DriverManager : UserControl
     {
         var options = new ExcelExportingOptions
                       {
-                          ExcelVersion = ExcelVersion.Excel2016
+                          ExcelVersion = ExcelVersion.Excel2016,
+                          ExportAllPages = true
                       };
         var excelEngine = this.DataGrid.ExportToExcel(this.DataGrid.View, options);
         var workBook = excelEngine.Excel.Workbooks[0];

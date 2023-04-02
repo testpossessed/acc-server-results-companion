@@ -13,6 +13,11 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.0.0-beta.7 2003-04-02
+
+### Fixed
+- Enabled export of all pages when exporting to Excel
+
 ## v1.0.0-beta.6 2003-04-01
 
 ### Added
