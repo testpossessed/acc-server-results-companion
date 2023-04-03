@@ -64,6 +64,15 @@
                     Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Image Source="../Icons/refresh.png" />
             </Button>
+            <sf:ToolBarItemSeparator />
+            <Button ToolTip="Convert SimGrid Standings"
+                    Command="{Binding ConvertSimGridStandings}"
+                    Height="32"
+                    Width="32"
+                    Margin="5 0">
+                <Image Source="../Icons/import-from-text.png" />
+            </Button>
+
         </sf:ToolBarAdv>
 
         <sf:TabControlExt Grid.Column="2"

@@ -13,6 +13,11 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.0.0-beta.8 2003-04-03
+
+### Added
+- Tool to load SimGrid standings export from JSON to display in grids an export to Excel
+
 ## v1.0.0-beta.7 2003-04-02
 
 ### Fixed

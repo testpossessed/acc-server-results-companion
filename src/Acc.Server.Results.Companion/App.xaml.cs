@@ -30,12 +30,12 @@ namespace Acc.Server.Results.Companion
         {
             // this.Reset();
 
+            SfSkinManager.ApplyStylesOnApplication = true;
             this.InitialiseApp();
             Configuration.Init();
             LogWriter.Init();
             DbRepository.Init();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTQ4MjExMUAzMjMxMmUzMTJlMzMzNVJZSVc0MVJZZUo1aGhpOU04Tnc1SHRVYm5XZkJIdFNYQ1JMa2JCb2k3ckk9");
-            SfSkinManager.ApplyStylesOnApplication = true;
 
 
 #if RELEASE

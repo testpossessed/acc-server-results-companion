@@ -9,6 +9,7 @@ using Acc.Server.Results.Companion.Database.Entities;
 using Acc.Server.Results.Companion.DataView;
 using Acc.Server.Results.Companion.Drivers;
 using Acc.Server.Results.Companion.Server.ServerEditor;
+using Acc.Server.Results.Companion.SimGrid;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -23,21 +24,18 @@ internal class MainWindowViewModel : ObservableObject
     {
         this.AddServer = new RelayCommand(this.HandleAddServer);
         this.EditServer = new RelayCommand(this.HandleEditServer, this.CanExecuteEditServer);
+        this.ConvertSimGridStandings = new RelayCommand(this.HandleConvertSimGridStandings);
         this.Refresh = new RelayCommand(this.HandleRefresh);
     }
 
-    private void HandleRefresh()
-    {
-        this.DriverManagerViewModel.Refresh();
-        this.DataViewerViewModel.Refresh();
-    }
-
-    public ICommand Refresh { get; }
     public ICommand AddServer { get; }
+    public ICommand ConvertSimGridStandings { get; }
     public DataViewerViewModel DataViewerViewModel { get; } = new();
     // public EventManagerViewModel EventManagerViewModel { get; } = new();
     public DriverManagerViewModel DriverManagerViewModel { get; } = new();
     public ICommand EditServer { get; }
+
+    public ICommand Refresh { get; }
     public ObservableCollection<ServerDetails> Servers { get; } = new();
 
     public bool IsInitialised
@@ -89,6 +87,17 @@ internal class MainWindowViewModel : ObservableObject
         this.LoadServers();
     }
 
+    private void HandleConvertSimGridStandings()
+    {
+        var window = new SimGridStandingsConverter
+                     {
+                         Owner = Application.Current.MainWindow
+                     };
+        var viewModel = new SimGridStandingsConverterViewModel(window);
+        window.DataContext = viewModel;
+        window.Show();
+    }
+
     private void HandleDriversChanged(object sender, EventArgs eventArgs)
     {
         this.DataViewerViewModel.Refresh();
@@ -111,6 +120,12 @@ internal class MainWindowViewModel : ObservableObject
         }
 
         this.LoadServers();
+    }
+
+    private void HandleRefresh()
+    {
+        this.DriverManagerViewModel.Refresh();
+        this.DataViewerViewModel.Refresh();
     }
 
     private void HandleSynchronisationCompleted(object sender, EventArgs eventArgs)
