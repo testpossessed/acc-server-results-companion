@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Acc.Server.Results.Companion.SimGrid.Models;
@@ -14,12 +13,10 @@ namespace Acc.Server.Results.Companion.SimGrid;
 
 public class SimGridStandingsConverterViewModel : ObservableObject
 {
-    private readonly SimGridStandingsConverter window;
     private string selectedFilePath;
 
-    public SimGridStandingsConverterViewModel(SimGridStandingsConverter window)
+    public SimGridStandingsConverterViewModel()
     {
-        this.window = window;
         this.SelectFilePath = new RelayCommand(this.HandleSelectFilePath);
     }
 

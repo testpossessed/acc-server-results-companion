@@ -13,6 +13,12 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.0.0 2003-04-05
+
+### Added
+- Report tool to provide overall fastest laps with option to filter by server
+- Released as v1 as primary function of importing and providing raw data is done and tested
+
 ## v1.0.0-beta.8 2003-04-03
 
 ### Added

@@ -8,6 +8,7 @@ using Acc.Server.Results.Companion.Database;
 using Acc.Server.Results.Companion.Database.Entities;
 using Acc.Server.Results.Companion.DataView;
 using Acc.Server.Results.Companion.Drivers;
+using Acc.Server.Results.Companion.Reporting.FastestLaps;
 using Acc.Server.Results.Companion.Server.ServerEditor;
 using Acc.Server.Results.Companion.SimGrid;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -23,9 +24,10 @@ internal class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         this.AddServer = new RelayCommand(this.HandleAddServer);
-        this.EditServer = new RelayCommand(this.HandleEditServer, this.CanExecuteEditServer);
         this.ConvertSimGridStandings = new RelayCommand(this.HandleConvertSimGridStandings);
+        this.EditServer = new RelayCommand(this.HandleEditServer, this.CanExecuteEditServer);
         this.Refresh = new RelayCommand(this.HandleRefresh);
+        this.ShowOverFastestLapsReport = new RelayCommand(this.HandleShowOverallFastestLapsReport);
     }
 
     public ICommand AddServer { get; }
@@ -34,9 +36,10 @@ internal class MainWindowViewModel : ObservableObject
     // public EventManagerViewModel EventManagerViewModel { get; } = new();
     public DriverManagerViewModel DriverManagerViewModel { get; } = new();
     public ICommand EditServer { get; }
-
     public ICommand Refresh { get; }
     public ObservableCollection<ServerDetails> Servers { get; } = new();
+
+    public ICommand ShowOverFastestLapsReport { get; }
 
     public bool IsInitialised
     {
@@ -91,10 +94,9 @@ internal class MainWindowViewModel : ObservableObject
     {
         var window = new SimGridStandingsConverter
                      {
-                         Owner = Application.Current.MainWindow
+                         Owner = Application.Current.MainWindow,
+                         DataContext = new SimGridStandingsConverterViewModel()
                      };
-        var viewModel = new SimGridStandingsConverterViewModel(window);
-        window.DataContext = viewModel;
         window.Show();
     }
 
@@ -126,6 +128,16 @@ internal class MainWindowViewModel : ObservableObject
     {
         this.DriverManagerViewModel.Refresh();
         this.DataViewerViewModel.Refresh();
+    }
+
+    private void HandleShowOverallFastestLapsReport()
+    {
+        var window = new OverallFastestLaps()
+                     {
+                         Owner = Application.Current.MainWindow,
+                         DataContext = new OverallFastestLapsViewModel()
+                     };
+        window.Show();
     }
 
     private void HandleSynchronisationCompleted(object sender, EventArgs eventArgs)

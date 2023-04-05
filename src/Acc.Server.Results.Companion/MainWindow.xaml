@@ -64,7 +64,15 @@
                     Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Image Source="../Icons/refresh.png" />
             </Button>
-            <sf:ToolBarItemSeparator />
+            <sf:ToolBarItemSeparator Width="2" />
+            <Button ToolTip="Fastest Laps - Overall"
+                    Command="{Binding ShowOverFastestLapsReport}"
+                    Height="32"
+                    Width="32"
+                    Margin="5 0">
+                <Image Source="../Icons/table.png" />
+            </Button>
+            <sf:ToolBarItemSeparator Width="2" />
             <Button ToolTip="Convert SimGrid Standings"
                     Command="{Binding ConvertSimGridStandings}"
                     Height="32"

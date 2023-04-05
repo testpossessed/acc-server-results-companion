@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Acc.Server.Results.Companion.Core.Models;
 using Acc.Server.Results.Companion.Core.Services;
 using Acc.Server.Results.Companion.Database.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -185,5 +186,35 @@ internal static class DbRepository
     private static AppDbContext GetDbContext()
     {
         return new AppDbContext();
+    }
+
+    public static List<FastestLapViewModel> GetOverallFastestLaps(int serverId)
+    {
+        var dbContext = GetDbContext();
+
+        var lapsQuery = from l in dbContext.Laps
+                        join s in dbContext.Sessions on l.SessionId equals s.Id
+                        where serverId == 0 || s.ServerId == serverId
+                              select new FastestLapViewModel
+                                     {
+                                         Track = s.TrackName,
+                                         Driver = l.Driver,
+                                         Car = l.Car,
+                                         LapTime = l.LapTime,
+                                         Sector1Time = l.Sector1Time,
+                                         Sector2Time = l.Sector2Time,
+                                         Sector3Time = l.Sector3Time,
+                                         LapTimeMs = l.LapTimeMs
+                                     };
+        var fastestLaps = from l in lapsQuery
+                          group l by l.Track
+                          into g
+                          select g.OrderBy(l => l.LapTimeMs)
+                                  .First();
+
+
+
+
+        return fastestLaps.ToList();
     }
 }
