@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="Acc.Server.Results.Companion.Sessions.SessionPenalties"
+﻿<UserControl x:Class="Acc.Server.Results.Companion.DataView.SessionPenalties"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Acc.Server.Results.Companion.Sessions"
              xmlns:sf="http://schemas.syncfusion.com/wpf"
+             xmlns:dataView="clr-namespace:Acc.Server.Results.Companion.DataView"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -23,7 +23,7 @@
             </StackPanel>
         </Button>
 
-        <sf:SfDataGrid Grid.Row="1" Name="DataGrid" ItemsSource="{Binding Penalties, RelativeSource={RelativeSource AncestorType={x:Type local:SessionPenalties}}}"
+        <sf:SfDataGrid Grid.Row="1" Name="DataGrid" ItemsSource="{Binding Penalties, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionPenalties}}}"
                   IsReadOnly="True"
                   AutoGenerateColumns="False" AllowFiltering="True">
             <sf:SfDataGrid.Columns>

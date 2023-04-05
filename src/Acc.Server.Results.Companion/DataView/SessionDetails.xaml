@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="Acc.Server.Results.Companion.Sessions.SessionDetails"
+﻿<UserControl x:Class="Acc.Server.Results.Companion.DataView.SessionDetails"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Acc.Server.Results.Companion.Sessions"
              xmlns:converters="clr-namespace:Acc.Server.Results.Companion.Core.Converters"
+             xmlns:dataView="clr-namespace:Acc.Server.Results.Companion.DataView"
              mc:Ignorable="d"
              Margin="20">
     <UserControl.Resources>
@@ -39,7 +39,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="0"
-               Content="{Binding Session.ServerName, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.ServerName, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="1"
@@ -47,7 +47,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="1"
-               Content="{Binding Session.TrackName, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.TrackName, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="2"
@@ -55,7 +55,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="2"
-               Content="{Binding Session.SessionType, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}, Converter={StaticResource SessionTypeConverter}}" />
+               Content="{Binding Session.SessionType, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}, Converter={StaticResource SessionTypeConverter}}" />
 
         <Label Grid.Column="0"
                Grid.Row="3"
@@ -63,7 +63,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="3"
-               Content="{Binding Session.BestLap, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.BestLap, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="4"
@@ -71,7 +71,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="4"
-               Content="{Binding Session.BestSector1, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.BestSector1, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="5"
@@ -79,7 +79,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="5"
-               Content="{Binding Session.BestSector2, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.BestSector2, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="6"
@@ -87,7 +87,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="6"
-               Content="{Binding Session.BestSector3, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.BestSector3, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="7"
@@ -95,7 +95,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="7"
-               Content="{Binding Session.IsWetSession, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.IsWetSession, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
 
         <Label Grid.Column="0"
@@ -104,7 +104,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="8"
-               Content="{Binding Session.MetaData, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.MetaData, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="9"
@@ -112,7 +112,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="9"
-               Content="{Binding Session.RaceWeekendIndex, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.RaceWeekendIndex, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="10"
@@ -120,7 +120,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="10"
-               Content="{Binding Session.RaceWeekendIndex, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.RaceWeekendIndex, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="11"
@@ -128,7 +128,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="11"
-               Content="{Binding Session.SessionIndex, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.SessionIndex, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
 
         <Label Grid.Column="0"
                Grid.Row="12"
@@ -136,7 +136,7 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="12"
-               Content="{Binding Session.TimeStamp, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}, StringFormat=D}" />
+               Content="{Binding Session.TimeStamp, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}, StringFormat=D}" />
 
         <Label Grid.Column="0"
                Grid.Row="13"
@@ -144,6 +144,6 @@
                FontWeight="Bold" />
         <Label Grid.Column="1"
                Grid.Row="13"
-               Content="{Binding Session.FilePath, RelativeSource={RelativeSource AncestorType={x:Type local:SessionDetails}}}" />
+               Content="{Binding Session.FilePath, RelativeSource={RelativeSource AncestorType={x:Type dataView:SessionDetails}}}" />
     </Grid>
 </UserControl>

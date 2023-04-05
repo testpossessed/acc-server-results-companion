@@ -7,25 +7,25 @@ using Microsoft.Win32;
 using Syncfusion.UI.Xaml.Grid.Converter;
 using Syncfusion.XlsIO;
 
-namespace Acc.Server.Results.Companion.Sessions;
+namespace Acc.Server.Results.Companion.DataView;
 
-public partial class SessionPenalties : UserControl
+public partial class LeaderBoard : UserControl
 {
-    public static readonly DependencyProperty PenaltiesProperty = DependencyProperty.Register(
-        nameof(Penalties),
-        typeof(ObservableCollection<PenaltyViewModel>),
-        typeof(SessionPenalties),
-        new PropertyMetadata(default(ObservableCollection<PenaltyViewModel>)));
+    public static readonly DependencyProperty LeaderBoardLinesProperty =
+        DependencyProperty.Register(nameof(LeaderBoardLines),
+            typeof(ObservableCollection<LeaderBoardLineViewModel>),
+            typeof(LeaderBoard),
+            new PropertyMetadata(default(ObservableCollection<LeaderBoardLineViewModel>)));
 
-    public SessionPenalties()
+    public LeaderBoard()
     {
         this.InitializeComponent();
     }
 
-    public ObservableCollection<PenaltyViewModel> Penalties
+    public ObservableCollection<LeaderBoardLineViewModel> LeaderBoardLines
     {
-        get => (ObservableCollection<PenaltyViewModel>)this.GetValue(PenaltiesProperty);
-        set => this.SetValue(PenaltiesProperty, value);
+        get => (ObservableCollection<LeaderBoardLineViewModel>)this.GetValue(LeaderBoardLinesProperty);
+        set => this.SetValue(LeaderBoardLinesProperty, value);
     }
 
     private void HandleExportToExcel(object sender, RoutedEventArgs eventArgs)

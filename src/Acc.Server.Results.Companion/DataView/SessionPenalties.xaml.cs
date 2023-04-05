@@ -1,33 +1,31 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using Acc.Server.Results.Companion.Core.Models;
-using Acc.Server.Results.Companion.Database.Entities;
 using Microsoft.Win32;
 using Syncfusion.UI.Xaml.Grid.Converter;
 using Syncfusion.XlsIO;
 
-namespace Acc.Server.Results.Companion.Sessions;
+namespace Acc.Server.Results.Companion.DataView;
 
-public partial class SessionLaps : UserControl
+public partial class SessionPenalties : UserControl
 {
-    public static readonly DependencyProperty LapsProperty = DependencyProperty.Register(
-        nameof(Laps),
-        typeof(ObservableCollection<LapViewModel>),
-        typeof(SessionLaps),
-        new PropertyMetadata(default(ObservableCollection<Lap>)));
+    public static readonly DependencyProperty PenaltiesProperty = DependencyProperty.Register(
+        nameof(Penalties),
+        typeof(ObservableCollection<PenaltyViewModel>),
+        typeof(SessionPenalties),
+        new PropertyMetadata(default(ObservableCollection<PenaltyViewModel>)));
 
-    public SessionLaps()
+    public SessionPenalties()
     {
         this.InitializeComponent();
     }
 
-    public ObservableCollection<LapViewModel> Laps
+    public ObservableCollection<PenaltyViewModel> Penalties
     {
-        get => (ObservableCollection<LapViewModel>)this.GetValue(LapsProperty);
-        set => this.SetValue(LapsProperty, value);
+        get => (ObservableCollection<PenaltyViewModel>)this.GetValue(PenaltiesProperty);
+        set => this.SetValue(PenaltiesProperty, value);
     }
 
     private void HandleExportToExcel(object sender, RoutedEventArgs eventArgs)

@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Acc.Server.Results.Companion.Database.Entities;
 
-namespace Acc.Server.Results.Companion.Sessions;
+namespace Acc.Server.Results.Companion.DataView;
 
 public partial class SessionDetails : UserControl
 {
