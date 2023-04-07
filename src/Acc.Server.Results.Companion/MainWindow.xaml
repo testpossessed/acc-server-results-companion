@@ -9,6 +9,7 @@
                      xmlns:dv="clr-namespace:Acc.Server.Results.Companion.DataView"
                      xmlns:em="clr-namespace:Acc.Server.Results.Companion.Events"
                      xmlns:dm="clr-namespace:Acc.Server.Results.Companion.Drivers"
+                     xmlns:ss="clr-namespace:Acc.Server.Results.Companion.Server.Stats"
                      mc:Ignorable="d"
                      Title="ACC Server Results Companion"
                      WindowStartupLocation="CenterScreen"
@@ -101,6 +102,10 @@
 
             <sf:TabItemExt Header="Driver Manager">
                 <dm:DriverManager DataContext="{Binding DriverManagerViewModel}" />
+            </sf:TabItemExt>
+
+            <sf:TabItemExt Header="Server Stats">
+                <ss:ServerStats DataContext="{Binding ServerStatsViewModel}" />
             </sf:TabItemExt>
 
         </sf:TabControlExt>

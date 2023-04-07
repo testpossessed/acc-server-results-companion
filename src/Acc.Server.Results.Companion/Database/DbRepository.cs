@@ -91,6 +91,13 @@ internal static class DbRepository
         return dbContext.Drivers.FirstOrDefault(d => d.Id == playerId);
     }
 
+    internal static int GetDriverCount()
+    {
+        var dbContext = GetDbContext();
+
+        return dbContext.Drivers.Count();
+    }
+
     internal static List<Driver> GetDrivers()
     {
         var dbContext = GetDbContext();
@@ -114,11 +121,48 @@ internal static class DbRepository
                         .ToList();
     }
 
+    internal static List<FastestLapViewModel> GetOverallFastestLaps(int serverId)
+    {
+        var dbContext = GetDbContext();
+
+        var lapsQuery = from l in dbContext.Laps
+                        join s in dbContext.Sessions on l.SessionId equals s.Id
+                        where serverId == 0 || s.ServerId == serverId
+                        select new FastestLapViewModel
+                               {
+                                   Track = s.TrackName,
+                                   Driver = l.Driver,
+                                   Car = l.Car,
+                                   LapTime = l.LapTime,
+                                   Sector1Time = l.Sector1Time,
+                                   Sector2Time = l.Sector2Time,
+                                   Sector3Time = l.Sector3Time,
+                                   LapTimeMs = l.LapTimeMs
+                               };
+        var fastestLaps = from l in lapsQuery
+                          group l by l.Track
+                          into g
+                          select g.OrderBy(l => l.LapTimeMs)
+                                  .First();
+
+        return fastestLaps.ToList();
+    }
+
     internal static List<Penalty> GetPenalties(int sessionId)
     {
         var dbContext = GetDbContext();
         return dbContext.Penalties.Where(p => p.SessionId == sessionId)
                         .ToList();
+    }
+
+    internal static int GetPracticeLapCount(int serverId)
+    {
+        return GetLapCount(serverId, "FP");
+    }
+
+    internal static int GetPracticeSessionCount(int serverId)
+    {
+        return GetSessionCount(serverId, "FP");
     }
 
     internal static List<string> GetProcessedEntryLists()
@@ -127,6 +171,26 @@ internal static class DbRepository
 
         return dbContext.Drivers.Select(d => d.LastUpdateFilePath)
                         .ToList();
+    }
+
+    internal static int GetQualiLapCount(int serverId)
+    {
+        return GetLapCount(serverId, "Q");
+    }
+
+    internal static int GetQualiSessionCount(int serverId)
+    {
+        return GetSessionCount(serverId, "Q");
+    }
+
+    internal static int GetRaceLapCount(int serverId)
+    {
+        return GetLapCount(serverId, "R");
+    }
+
+    internal static int GetRaceSessionCount(int serverId)
+    {
+        return GetSessionCount(serverId, "R");
     }
 
     internal static List<ServerDetails> GetServers()
@@ -143,6 +207,28 @@ internal static class DbRepository
         return dbContext.Sessions.Where(s => s.ServerId == serverId)
                         .OrderByDescending(s => s.TimeStamp)
                         .ToList();
+    }
+
+    internal static int GetTotalInvalidLapCount(int serverId)
+    {
+        var dbContext = GetDbContext();
+        var query = from l in dbContext.Laps
+                    join s in dbContext.Sessions on l.SessionId equals s.Id
+                    where s.ServerId == serverId && !l.IsValid
+                    select l;
+
+        return query.Count();
+    }
+
+    internal static int GetTotalLapCount(int serverId)
+    {
+        var dbContext = GetDbContext();
+        var query = from l in dbContext.Laps
+                    join s in dbContext.Sessions on l.SessionId equals s.Id
+                    where s.ServerId == serverId
+                    select l;
+
+        return query.Count();
     }
 
     internal static string GetTrackNameByAccTrackId(string trackName)
@@ -188,33 +274,21 @@ internal static class DbRepository
         return new AppDbContext();
     }
 
-    public static List<FastestLapViewModel> GetOverallFastestLaps(int serverId)
+    private static int GetLapCount(int serverId, string sessionType)
     {
         var dbContext = GetDbContext();
+        var query = from l in dbContext.Laps
+                    join s in dbContext.Sessions on l.SessionId equals s.Id
+                    where s.SessionType == sessionType && s.ServerId == serverId
+                    select l;
 
-        var lapsQuery = from l in dbContext.Laps
-                        join s in dbContext.Sessions on l.SessionId equals s.Id
-                        where serverId == 0 || s.ServerId == serverId
-                              select new FastestLapViewModel
-                                     {
-                                         Track = s.TrackName,
-                                         Driver = l.Driver,
-                                         Car = l.Car,
-                                         LapTime = l.LapTime,
-                                         Sector1Time = l.Sector1Time,
-                                         Sector2Time = l.Sector2Time,
-                                         Sector3Time = l.Sector3Time,
-                                         LapTimeMs = l.LapTimeMs
-                                     };
-        var fastestLaps = from l in lapsQuery
-                          group l by l.Track
-                          into g
-                          select g.OrderBy(l => l.LapTimeMs)
-                                  .First();
+        return query.Count();
+    }
 
-
-
-
-        return fastestLaps.ToList();
+    private static int GetSessionCount(int serverId, string sessionType)
+    {
+        var dbContext = GetDbContext();
+        return dbContext.Sessions.Count(s => s.ServerId == serverId
+                                             && s.SessionType == sessionType);
     }
 }

@@ -45,7 +45,7 @@
                           CloseButtonType="Hide"
                           ShowTabItemContextMenu="False"
                           CloseTabOnMiddleClick="False">
-            <sf:TabItemExt Header="Details">
+            <sf:TabItemExt Header="Session Details">
                 <local:SessionDetails Session="{Binding SelectedSession}" />
             </sf:TabItemExt>
             <sf:TabItemExt Header="Leader Board">

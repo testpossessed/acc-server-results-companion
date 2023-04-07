@@ -13,6 +13,14 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.1.0 2003-04-07
+
+### Added
+- Server stats tab
+
+### Fixed
+- Issue where drivers were not being updated on import of entry list
+
 ## v1.0.0 2003-04-05
 
 ### Added

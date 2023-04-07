@@ -10,6 +10,7 @@ using Acc.Server.Results.Companion.DataView;
 using Acc.Server.Results.Companion.Drivers;
 using Acc.Server.Results.Companion.Reporting.FastestLaps;
 using Acc.Server.Results.Companion.Server.ServerEditor;
+using Acc.Server.Results.Companion.Server.Stats;
 using Acc.Server.Results.Companion.SimGrid;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -38,7 +39,7 @@ internal class MainWindowViewModel : ObservableObject
     public ICommand EditServer { get; }
     public ICommand Refresh { get; }
     public ObservableCollection<ServerDetails> Servers { get; } = new();
-
+    public ServerStatsViewModel ServerStatsViewModel { get; } = new();
     public ICommand ShowOverFastestLapsReport { get; }
 
     public bool IsInitialised
@@ -55,6 +56,7 @@ internal class MainWindowViewModel : ObservableObject
             this.SetProperty(ref this.selectedServer, value);
             this.DataViewerViewModel.SetServerDetails(this.SelectedServer);
             this.DriverManagerViewModel.SetServerDetails(this.SelectedServer);
+            this.ServerStatsViewModel.SetServerDetails(this.SelectedServer);
             this.NotifyCanExecuteEditServerChanged();
             // this.EventManagerViewModel.SetServerDetails(this.SelectedServer);
         }
@@ -143,6 +145,7 @@ internal class MainWindowViewModel : ObservableObject
     private void HandleSynchronisationCompleted(object sender, EventArgs eventArgs)
     {
         this.DriverManagerViewModel.Refresh();
+        this.ServerStatsViewModel.Refresh();
     }
 
     private void LoadServers()
