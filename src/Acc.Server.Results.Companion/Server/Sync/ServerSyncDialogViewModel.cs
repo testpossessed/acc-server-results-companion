@@ -403,9 +403,59 @@ public class ServerSyncDialogViewModel : ObservableObject
             }
             else
             {
-                DbRepository.UpdateDriver(dbDriver);
+                if(this.SyncDriverDetails(dbDriver, driver))
+                {
+                    dbDriver.LastUpdateFilePath = filePath;
+                    DbRepository.UpdateDriver(dbDriver);
+                }
             }
         }
+    }
+
+    private bool SyncDriverDetails(Driver driver, AccEntryListDriver entryListDriver)
+    {
+        var updated = false;
+
+        var driverCategoryCode = (int)entryListDriver.DriverCategory;
+        if(driver.DriverCategoryCode != driverCategoryCode)
+        {
+            driver.DriverCategoryCode = (int)entryListDriver.DriverCategory;
+            updated = true;
+        }
+
+        if(driver.FirstName != entryListDriver.FirstName)
+        {
+            driver.FirstName = entryListDriver.FirstName;
+            updated = true;
+        }
+
+        if(driver.LastName != entryListDriver.LastName)
+        {
+            driver.LastName = entryListDriver.LastName;
+            updated = true;
+        }
+
+        var nationalityCode = (int)entryListDriver.Nationality;
+        if(driver.NationalityCode != nationalityCode)
+        {
+            driver.NationalityCode = nationalityCode;
+            updated = true;
+        }
+
+        var nationality = nationalityCode.ToString();
+        if(driver.Nationality != nationality)
+        {
+            driver.Nationality = nationality;
+            updated = true;
+        }
+
+        if(driver.ShortName != entryListDriver.ShortName)
+        {
+            driver.ShortName = entryListDriver.ShortName;
+            updated = true;
+        }
+
+        return updated;
     }
 
     private void ImportSession(int serverId, string json, string filePath)
