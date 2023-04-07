@@ -130,6 +130,7 @@ internal class MainWindowViewModel : ObservableObject
     {
         this.DriverManagerViewModel.Refresh();
         this.DataViewerViewModel.Refresh();
+        this.ServerStatsViewModel.Refresh();
     }
 
     private void HandleShowOverallFastestLapsReport()

@@ -74,7 +74,7 @@ public class ServerSyncDialogViewModel : ObservableObject
 
         if(serverDetails.IsLocalFolder)
         {
-            await this.SyncFolder(serverDetails);
+            this.SyncFolder(serverDetails);
         }
         else
         {
@@ -442,7 +442,7 @@ public class ServerSyncDialogViewModel : ObservableObject
             updated = true;
         }
 
-        var nationality = nationalityCode.ToString();
+        var nationality = entryListDriver.Nationality.ToFriendlyName();
         if(driver.Nationality != nationality)
         {
             driver.Nationality = nationality;
@@ -484,9 +484,9 @@ public class ServerSyncDialogViewModel : ObservableObject
                       .Replace("\n", "");
     }
 
-    private Task SyncFolder(ServerDetails server)
+    private void SyncFolder(ServerDetails serverDetails)
     {
-        return Task.CompletedTask;
+        this.SyncSessionsFromFolder(serverDetails.Id, this.serverDetails.Address);
     }
 
     private async Task SyncFtpServer(ServerDetails serverDetails)

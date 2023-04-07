@@ -13,6 +13,14 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.1.1 2003-04-07
+
+### Fixed
+- Implementation of folder based server import
+
+### Changed
+- Reduced size of splash screen
+
 ## v1.1.0 2003-04-07
 
 ### Added

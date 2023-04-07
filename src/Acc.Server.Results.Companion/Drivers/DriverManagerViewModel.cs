@@ -32,6 +32,10 @@ public class DriverManagerViewModel : ObservableObject
     internal void SetServerDetails(ServerDetails serverDetails)
     {
         this.serverDetails = serverDetails;
+        if(serverDetails == null)
+        {
+            return;
+        }
         this.LoadDrivers();
     }
 

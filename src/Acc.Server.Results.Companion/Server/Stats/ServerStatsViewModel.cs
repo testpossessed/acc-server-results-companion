@@ -8,22 +8,14 @@ namespace Acc.Server.Results.Companion.Server.Stats;
 public class ServerStatsViewModel : ObservableObject
 {
     private int driverCount;
-
     private int practiceLapCount;
-
     private int practiceSessionCount;
-
     private int qualiLapCount;
-
     private int qualiSessionCount;
-
     private int raceLapCount;
-
     private int raceSessionCount;
     private ServerDetails serverDetails;
-
     private int totalLapCount;
-
     private int totalInvalidLapCount;
 
     public int DriverCount
@@ -88,6 +80,7 @@ public class ServerStatsViewModel : ObservableObject
     public void SetServerDetails(ServerDetails serverDetails)
     {
         this.serverDetails = serverDetails;
+        this.LoadServerStats();
     }
 
     private void LoadServerStats()
