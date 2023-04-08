@@ -12,10 +12,9 @@ namespace Acc.Server.Results.Companion.DataView;
 
 public class DataViewerViewModel : ObservableObject
 {
-    internal event EventHandler SynchronisationCompleted;
-
     private Session selectedSession;
     private ServerDetails serverDetails;
+    internal event EventHandler SynchronisationCompleted;
 
     public ObservableCollection<LapViewModel> Laps { get; } = new();
     public ObservableCollection<LeaderBoardLineViewModel> LeaderBoardLines { get; } = new();
@@ -32,7 +31,7 @@ public class DataViewerViewModel : ObservableObject
         }
     }
 
-    public void Refresh()
+    internal void Refresh()
     {
         this.LoadSession();
     }
@@ -40,6 +39,11 @@ public class DataViewerViewModel : ObservableObject
     internal void SetServerDetails(ServerDetails serverDetails)
     {
         this.serverDetails = serverDetails;
+        this.LoadServerSessions();
+    }
+
+    internal void SyncServer()
+    {
         this.LoadServerSessions();
     }
 

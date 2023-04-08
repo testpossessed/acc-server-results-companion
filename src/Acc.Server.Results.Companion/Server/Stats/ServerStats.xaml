@@ -5,65 +5,67 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Acc.Server.Results.Companion.Server.Stats"
              mc:Ignorable="d"
-             Margin="20"
              d:DataContext="{d:DesignInstance local:ServerStatsViewModel}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <local:ServerStatItem Grid.Column="0"
-                              Grid.Row="0"
-                              StatLabel="Races"
-                              StatValue="{Binding RaceSessionCount}" />
+            <local:ServerStatItem Grid.Column="0"
+                                  Grid.Row="0"
+                                  StatLabel="Races"
+                                  StatValue="{Binding RaceSessionCount}" />
 
-        <local:ServerStatItem Grid.Column="1"
-                              Grid.Row="0"
-                              StatLabel="Quali Sessions"
-                              StatValue="{Binding QualiSessionCount}" />
+            <local:ServerStatItem Grid.Column="1"
+                                  Grid.Row="0"
+                                  StatLabel="Quali Sessions"
+                                  StatValue="{Binding QualiSessionCount}" />
 
-        <local:ServerStatItem Grid.Column="2"
-                              Grid.Row="0"
-                              StatLabel="Practice Sessions"
-                              StatValue="{Binding PracticeSessionCount}" />
+            <local:ServerStatItem Grid.Column="2"
+                                  Grid.Row="0"
+                                  StatLabel="Practice Sessions"
+                                  StatValue="{Binding PracticeSessionCount}" />
 
-        <local:ServerStatItem Grid.Column="0"
-                              Grid.Row="1"
-                              StatLabel="Race Laps"
-                              StatValue="{Binding RaceLapCount}" />
+            <local:ServerStatItem Grid.Column="0"
+                                  Grid.Row="1"
+                                  StatLabel="Race Laps"
+                                  StatValue="{Binding RaceLapCount}" />
 
-        <local:ServerStatItem Grid.Column="1"
-                              Grid.Row="1"
-                              StatLabel="Quali Laps"
-                              StatValue="{Binding QualiLapCount}" />
+            <local:ServerStatItem Grid.Column="1"
+                                  Grid.Row="1"
+                                  StatLabel="Quali Laps"
+                                  StatValue="{Binding QualiLapCount}" />
 
-        <local:ServerStatItem Grid.Column="2"
-                              Grid.Row="1"
-                              StatLabel="Practice Laps"
-                              StatValue="{Binding PracticeLapCount}" />
+            <local:ServerStatItem Grid.Column="2"
+                                  Grid.Row="1"
+                                  StatLabel="Practice Laps"
+                                  StatValue="{Binding PracticeLapCount}" />
 
-        <local:ServerStatItem Grid.Column="0"
-                              Grid.Row="2"
-                              StatLabel="Total Laps"
-                              StatValue="{Binding TotalLapCount}" />
+            <local:ServerStatItem Grid.Column="0"
+                                  Grid.Row="2"
+                                  StatLabel="Total Laps"
+                                  StatValue="{Binding TotalLapCount}" />
 
-        <local:ServerStatItem Grid.Column="1"
-                              Grid.Row="2"
-                              StatLabel="Invalid Laps"
-                              StatValue="{Binding TotalInvalidLapCount}" />
+            <local:ServerStatItem Grid.Column="1"
+                                  Grid.Row="2"
+                                  StatLabel="Invalid Laps"
+                                  StatValue="{Binding TotalInvalidLapCount}" />
 
-        <local:ServerStatItem Grid.Column="2"
-                              Grid.Row="2"
-                              StatLabel="Drivers"
-                              StatValue="{Binding DriverCount}" />
+            <local:ServerStatItem Grid.Column="2"
+                                  Grid.Row="2"
+                                  StatLabel="Drivers"
+                                  StatValue="{Binding DriverCount}" />
 
-    </Grid>
+        </Grid>
+    </ScrollViewer>
+
 </UserControl>

@@ -50,6 +50,15 @@
                       VerticalAlignment="Center"
                       Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
+            <Button ToolTip="Sync the selected server"
+                    Command="{Binding SyncServer}"
+                    Height="32"
+                    Width="32"
+                    Margin="5 0"
+                    Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Image Source="../Icons/server-update.png" />
+            </Button>
+
             <Button ToolTip="Edit the selected Server"
                     Command="{Binding EditServer}"
                     Height="32"
@@ -70,7 +79,8 @@
                     Command="{Binding ShowOverFastestLapsReport}"
                     Height="32"
                     Width="32"
-                    Margin="5 0">
+                    Margin="5 0"
+                    Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Image Source="../Icons/table.png" />
             </Button>
             <sf:ToolBarItemSeparator Width="2" />

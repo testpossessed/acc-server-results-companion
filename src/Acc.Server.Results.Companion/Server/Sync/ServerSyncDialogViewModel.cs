@@ -81,6 +81,11 @@ public class ServerSyncDialogViewModel : ObservableObject
             await this.SyncFtpServer(serverDetails);
         }
 
+        this.CloseDialog();
+    }
+
+    private void CloseDialog()
+    {
         this.window.Close();
         this.window.Owner.Activate();
     }
@@ -123,40 +128,6 @@ public class ServerSyncDialogViewModel : ObservableObject
                           SessionId = session.Id
                       };
             DbRepository.AddLap(lap);
-        }
-    }
-
-    private void UpdateDriverDetails(Driver driver, AccDriver accDriver)
-    {
-        if(driver == null)
-        {
-            return;
-        }
-
-        var update = false;
-        if(string.IsNullOrWhiteSpace(driver.FirstName) && !string.IsNullOrWhiteSpace(accDriver.FirstName))
-        {
-            driver.FirstName = accDriver.FirstName;
-            update = true;
-        }
-
-        if(string.IsNullOrWhiteSpace(driver.LastName)
-           && !string.IsNullOrWhiteSpace(accDriver.FirstName))
-        {
-            driver.LastName = accDriver.LastName;
-            update = true;
-        }
-
-        if(string.IsNullOrWhiteSpace(driver.ShortName)
-           && !string.IsNullOrWhiteSpace(accDriver.ShortName))
-        {
-            driver.ShortName = accDriver.ShortName;
-            update = true;
-        }
-
-        if(update)
-        {
-            DbRepository.UpdateDriver(driver);
         }
     }
 
@@ -412,6 +383,32 @@ public class ServerSyncDialogViewModel : ObservableObject
         }
     }
 
+    private void ImportSession(int serverId, string json, string filePath)
+    {
+        var accSession = JsonConvert.DeserializeObject<AccSession>(json);
+        if(accSession == null || accSession.Laps?.Any() is false)
+        {
+            this.Action = $"{Path.GetFileName(filePath)} did not contain any laps, ignoring it";
+            return;
+        }
+
+        var session = this.AddSession(serverId, filePath, accSession);
+
+        this.AddLeaderBoardLines(session, accSession);
+        this.AddLaps(session, accSession);
+        this.AddPenalties(session, accSession);
+        this.ProgressValue++;
+    }
+
+    private string NormalisedContent(string filePath)
+    {
+        var content = File.ReadAllText(filePath, Encoding.UTF8);
+
+        return content.Replace(Environment.NewLine, "")
+                      .Replace("\0", "")
+                      .Replace("\n", "");
+    }
+
     private bool SyncDriverDetails(Driver driver, AccEntryListDriver entryListDriver)
     {
         var updated = false;
@@ -458,32 +455,6 @@ public class ServerSyncDialogViewModel : ObservableObject
         return updated;
     }
 
-    private void ImportSession(int serverId, string json, string filePath)
-    {
-        var accSession = JsonConvert.DeserializeObject<AccSession>(json);
-        if(accSession == null || accSession.Laps?.Any() is false)
-        {
-            this.Action = $"{Path.GetFileName(filePath)} did not contain any laps, ignoring it";
-            return;
-        }
-
-        var session = this.AddSession(serverId, filePath, accSession);
-
-        this.AddLeaderBoardLines(session, accSession);
-        this.AddLaps(session, accSession);
-        this.AddPenalties(session, accSession);
-        this.ProgressValue++;
-    }
-
-    private string NormalisedContent(string filePath)
-    {
-        var content = File.ReadAllText(filePath, Encoding.UTF8);
-
-        return content.Replace(Environment.NewLine, "")
-                      .Replace("\0", "")
-                      .Replace("\n", "");
-    }
-
     private void SyncFolder(ServerDetails serverDetails)
     {
         this.SyncSessionsFromFolder(serverDetails.Id, this.serverDetails.Address);
@@ -491,14 +462,18 @@ public class ServerSyncDialogViewModel : ObservableObject
 
     private async Task SyncFtpServer(ServerDetails serverDetails)
     {
-        await this.SyncFtpServerFiles(serverDetails);
+        var completedSync = await this.SyncFtpServerFiles(serverDetails);
+        if(!completedSync)
+        {
+            return;
+        }
         var localFolderPath = Path.Combine(
             PathProvider.DownloadedResultsFolderPath,
             serverDetails.Name);
         this.SyncSessionsFromFolder(serverDetails.Id, localFolderPath);
     }
 
-    private async Task SyncFtpServerFiles(ServerDetails serverDetails)
+    private async Task<bool> SyncFtpServerFiles(ServerDetails serverDetails)
     {
         this.Stage = "Download Result Files";
 
@@ -523,7 +498,23 @@ public class ServerSyncDialogViewModel : ObservableObject
         }
 
         var localFiles = Directory.GetFiles(localFolderPath);
-        var listItems = await client.GetListing(serverDetails.FtpFolderPath);
+        FtpListItem[] listItems;
+        try
+        {
+            listItems = await client.GetListing(serverDetails.FtpFolderPath);
+        }
+        catch(Exception exception)
+        {
+            this.CloseDialog();
+
+            LogWriter.LogError(exception, "Unexpected error fetching listing from server");
+            MessageBox.Show(Application.Current.MainWindow!,
+                $"An unexpected error occurred fetching list of files from the server.  We are unable to sync the server at this time. {Environment.NewLine}{Environment.NewLine} The error message is: {exception.Message}{Environment.NewLine}{Environment.NewLine}It may work later if you try  again using the Sync server button.",
+                "FTP Server Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return false;
+        }
 
         var itemsToDownload = this.GetFilesToDownload(localFiles, listItems);
 
@@ -540,12 +531,28 @@ public class ServerSyncDialogViewModel : ObservableObject
                 item.Name);
 
             this.Action = $"Downloading {item.Name}...";
-            await client.DownloadFile(localFilePath, item.FullName);
-            this.ProgressValue++;
+            try
+            {
+                await client.DownloadFile(localFilePath, item.FullName);
+                this.ProgressValue++;
+            }
+            catch(Exception exception)
+            {
+                this.CloseDialog();
+
+                LogWriter.LogError(exception, $"Unexpected error downloading {item.FullName}");
+                MessageBox.Show(Application.Current.MainWindow!,
+                    $"An unexpected error occurred downloading {item.FullName} from the server.  We are unable to complete sync of the server at this time. {Environment.NewLine}{Environment.NewLine} The error message is: {exception.Message}{Environment.NewLine}{Environment.NewLine}It may work later if you try again using the Sync server button.",
+                    "FTP Server Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return false;
+            }
         }
 
         await client.Disconnect();
         client.Dispose();
+        return true;
     }
 
     private void SyncSessionsFromFolder(int serverId, string localFolderPath)
@@ -589,6 +596,41 @@ public class ServerSyncDialogViewModel : ObservableObject
             }
 
             this.ImportSession(serverId, json, importFileInfo.FilePath);
+        }
+    }
+
+    private void UpdateDriverDetails(Driver driver, AccDriver accDriver)
+    {
+        if(driver == null)
+        {
+            return;
+        }
+
+        var update = false;
+        if(string.IsNullOrWhiteSpace(driver.FirstName)
+           && !string.IsNullOrWhiteSpace(accDriver.FirstName))
+        {
+            driver.FirstName = accDriver.FirstName;
+            update = true;
+        }
+
+        if(string.IsNullOrWhiteSpace(driver.LastName)
+           && !string.IsNullOrWhiteSpace(accDriver.FirstName))
+        {
+            driver.LastName = accDriver.LastName;
+            update = true;
+        }
+
+        if(string.IsNullOrWhiteSpace(driver.ShortName)
+           && !string.IsNullOrWhiteSpace(accDriver.ShortName))
+        {
+            driver.ShortName = accDriver.ShortName;
+            update = true;
+        }
+
+        if(update)
+        {
+            DbRepository.UpdateDriver(driver);
         }
     }
 }

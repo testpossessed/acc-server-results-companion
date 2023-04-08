@@ -32,10 +32,6 @@ public class DriverManagerViewModel : ObservableObject
     internal void SetServerDetails(ServerDetails serverDetails)
     {
         this.serverDetails = serverDetails;
-        if(serverDetails == null)
-        {
-            return;
-        }
         this.LoadDrivers();
     }
 
@@ -80,6 +76,10 @@ public class DriverManagerViewModel : ObservableObject
     {
         this.Drivers.Clear();
 
+        if(this.serverDetails == null)
+        {
+            return;
+        }
         var drivers = DbRepository.GetDrivers();
         foreach(var driver in drivers)
         {

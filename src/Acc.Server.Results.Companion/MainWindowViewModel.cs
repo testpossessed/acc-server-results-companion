@@ -29,6 +29,7 @@ internal class MainWindowViewModel : ObservableObject
         this.EditServer = new RelayCommand(this.HandleEditServer, this.CanExecuteEditServer);
         this.Refresh = new RelayCommand(this.HandleRefresh);
         this.ShowOverFastestLapsReport = new RelayCommand(this.HandleShowOverallFastestLapsReport);
+        this.SyncServer = new RelayCommand(this.HandleSyncServer);
     }
 
     public ICommand AddServer { get; }
@@ -61,6 +62,7 @@ internal class MainWindowViewModel : ObservableObject
             // this.EventManagerViewModel.SetServerDetails(this.SelectedServer);
         }
     }
+    public ICommand SyncServer { get; }
 
     internal void Init()
     {
@@ -147,6 +149,11 @@ internal class MainWindowViewModel : ObservableObject
     {
         this.DriverManagerViewModel.Refresh();
         this.ServerStatsViewModel.Refresh();
+    }
+
+    private void HandleSyncServer()
+    {
+        this.DataViewerViewModel.SyncServer();
     }
 
     private void LoadServers()

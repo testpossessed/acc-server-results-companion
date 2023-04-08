@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Acc.Server.Results.Companion.Server.Stats"
              mc:Ignorable="d"
-             Width="250"
-             Height="250">
+             Width="200"
+             Height="200">
     <Border BorderBrush="Red"
             BorderThickness="3"
             CornerRadius="110"
@@ -16,7 +16,7 @@
                     VerticalAlignment="Center">
             <Label
                 Content="{Binding StatLabel, RelativeSource={RelativeSource AncestorType={x:Type local:ServerStatItem}}}"
-                FontSize="22"
+                FontSize="18"
                 FontWeight="Bold"
                 HorizontalAlignment="Center" />
             <Label

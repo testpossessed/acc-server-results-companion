@@ -20,6 +20,7 @@
 		<None Remove="Icons\save.png" />
 		<None Remove="Icons\server-add2.png" />
 		<None Remove="Icons\server-edit.png" />
+		<None Remove="Icons\server-update.png" />
 		<None Remove="Icons\server.png" />
 		<None Remove="Icons\table.png" />
 		<None Remove="Icons\user_symbol_blue-add.png" />
@@ -66,6 +67,7 @@
 		<Resource Include="Icons\save.png" />
 		<Resource Include="Icons\server-add2.png" />
 		<Resource Include="Icons\server-edit.png" />
+		<Resource Include="Icons\server-update.png" />
 		<Resource Include="Icons\server.png" />
 	</ItemGroup>
 
