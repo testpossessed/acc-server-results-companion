@@ -13,6 +13,15 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.2.0 2003-04-08
+
+### Added
+- Filtering to Fastest Laps reporting tool
+
+### Changed
+- Added better handling of failed FTP operations to avoid crashing the app
+- Improved layout of Server Stats view for smaller screens
+
 ## v1.1.1 2003-04-07
 
 ### Fixed
