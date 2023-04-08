@@ -121,13 +121,18 @@ internal static class DbRepository
                         .ToList();
     }
 
-    internal static List<FastestLapViewModel> GetOverallFastestLaps(int serverId)
+    internal static List<FastestLapViewModel> GetOverallFastestLaps(int serverId,
+        string filterMode,
+        bool includeInvalidLaps)
     {
+        var sessionTypeFilter = GetSessionTypeFilter(filterMode);
         var dbContext = GetDbContext();
 
         var lapsQuery = from l in dbContext.Laps
                         join s in dbContext.Sessions on l.SessionId equals s.Id
-                        where serverId == 0 || s.ServerId == serverId
+                        where (serverId == 0 || s.ServerId == serverId) 
+                              && (includeInvalidLaps || l.IsValid)
+                              && (sessionTypeFilter == "A" || s.SessionType == sessionTypeFilter)
                         select new FastestLapViewModel
                                {
                                    Track = s.TrackName,
@@ -146,6 +151,17 @@ internal static class DbRepository
                                   .First();
 
         return fastestLaps.ToList();
+    }
+
+    private static string GetSessionTypeFilter(string filterMode)
+    {
+        return filterMode switch
+        {
+            "Race" => "R",
+            "Qualifying" => "Q",
+            "Practice" => "FP",
+            _ => "A"
+        };
     }
 
     internal static List<Penalty> GetPenalties(int sessionId)

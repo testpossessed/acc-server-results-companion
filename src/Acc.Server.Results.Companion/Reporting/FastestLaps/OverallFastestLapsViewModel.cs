@@ -8,16 +8,39 @@ namespace Acc.Server.Results.Companion.Reporting.FastestLaps;
 
 internal class OverallFastestLapsViewModel : ObservableObject
 {
+    private string filterMode;
+    private bool includeInvalidLaps;
     private ServerListItem selectedServer;
 
     public OverallFastestLapsViewModel()
     {
+        this.FilterMode = "All";
+        this.IncludeInvalidLaps = false;
         this.LoadServers();
     }
 
     public ObservableCollection<FastestLapViewModel> FastestLaps { get; } = new();
-
     public ObservableCollection<ServerListItem> Servers { get; } = new();
+
+    public string FilterMode
+    {
+        get => this.filterMode;
+        set
+        {
+            this.SetProperty(ref this.filterMode, value);
+            this.LoadFastestLaps();
+        }
+    }
+
+    public bool IncludeInvalidLaps
+    {
+        get => this.includeInvalidLaps;
+        set
+        {
+            this.SetProperty(ref this.includeInvalidLaps, value);
+            this.LoadFastestLaps();
+        }
+    }
 
     public ServerListItem SelectedServer
     {
@@ -33,7 +56,12 @@ internal class OverallFastestLapsViewModel : ObservableObject
     {
         this.FastestLaps.Clear();
 
-        var fastestLapsForServer = DbRepository.GetOverallFastestLaps(this.SelectedServer.Id);
+        if(this.SelectedServer == null)
+        {
+            return;
+        }
+
+        var fastestLapsForServer = DbRepository.GetOverallFastestLaps(this.SelectedServer.Id, this.FilterMode, this.IncludeInvalidLaps);
 
         foreach(var lapViewModel in fastestLapsForServer)
         {

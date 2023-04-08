@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Acc.Server.Results.Companion.ServerManagement.ServerEditor
+namespace Acc.Server.Results.Companion.Core.Converters
 {
     internal class ServerTypeVisibilityConverter : IValueConverter
     {

@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Acc.Server.Results.Companion.ServerManagement.ServerEditor"
         xmlns:se="clr-namespace:Acc.Server.Results.Companion.Server.ServerEditor"
         xmlns:sf="http://schemas.syncfusion.com/wpf"
         xmlns:sfs="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+        xmlns:converters="clr-namespace:Acc.Server.Results.Companion.Core.Converters"
         sfs:SfSkinManager.VisualStyle="Blend"
         mc:Ignorable="d"
         Title="Server Details"
@@ -15,10 +15,6 @@
         WindowStartupLocation="CenterOwner"
         d:DataContext="{d:DesignInstance se:ServerEditorViewModel}"
         ShowInTaskbar="False">
-    <sf:ChromelessWindow.Resources>
-        <local:ServerTypeConverter x:Key="ServerTypeConverter" />
-        <local:ServerTypeVisibilityConverter x:Key="ServerTypeVisibilityConverter" />
-    </sf:ChromelessWindow.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -59,9 +55,9 @@
                     VerticalAlignment="Center"
                     Margin="10 0">
             <RadioButton Content="FTP"
-                         IsChecked="{Binding ServerType, Mode=TwoWay, Converter={StaticResource ServerTypeConverter}, ConverterParameter=FTP}" />
+                         IsChecked="{Binding ServerType, Mode=TwoWay, Converter={StaticResource ParameterValueMatchBooleanConverter}, ConverterParameter=FTP}" />
             <RadioButton Content="Folder"
-                         IsChecked="{Binding ServerType, Mode=TwoWay, Converter={StaticResource ServerTypeConverter}, ConverterParameter=Folder}"
+                         IsChecked="{Binding ServerType, Mode=TwoWay, Converter={StaticResource ParameterValueMatchBooleanConverter}, ConverterParameter=Folder}"
                          Margin="10 0" />
         </StackPanel>
 

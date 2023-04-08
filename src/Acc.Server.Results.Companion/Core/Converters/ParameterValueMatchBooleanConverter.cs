@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Acc.Server.Results.Companion.ServerManagement.ServerEditor
+namespace Acc.Server.Results.Companion.Core.Converters
 {
-    internal class ServerTypeConverter : IValueConverter
+    internal class ParameterValueMatchBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

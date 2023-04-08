@@ -41,6 +41,30 @@
                       DisplayMemberPath="Name"
                       SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
                       VerticalAlignment="Center" />
+
+            <Label Content="Session Types:"
+                   Margin="10 0 5 0"
+                   VerticalAlignment="Center" />
+
+            <RadioButton Content="All"
+                         IsChecked="{Binding FilterMode, Mode=TwoWay, Converter={StaticResource ParameterValueMatchBooleanConverter}, ConverterParameter=All}"
+                         VerticalAlignment="Center"/>
+            <RadioButton Content="Race"
+                         IsChecked="{Binding FilterMode, Mode=TwoWay, Converter={StaticResource ParameterValueMatchBooleanConverter}, ConverterParameter=Race}"
+                         Margin="10 0"
+                         VerticalAlignment="Center" />
+            <RadioButton Content="Qualifying"
+                         IsChecked="{Binding FilterMode, Mode=TwoWay, Converter={StaticResource ParameterValueMatchBooleanConverter}, ConverterParameter=Qualifying}"
+                         Margin="10 0"
+                         VerticalAlignment="Center" />
+            <RadioButton Content="Practice"
+                         IsChecked="{Binding FilterMode, Mode=TwoWay, Converter={StaticResource ParameterValueMatchBooleanConverter}, ConverterParameter=Practice}"
+                         Margin="10 0" />
+
+            <CheckBox Content="Include Invalid Laps" IsChecked="{Binding IncludeInvalidLaps, Mode=TwoWay}"
+                      Margin="10 0"
+                      VerticalAlignment="Center" />
+
         </StackPanel>
 
         <sf:SfDataGrid Grid.Row="1"

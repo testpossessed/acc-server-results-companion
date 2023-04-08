@@ -8,5 +8,7 @@
         <c:BooleanToServerTypeConverter x:Key="BooleanToServerTypeConverter" />
         <c:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
         <c:NationalityConverter x:Key="NationalityConverter"/>
+        <c:ParameterValueMatchBooleanConverter x:Key="ParameterValueMatchBooleanConverter" />
+        <c:ServerTypeVisibilityConverter x:Key="ServerTypeVisibilityConverter"/>
     </Application.Resources>
 </Application>
