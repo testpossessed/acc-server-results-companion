@@ -13,6 +13,11 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.2.1 2003-04-10
+
+### Changed
+- Add Excel like filtering to all data grids
+
 ## v1.2.0 2003-04-08
 
 ### Added

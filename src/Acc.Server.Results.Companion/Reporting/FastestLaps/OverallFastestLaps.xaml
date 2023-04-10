@@ -71,7 +71,9 @@
                        Name="DataGrid"
                        ItemsSource="{Binding FastestLaps}"
                        IsReadOnly="True"
-                       AutoGenerateColumns="False">
+                       AutoGenerateColumns="False"
+                       FilterRowPosition="None"
+                       AllowFiltering="True">
             <sf:SfDataGrid.Columns>
 
                 <sf:GridTextColumn HeaderText="Track"
