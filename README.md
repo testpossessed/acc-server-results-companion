@@ -13,6 +13,11 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.2.2 2003-04-18
+
+### Added
+- Driver race performance report
+
 ## v1.2.1 2003-04-10
 
 ### Changed
