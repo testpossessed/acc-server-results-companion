@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Acc.Server.Results.Companion.Core;
 using Acc.Server.Results.Companion.Core.Models;
 using Acc.Server.Results.Companion.Core.Services;
 using Acc.Server.Results.Companion.Database.Entities;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.Windows.Tools.Controls;
+using Syncfusion.XlsIO.FormatParser.FormatTokens;
 
 namespace Acc.Server.Results.Companion.Database;
 
@@ -225,6 +228,16 @@ internal static class DbRepository
                         .ToList();
     }
 
+    internal static List<Session> GetRaceSessionsForServer(int serverId)
+    {
+        var dbContext = GetDbContext();
+
+        return dbContext.Sessions.Include(s => s.Laps)
+                        .Where(s => s.ServerId == serverId && s.SessionType == "R")
+                        .OrderByDescending(s => s.TimeStamp)
+                        .ToList();
+    }
+
     internal static int GetTotalInvalidLapCount(int serverId)
     {
         var dbContext = GetDbContext();
@@ -234,6 +247,24 @@ internal static class DbRepository
                     select l;
 
         return query.Count();
+    }
+
+    internal static int GetLapCountForSession(int sessionId)
+    {
+        var dbContext = GetDbContext();
+
+        var query = from l in dbContext.Laps
+                    where l.SessionId == sessionId
+                    group l by l.Driver
+                    into g
+                    select new
+                           {
+                               Driver = g.Key,
+                               LapCount = g.Count()
+                           };
+
+        return query.Max(g => g.LapCount);
+
     }
 
     internal static int GetTotalLapCount(int serverId)

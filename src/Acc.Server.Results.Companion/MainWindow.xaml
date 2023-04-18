@@ -76,7 +76,15 @@
             </Button>
             <sf:ToolBarItemSeparator Width="2" />
             <Button ToolTip="Fastest Laps - Overall"
-                    Command="{Binding ShowOverFastestLapsReport}"
+                    Command="{Binding ShowOverallFastestLapsReport}"
+                    Height="32"
+                    Width="32"
+                    Margin="5 0"
+                    Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Image Source="../Icons/table.png" />
+            </Button>
+            <Button ToolTip="Driver Performance"
+                    Command="{Binding ShowDriverPerformanceReport}"
                     Height="32"
                     Width="32"
                     Margin="5 0"

@@ -9,6 +9,7 @@ using Acc.Server.Results.Companion.Database.Entities;
 using Acc.Server.Results.Companion.DataView;
 using Acc.Server.Results.Companion.Drivers;
 using Acc.Server.Results.Companion.Reporting.FastestLaps;
+using Acc.Server.Results.Companion.Reporting.Performance;
 using Acc.Server.Results.Companion.Server.ServerEditor;
 using Acc.Server.Results.Companion.Server.Stats;
 using Acc.Server.Results.Companion.SimGrid;
@@ -28,7 +29,9 @@ internal class MainWindowViewModel : ObservableObject
         this.ConvertSimGridStandings = new RelayCommand(this.HandleConvertSimGridStandings);
         this.EditServer = new RelayCommand(this.HandleEditServer, this.CanExecuteEditServer);
         this.Refresh = new RelayCommand(this.HandleRefresh);
-        this.ShowOverFastestLapsReport = new RelayCommand(this.HandleShowOverallFastestLapsReport);
+        this.ShowOverallFastestLapsReport =
+            new RelayCommand(this.HandleShowOverallFastestLapsReport);
+        this.ShowDriverPerformanceReport = new RelayCommand(this.HandleShowDriverPerformanceReport);
         this.SyncServer = new RelayCommand(this.HandleSyncServer);
     }
 
@@ -41,7 +44,9 @@ internal class MainWindowViewModel : ObservableObject
     public ICommand Refresh { get; }
     public ObservableCollection<ServerDetails> Servers { get; } = new();
     public ServerStatsViewModel ServerStatsViewModel { get; } = new();
-    public ICommand ShowOverFastestLapsReport { get; }
+    public ICommand ShowDriverPerformanceReport { get; }
+    public ICommand ShowOverallFastestLapsReport { get; }
+    public ICommand SyncServer { get; }
 
     public bool IsInitialised
     {
@@ -62,7 +67,6 @@ internal class MainWindowViewModel : ObservableObject
             // this.EventManagerViewModel.SetServerDetails(this.SelectedServer);
         }
     }
-    public ICommand SyncServer { get; }
 
     internal void Init()
     {
@@ -133,6 +137,16 @@ internal class MainWindowViewModel : ObservableObject
         this.DriverManagerViewModel.Refresh();
         this.DataViewerViewModel.Refresh();
         this.ServerStatsViewModel.Refresh();
+    }
+
+    private void HandleShowDriverPerformanceReport()
+    {
+        var window = new DriverPerformanceView()
+                     {
+                         Owner = Application.Current.MainWindow,
+                         DataContext = new DriverPerformanceViewModel()
+                     };
+        window.Show();
     }
 
     private void HandleShowOverallFastestLapsReport()
