@@ -481,6 +481,39 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
                 AccModelId = 61,
                 Name = "Porsche 718 Cayman GT4 Clubsport",
                 Year = 2019
+            },
+            new Car
+            {
+                Id = 44,
+                Class = "GT3",
+                AccModelName = "ferrari_296_gt3",
+                MaxFuel = 120,
+                MaxRpm = 7300,
+                AccModelId = 32,
+                Name = "Ferrari 296 GT3",
+                Year = 2023
+            },
+            new Car
+            {
+                Id = 45,
+                Class = "GT3",
+                AccModelName = "lamborghini_huracan_gt3_evo2",
+                MaxFuel = 120,
+                MaxRpm = 8650,
+                AccModelId = 33,
+                Name = "Lamborghini Huracan GT3 Evo 2",
+                Year = 2023
+            },
+            new Car
+            {
+                Id = 46,
+                Class = "GT3",
+                AccModelName = "porsche_992_gt3_r",
+                MaxFuel = 120,
+                MaxRpm = 9250,
+                AccModelId = 34,
+                Name = "Porsche 992 GT3 R",
+                Year = 2023
             });
     }
 }

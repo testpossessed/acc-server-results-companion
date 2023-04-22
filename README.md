@@ -13,6 +13,11 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.3.0 2004-04-22
+
+### Added
+- Meta data for new 2023 content
+
 ## v1.2.2 2003-04-18
 
 ### Added

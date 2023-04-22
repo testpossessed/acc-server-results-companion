@@ -184,6 +184,14 @@ public class TrackConfiguration : IEntityTypeConfiguration<Track>
                 Corners = 10,
                 Name = "Zolder",
                 TrackLength = 4011
+            },
+            new Track
+            {
+                Id = 23,
+                AccTrackId = "valencia",
+                Corners = 14,
+                Name = "Valencia",
+                TrackLength = 4005
             });
     }
 }
