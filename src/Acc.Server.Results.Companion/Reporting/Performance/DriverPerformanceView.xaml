@@ -54,6 +54,8 @@
                                    MappingName="ValidRatioDisplay" />
                 <sf:GridTextColumn HeaderText="Avg. Consistency"
                                    MappingName="ConsistencyDisplay" />
+                <sf:GridTextColumn HeaderText="Races"
+                                   MappingName="SessionCount" />
                 <sf:GridTextColumn HeaderText="Valid Laps"
                                    MappingName="ValidLapCount" />
                 <sf:GridTextColumn HeaderText="Invalid Laps"
@@ -65,6 +67,8 @@
             Valid Lap Ratio is the ratio of valid laps driven for each invalid lap as reported by ACC.
             <LineBreak />
             Consistency is an average of the Standard Deviation across valid lap times in each session.
+            <LineBreak/>
+            Races is the number of race sessions that were used for calculating the rating.
             <LineBreak />
             Not Rated indicates there was insufficient data to provide a meaningful measurement.  Only Races longer
             than 10 laps and Drivers with a valid name who completed more than 25% of at least 3 races are rated.

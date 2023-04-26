@@ -85,7 +85,7 @@ public class DriverPerformanceViewModel : ObservableObject
                 var invalidLapCount = driverLaps.Count() - validLapCount;
                 driverPerformance.ValidLapCount+= validLapCount;
                 driverPerformance.InvalidLapCount+= invalidLapCount;
-
+                driverPerformance.SessionCount++;
             }
 
             if(consistencyCalculations.Any())
