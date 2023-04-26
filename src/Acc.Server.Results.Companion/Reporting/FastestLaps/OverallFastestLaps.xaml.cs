@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Win32;
 using Syncfusion.UI.Xaml.Grid.Converter;
-using Syncfusion.Windows.Shared;
 using Syncfusion.XlsIO;
 
 namespace Acc.Server.Results.Companion.Reporting.FastestLaps;
 
-public partial class OverallFastestLaps : ChromelessWindow
+public partial class OverallFastestLaps : UserControl
 {
     public OverallFastestLaps()
     {

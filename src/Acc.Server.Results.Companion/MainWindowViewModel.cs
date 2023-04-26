@@ -29,9 +29,6 @@ internal class MainWindowViewModel : ObservableObject
         this.ConvertSimGridStandings = new RelayCommand(this.HandleConvertSimGridStandings);
         this.EditServer = new RelayCommand(this.HandleEditServer, this.CanExecuteEditServer);
         this.Refresh = new RelayCommand(this.HandleRefresh);
-        this.ShowOverallFastestLapsReport =
-            new RelayCommand(this.HandleShowOverallFastestLapsReport);
-        this.ShowDriverPerformanceReport = new RelayCommand(this.HandleShowDriverPerformanceReport);
         this.SyncServer = new RelayCommand(this.HandleSyncServer);
     }
 
@@ -44,8 +41,8 @@ internal class MainWindowViewModel : ObservableObject
     public ICommand Refresh { get; }
     public ObservableCollection<ServerDetails> Servers { get; } = new();
     public ServerStatsViewModel ServerStatsViewModel { get; } = new();
-    public ICommand ShowDriverPerformanceReport { get; }
-    public ICommand ShowOverallFastestLapsReport { get; }
+    public OverallFastestLapsViewModel OverallFastestLapsViewModel { get; } = new();
+    public DriverPerformanceViewModel DriverPerformanceViewModel { get; } = new();
     public ICommand SyncServer { get; }
 
     public bool IsInitialised
@@ -137,26 +134,6 @@ internal class MainWindowViewModel : ObservableObject
         this.DriverManagerViewModel.Refresh();
         this.DataViewerViewModel.Refresh();
         this.ServerStatsViewModel.Refresh();
-    }
-
-    private void HandleShowDriverPerformanceReport()
-    {
-        var window = new DriverPerformanceView()
-                     {
-                         Owner = Application.Current.MainWindow,
-                         DataContext = new DriverPerformanceViewModel()
-                     };
-        window.Show();
-    }
-
-    private void HandleShowOverallFastestLapsReport()
-    {
-        var window = new OverallFastestLaps()
-                     {
-                         Owner = Application.Current.MainWindow,
-                         DataContext = new OverallFastestLapsViewModel()
-                     };
-        window.Show();
     }
 
     private void HandleSynchronisationCompleted(object sender, EventArgs eventArgs)

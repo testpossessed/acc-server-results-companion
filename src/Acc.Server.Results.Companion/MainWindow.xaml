@@ -10,6 +10,8 @@
                      xmlns:em="clr-namespace:Acc.Server.Results.Companion.Events"
                      xmlns:dm="clr-namespace:Acc.Server.Results.Companion.Drivers"
                      xmlns:ss="clr-namespace:Acc.Server.Results.Companion.Server.Stats"
+                     xmlns:fl="clr-namespace:Acc.Server.Results.Companion.Reporting.FastestLaps"
+                     xmlns:dp="clr-namespace:Acc.Server.Results.Companion.Reporting.Performance"
                      mc:Ignorable="d"
                      Title="ACC Server Results Companion"
                      WindowStartupLocation="CenterScreen"
@@ -75,23 +77,6 @@
                 <Image Source="../Icons/refresh.png" />
             </Button>
             <sf:ToolBarItemSeparator Width="2" />
-            <Button ToolTip="Fastest Laps - Overall"
-                    Command="{Binding ShowOverallFastestLapsReport}"
-                    Height="32"
-                    Width="32"
-                    Margin="5 0"
-                    Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <Image Source="../Icons/table.png" />
-            </Button>
-            <Button ToolTip="Driver Performance"
-                    Command="{Binding ShowDriverPerformanceReport}"
-                    Height="32"
-                    Width="32"
-                    Margin="5 0"
-                    Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <Image Source="../Icons/table.png" />
-            </Button>
-            <sf:ToolBarItemSeparator Width="2" />
             <Button ToolTip="Convert SimGrid Standings"
                     Command="{Binding ConvertSimGridStandings}"
                     Height="32"
@@ -110,7 +95,7 @@
                           ShowTabItemContextMenu="False"
                           CloseTabOnMiddleClick="False">
 
-            <sf:TabItemExt Header="Data Viewer">
+            <sf:TabItemExt Header="Session Viewer">
                 <dv:DataViewer DataContext="{Binding DataViewerViewModel}" />
             </sf:TabItemExt>
 
@@ -124,6 +109,14 @@
 
             <sf:TabItemExt Header="Server Stats">
                 <ss:ServerStats DataContext="{Binding ServerStatsViewModel}" />
+            </sf:TabItemExt>
+
+            <sf:TabItemExt Header="Fastest Laps">
+                <fl:OverallFastestLaps DataContext="{Binding OverallFastestLapsViewModel}" />
+            </sf:TabItemExt>
+
+            <sf:TabItemExt Header="Driver Performance">
+                <dp:DriverPerformanceView DataContext="{Binding DriverPerformanceViewModel}" />
             </sf:TabItemExt>
 
         </sf:TabControlExt>

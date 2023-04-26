@@ -13,6 +13,14 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.3.1 2004-04-26
+
+### Added
+- Added count of races to Driver Performance report
+
+### Changed
+- Moved reports to tabs rather than buttons
+
 ## v1.3.0 2004-04-22
 
 ### Added
