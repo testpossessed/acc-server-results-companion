@@ -108,7 +108,7 @@ public class DriverPerformanceViewModel : ObservableObject
             }
 
             driverPerformance.PenaltyRatio = Math.Round((double)driverPerformance.PenaltyCount / driverPerformance.SessionCount, 2);
-            driverPerformance.PenaltyRatioDisplay = $"{driverPerformance.PenaltyCount:F}:1";
+            driverPerformance.PenaltyRatioDisplay = $"{driverPerformance.PenaltyRatio:F}:1";
 
         }
 
