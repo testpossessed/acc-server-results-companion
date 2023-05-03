@@ -12,6 +12,12 @@ The application provides guidance on getting started the first time you start it
 PLEASE NOTE:  This application and documentation is in the early stages of development so it will change frequently.
 
 # Release History
+
+## v1.3.4 2023-05-03
+
+### Added
+- Penalty Ratio to Driver Performance report
+
 ## v1.3.3 2023-05-03
 
 ### Fixed

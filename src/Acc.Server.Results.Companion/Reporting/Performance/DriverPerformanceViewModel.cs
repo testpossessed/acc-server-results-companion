@@ -102,6 +102,14 @@ public class DriverPerformanceViewModel : ObservableObject
                 2);
             driverPerformance.ValidRatioDisplay = $"{driverPerformance.ValidRatio:F}:1";
 
+            if(driverPerformance.PenaltyCount <= 0)
+            {
+                continue;
+            }
+
+            driverPerformance.PenaltyRatio = Math.Round((double)driverPerformance.PenaltyCount / driverPerformance.SessionCount, 2);
+            driverPerformance.PenaltyRatioDisplay = $"{driverPerformance.PenaltyCount:F}:1";
+
         }
 
         foreach(var result in results.OrderByDescending(r => r.ValidRatio).ThenBy(r => r.Consistency))

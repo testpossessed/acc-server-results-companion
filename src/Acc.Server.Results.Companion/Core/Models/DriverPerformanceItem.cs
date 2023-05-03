@@ -9,6 +9,8 @@ public class DriverPerformanceItem
     public string DriverName { get; set; }
     public int InvalidLapCount { get; set; }
     public int PenaltyCount { get; set; }
+    public double PenaltyRatio { get; set; }
+    public string PenaltyRatioDisplay { get; set; }
     public int PenaltyValueTotal { get; set; }
     public int SessionCount { get; set; }
     public int ValidLapCount { get; set; }

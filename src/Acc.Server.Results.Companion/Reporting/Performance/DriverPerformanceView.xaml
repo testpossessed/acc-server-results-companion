@@ -64,6 +64,8 @@
                                    MappingName="PenaltyCount" />
                 <sf:GridTextColumn HeaderText="Penalty Value Total "
                                    MappingName="PenaltyValueTotal" />
+                <sf:GridTextColumn HeaderText="Penalty Ratio "
+                                   MappingName="PenaltyRationDisplay" />
             </sf:SfDataGrid.Columns>
         </sf:SfDataGrid>
         <TextBlock Grid.Row="2"
@@ -73,6 +75,8 @@
             Consistency is an average of the Standard Deviation across valid lap times in each session.
             <LineBreak/>
             Races is the number of race sessions that were used for calculating the rating.
+            <LineBreak />
+            Penalty Ratio is the ration of penalties per race
             <LineBreak />
             Not Rated indicates there was insufficient data to provide a meaningful measurement.  Only Races longer
             than 10 laps and Drivers with a valid name who completed more than 25% of at least 3 races are rated.
