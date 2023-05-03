@@ -86,9 +86,9 @@ public class DriverPerformanceViewModel : ObservableObject
                 driverPerformance.ValidLapCount+= validLapCount;
                 driverPerformance.InvalidLapCount+= invalidLapCount;
                 driverPerformance.SessionCount++;
-                driverPerformance.PenaltyCount += driverSession.Penalties.Count();
+                driverPerformance.PenaltyCount += driverSession.Penalties.Count(p => p.Driver == driverPerformance.DriverName);
                 driverPerformance.PenaltyValueTotal +=
-                    driverSession.Penalties.Sum(p => p.PenaltyValue);
+                    driverSession.Penalties.Where(p => p.Driver == driverPerformance.DriverName).Sum(p => p.PenaltyValue);
             }
 
             if(consistencyCalculations.Any())
