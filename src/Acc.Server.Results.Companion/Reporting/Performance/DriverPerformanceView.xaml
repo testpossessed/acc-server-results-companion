@@ -60,6 +60,10 @@
                                    MappingName="ValidLapCount" />
                 <sf:GridTextColumn HeaderText="Invalid Laps"
                                    MappingName="InvalidLapCount" />
+                <sf:GridTextColumn HeaderText="Penalty Count "
+                                   MappingName="PenaltyCount" />
+                <sf:GridTextColumn HeaderText="Penalty Value Total "
+                                   MappingName="PenaltyValueTotal" />
             </sf:SfDataGrid.Columns>
         </sf:SfDataGrid>
         <TextBlock Grid.Row="2"

@@ -232,7 +232,7 @@ internal static class DbRepository
     {
         var dbContext = GetDbContext();
 
-        return dbContext.Sessions.Include(s => s.Laps)
+        return dbContext.Sessions.Include(s => s.Laps).Include(s => s.Penalties)
                         .Where(s => s.ServerId == serverId && s.SessionType == "R")
                         .OrderByDescending(s => s.TimeStamp)
                         .ToList();

@@ -13,7 +13,12 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
-## v1.3.1 2004-04-26
+## v1.3.2 2023-05-03
+
+### Added
+- Penalty Count and Penalty Value Total columns to Driver Performance Report
+
+## v1.3.1 2023-04-26
 
 ### Added
 - Added count of races to Driver Performance report
@@ -21,22 +26,22 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 ### Changed
 - Moved reports to tabs rather than buttons
 
-## v1.3.0 2004-04-22
+## v1.3.0 2023-04-22
 
 ### Added
 - Meta data for new 2023 content
 
-## v1.2.2 2003-04-18
+## v1.2.2 2023-04-18
 
 ### Added
 - Driver race performance report
 
-## v1.2.1 2003-04-10
+## v1.2.1 2023-04-10
 
 ### Changed
 - Add Excel like filtering to all data grids
 
-## v1.2.0 2003-04-08
+## v1.2.0 2023-04-08
 
 ### Added
 - Filtering to Fastest Laps reporting tool
@@ -45,7 +50,7 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 - Added better handling of failed FTP operations to avoid crashing the app
 - Improved layout of Server Stats view for smaller screens
 
-## v1.1.1 2003-04-07
+## v1.1.1 2023-04-07
 
 ### Fixed
 - Implementation of folder based server import
@@ -53,7 +58,7 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 ### Changed
 - Reduced size of splash screen
 
-## v1.1.0 2003-04-07
+## v1.1.0 2023-04-07
 
 ### Added
 - Server stats tab
@@ -61,23 +66,23 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 ### Fixed
 - Issue where drivers were not being updated on import of entry list
 
-## v1.0.0 2003-04-05
+## v1.0.0 2023-04-05
 
 ### Added
 - Report tool to provide overall fastest laps with option to filter by server
 - Released as v1 as primary function of importing and providing raw data is done and tested
 
-## v1.0.0-beta.8 2003-04-03
+## v1.0.0-beta.8 2023-04-03
 
 ### Added
 - Tool to load SimGrid standings export from JSON to display in grids an export to Excel
 
-## v1.0.0-beta.7 2003-04-02
+## v1.0.0-beta.7 2023-04-02
 
 ### Fixed
 - Enabled export of all pages when exporting to Excel
 
-## v1.0.0-beta.6 2003-04-01
+## v1.0.0-beta.6 2023-04-01
 
 ### Added
 - Refresh button on toolbar to reload all data grids
@@ -85,19 +90,19 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 ### Fixed
 - Issue where driver manager was not refreshing after sync.
 
-## v1.0.0-beta.5 2003-03-31
+## v1.0.0-beta.5 2023-03-31
 
 ### Fixed
 - Timing issue where entry list files were not always being processed before related session files
 
-## v1.0.0-beta.4 2003-03-31
+## v1.0.0-beta.4 2023-03-31
 
 ### Changed
 - Added driver category to class mapping override to server editor
 - Removed Our Category override throughout
 - Updated all grids to show driver class using server mapping
 
-## v1.0.0-beta.3 2003-03-29
+## v1.0.0-beta.3 2023-03-29
 
 ### Added
 - Driver Manager
@@ -107,13 +112,13 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 ### Changed
 - All data grids to user driver overrides
 
-## v1.0.0-beta.2 2003-03-28
+## v1.0.0-beta.2 2023-03-28
 
 ### Added
 - Capture of driver details from entry lists
 - Display of driver category and country in data grids
 
-## v1.0.0-beta.1 2003-03-27
+## v1.0.0-beta.1 2023-03-27
 
 ### Added
 - Laps tab
@@ -124,7 +129,7 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 ### Changed
 - Resolved issues with different types of result files
 
-## v1.0.0-alpha.4 2003-03-25
+## v1.0.0-alpha.4 2023-03-25
 
 ### Added
 - Progress window during server sync process
@@ -133,12 +138,12 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 - Split bar to adjust space taken by left and right panels
 
 
-## v1.0.0-alpha.3 2003-03-24
+## v1.0.0-alpha.3 2023-03-24
 
 ### Added
 - Display leader board for selected session
 
-## v1.0.0-alpha.2 2003-03-24
+## v1.0.0-alpha.2 2023-03-24
 
 ### Added
 - Display of selected session details
@@ -147,7 +152,7 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 - Error on startup when no servers registered
 
 
-## v1.0.0-aplha.1 2003-03-25
+## v1.0.0-aplha.1 2023-03-25
 
 Initial release
 
