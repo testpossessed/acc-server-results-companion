@@ -13,6 +13,11 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.3.5 2023-05-04
+
+### Fixed
+- Made comparison of driver names case insensitive
+
 ## v1.3.4 2023-05-03
 
 ### Added

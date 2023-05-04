@@ -62,7 +62,7 @@ public class DriverPerformanceViewModel : ObservableObject
             foreach(var driverSession in driverSessions)
             {
                 var driverLaps = driverSession
-                                 .Laps.Where(l => l.Driver == driverPerformance.DriverName)
+                                 .Laps.Where(l => string.Equals(l.Driver, driverPerformance.DriverName, StringComparison.InvariantCultureIgnoreCase))
                                  .ToList();
 
                 if(!driverLaps.Any())
@@ -86,9 +86,9 @@ public class DriverPerformanceViewModel : ObservableObject
                 driverPerformance.ValidLapCount+= validLapCount;
                 driverPerformance.InvalidLapCount+= invalidLapCount;
                 driverPerformance.SessionCount++;
-                driverPerformance.PenaltyCount += driverSession.Penalties.Count(p => p.Driver == driverPerformance.DriverName);
+                driverPerformance.PenaltyCount += driverSession.Penalties.Count(p => string.Equals(p.Driver, driverPerformance.DriverName, StringComparison.InvariantCultureIgnoreCase));
                 driverPerformance.PenaltyValueTotal +=
-                    driverSession.Penalties.Where(p => p.Driver == driverPerformance.DriverName).Sum(p => p.PenaltyValue);
+                    driverSession.Penalties.Where(p => string.Equals(p.Driver, driverPerformance.DriverName, StringComparison.InvariantCultureIgnoreCase)).Sum(p => p.PenaltyValue);
             }
 
             if(consistencyCalculations.Any())
@@ -132,7 +132,7 @@ public class DriverPerformanceViewModel : ObservableObject
             }
 
             var driverLapCount =
-                raceSession.Laps.Count(l => l.Driver == driverPerformance.DriverName);
+                raceSession.Laps.Count(l => string.Equals(l.Driver, driverPerformance.DriverName, StringComparison.InvariantCultureIgnoreCase));
 
             if(driverLapCount < (raceLapCount * .25))
             {
