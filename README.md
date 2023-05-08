@@ -13,6 +13,11 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.3.7 2023-05-08
+
+### Fixed
+- Issue with SimGrid converter where event with multiple races not previously encountered
+
 ## v1.3.6 2023-05-08
 
 ### Fixed
