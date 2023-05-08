@@ -7,6 +7,7 @@ public class AccEntryListDriver
 {
     public AccDriverCategory DriverCategory { get; set; }
     public string FirstName { get; set; }
+    public bool IsSystemAdmin { get; set; }
     public string LastName { get; set; }
     public AccNationality Nationality { get; set; }
     public string PlayerId { get; set; }

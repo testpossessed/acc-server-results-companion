@@ -81,13 +81,9 @@ public class ServerSyncDialogViewModel : ObservableObject
             await this.SyncFtpServer(serverDetails);
         }
 
-        this.CloseDialog();
-    }
+        DriverNameRepairer.Repair(serverDetails);
 
-    private void CloseDialog()
-    {
-        this.window.Close();
-        this.window.Owner.Activate();
+        this.CloseDialog();
     }
 
     private void AddLaps(Session session, AccSession accSession)
@@ -266,6 +262,12 @@ public class ServerSyncDialogViewModel : ObservableObject
         return session;
     }
 
+    private void CloseDialog()
+    {
+        this.window.Close();
+        this.window.Owner.Activate();
+    }
+
     private string GetDriverCategory(Driver dbDriver)
     {
         var category = dbDriver?.DriverCategoryCode ?? 0;
@@ -352,29 +354,32 @@ public class ServerSyncDialogViewModel : ObservableObject
     private void ImportEntryList(string json, string filePath)
     {
         var entryList = JsonConvert.DeserializeObject<AccEntryList>(json);
-        var drivers = entryList.Entries.SelectMany(l => l.Drivers);
-        foreach(var driver in drivers)
+        var entryListDrivers = entryList.Entries.SelectMany(l => l.Drivers);
+        foreach(var entryListDriver in entryListDrivers)
         {
-            var dbDriver = DbRepository.GetDriver(driver.PlayerId) ?? new Driver
+            var dbDriver = DbRepository.GetDriver(entryListDriver.PlayerId) ?? new Driver
                                {
-                                   DriverCategoryCode = (int)driver.DriverCategory,
+                                   DriverCategoryCode = (int)entryListDriver.DriverCategory,
                                    LastUpdateFilePath = filePath,
-                                   FirstName = driver.FirstName,
-                                   LastName = driver.LastName,
-                                   Nationality = driver.Nationality.ToFriendlyName(),
-                                   NationalityCode = (int)driver.DriverCategory,
-                                   ShortName = driver.ShortName,
+                                   FirstName = entryListDriver.FirstName,
+                                   LastName = entryListDriver.LastName,
+                                   Nationality = entryListDriver.Nationality.ToFriendlyName(),
+                                   NationalityCode = (int)entryListDriver.DriverCategory,
+                                   ShortName = entryListDriver.ShortName,
                                    IsImported = true
                                };
 
             if(string.IsNullOrWhiteSpace(dbDriver.Id))
             {
-                dbDriver.Id = driver.PlayerId;
+                dbDriver.Id = entryListDriver.PlayerId;
                 DbRepository.AddDriver(dbDriver);
             }
             else
             {
-                if(this.SyncDriverDetails(dbDriver, driver))
+                if(!entryListDriver.IsSystemAdmin
+                   && !string.IsNullOrWhiteSpace(entryListDriver.FirstName)
+                   && !string.IsNullOrWhiteSpace(entryListDriver.LastName)
+                   && this.SyncDriverDetails(dbDriver, entryListDriver))
                 {
                     dbDriver.LastUpdateFilePath = filePath;
                     DbRepository.UpdateDriver(dbDriver);
@@ -467,6 +472,7 @@ public class ServerSyncDialogViewModel : ObservableObject
         {
             return;
         }
+
         var localFolderPath = Path.Combine(
             PathProvider.DownloadedResultsFolderPath,
             serverDetails.Name);

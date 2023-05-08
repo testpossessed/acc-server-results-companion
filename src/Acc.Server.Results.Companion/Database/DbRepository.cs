@@ -338,4 +338,12 @@ internal static class DbRepository
         return dbContext.Sessions.Count(s => s.ServerId == serverId
                                              && s.SessionType == sessionType);
     }
+
+    internal static List<Driver> GetDriversWithoutNames()
+    {
+        var dbContext = GetDbContext();
+        return dbContext.Drivers.Where(d => string.IsNullOrWhiteSpace(d.FirstName)
+                                            || string.IsNullOrWhiteSpace(d.LastName))
+                        .ToList();
+    }
 }

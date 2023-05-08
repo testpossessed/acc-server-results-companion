@@ -13,6 +13,11 @@ PLEASE NOTE:  This application and documentation is in the early stages of devel
 
 # Release History
 
+## v1.3.6 2023-05-08
+
+### Fixed
+- Issue where drivers who were server admins were coming through in entry lists with all values set to default or empty, which caused the tool to update their driver record with these values.
+
 ## v1.3.5 2023-05-04
 
 ### Fixed
