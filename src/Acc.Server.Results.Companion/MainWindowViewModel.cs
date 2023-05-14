@@ -12,6 +12,7 @@ using Acc.Server.Results.Companion.Reporting.FastestLaps;
 using Acc.Server.Results.Companion.Reporting.Performance;
 using Acc.Server.Results.Companion.Server.ServerEditor;
 using Acc.Server.Results.Companion.Server.Stats;
+using Acc.Server.Results.Companion.Settings;
 using Acc.Server.Results.Companion.SimGrid;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -43,6 +44,7 @@ internal class MainWindowViewModel : ObservableObject
     public ServerStatsViewModel ServerStatsViewModel { get; } = new();
     public OverallFastestLapsViewModel OverallFastestLapsViewModel { get; } = new();
     public DriverPerformanceViewModel DriverPerformanceViewModel { get; } = new();
+    public SettingsPanelViewModel SettingsPanelViewModel { get; } = new();
     public ICommand SyncServer { get; }
 
     public bool IsInitialised

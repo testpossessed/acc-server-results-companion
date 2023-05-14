@@ -3,40 +3,54 @@ using System.IO;
 using Acc.Server.Results.Companion.Core.Models;
 using Newtonsoft.Json;
 
-namespace Acc.Server.Results.Companion.Core.Services
-{
-    internal static class UserSettingsProvider
-    {
-        private static UserSettings currentSettings; 
+namespace Acc.Server.Results.Companion.Core.Services;
 
-        internal static UserSettings GetSettings()
+internal static class UserSettingsProvider
+{
+    private static UserSettings currentSettings;
+
+    internal static UserSettings GetSettings()
+    {
+        if(currentSettings == null)
         {
-            if(currentSettings == null)
+            currentSettings = new UserSettings();
+            if(File.Exists(PathProvider.UserSettingsFilePath))
             {
-                currentSettings = new UserSettings();
-                if(File.Exists(PathProvider.UserSettingsFilePath))
+                var json = File.ReadAllText(PathProvider.UserSettingsFilePath);
+                if(!string.IsNullOrWhiteSpace(json))
                 {
-                    var json = File.ReadAllText(PathProvider.UserSettingsFilePath);
-                    if(!string.IsNullOrWhiteSpace(json))
-                    {
-                        currentSettings = JsonConvert.DeserializeObject<UserSettings>(json);
-                    }
+                    currentSettings = JsonConvert.DeserializeObject<UserSettings>(json);
                 }
             }
-
-            return currentSettings;
         }
 
-        internal static void SetLastServerId(int serverId)
-        {
-            GetSettings().LastServerId = serverId;
-            SaveCurrentSettings();
-        }
+        return currentSettings;
+    }
 
-        private static void SaveCurrentSettings()
-        {
-            var json = JsonConvert.SerializeObject(currentSettings);
-            File.WriteAllText(PathProvider.UserSettingsFilePath, json);
-        }
+    internal static void SetFlagIconUrlBase(string url)
+    {
+        GetSettings()
+            .FlagIconUrlBase = url;
+        SaveCurrentSettings();
+    }
+
+    internal static void SetLastServerId(int serverId)
+    {
+        GetSettings()
+            .LastServerId = serverId;
+        SaveCurrentSettings();
+    }
+
+    internal static void SetVehicleIconUrlBase(string url)
+    {
+        GetSettings()
+            .VehicleIconUrlBase = url;
+        SaveCurrentSettings();
+    }
+
+    private static void SaveCurrentSettings()
+    {
+        var json = JsonConvert.SerializeObject(currentSettings);
+        File.WriteAllText(PathProvider.UserSettingsFilePath, json);
     }
 }

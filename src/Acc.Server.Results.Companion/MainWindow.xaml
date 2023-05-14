@@ -12,6 +12,7 @@
                      xmlns:ss="clr-namespace:Acc.Server.Results.Companion.Server.Stats"
                      xmlns:fl="clr-namespace:Acc.Server.Results.Companion.Reporting.FastestLaps"
                      xmlns:dp="clr-namespace:Acc.Server.Results.Companion.Reporting.Performance"
+                     xmlns:settings="clr-namespace:Acc.Server.Results.Companion.Settings"
                      mc:Ignorable="d"
                      Title="ACC Server Results Companion"
                      WindowStartupLocation="CenterScreen"
@@ -22,6 +23,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -64,7 +66,8 @@
             <Button ToolTip="Edit the selected Server"
                     Command="{Binding EditServer}"
                     Height="32"
-                    Width="32" Margin="5 0"
+                    Width="32"
+                    Margin="5 0"
                     Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Image Source="../Icons/server-edit.png" />
             </Button>
@@ -121,10 +124,15 @@
 
         </sf:TabControlExt>
 
+        <settings:SettingsPanel Grid.Column="3"
+                                Grid.Row="1"
+                                Visibility="{Binding DataContext.IsInitialised, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
+                                DataContext="{Binding SettingsPanelViewModel}" />
+
         <w:WelcomeScreen Grid.Column="0"
-                               Grid.Row="1"
-                               Grid.ColumnSpan="3"
-                               Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityInverseConverter}}" />
+                         Grid.Row="1"
+                         Grid.ColumnSpan="3"
+                         Visibility="{Binding IsInitialised, Converter={StaticResource BooleanToVisibilityInverseConverter}}" />
 
         <StatusBar Grid.Column="0"
                    Grid.Row="2"

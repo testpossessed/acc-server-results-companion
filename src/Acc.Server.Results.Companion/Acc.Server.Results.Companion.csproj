@@ -13,6 +13,7 @@
 	<ItemGroup>
 		<None Remove="Icons\cancel.png" />
 		<None Remove="Icons\export-to-excel.png" />
+		<None Remove="Icons\gear-filled.png" />
 		<None Remove="Icons\Icon.png" />
 		<None Remove="Icons\import-from-text.png" />
 		<None Remove="Icons\Logo.png" />
@@ -61,6 +62,7 @@
 	<ItemGroup>
 		<Resource Include="Icons\cancel.png" />
 		<Resource Include="Icons\export-to-excel.png" />
+		<Resource Include="Icons\gear-filled.png" />
 		<Resource Include="Icons\Icon.png" />
 		<Resource Include="Icons\import-from-text.png" />
 		<Resource Include="Icons\refresh.png" />
