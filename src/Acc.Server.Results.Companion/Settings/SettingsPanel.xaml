@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Acc.Server.Results.Companion.Settings"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance local:SettingsPanelViewModel}">
     <StackPanel Orientation="Vertical"
@@ -30,5 +31,42 @@
                 </Image.InputBindings>
             </Image>
         </Grid>
+        <sf:SfAccordion SelectionMode="One"
+                        Width="300"
+                        Visibility="{Binding SettingsVisibility}">
+            <sf:SfAccordionItem Header="Icon Sources">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0"
+                           Grid.Row="0"
+                           Content="Flag Icons"
+                           VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="0"
+                             Text="{Binding FlagIconUrlBase}"
+                             VerticalAlignment="Center"
+                             ToolTip="A local folder or url where flag icons can be found" />
+
+                    <Label Grid.Column="0"
+                           Grid.Row="1"
+                           Content="Vehicle Icons"
+                           VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="1"
+                             Text="{Binding VehicleIconUrlBase}"
+                             VerticalAlignment="Center"
+                             ToolTip="A local folder or url where vehicle icons can be found" />
+                </Grid>
+            </sf:SfAccordionItem>
+        </sf:SfAccordion>
     </StackPanel>
 </UserControl>

@@ -35,7 +35,7 @@ namespace Acc.Server.Results.Companion
             Configuration.Init();
             LogWriter.Init();
             DbRepository.Init();
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTQ4MjExMUAzMjMxMmUzMTJlMzMzNVJZSVc0MVJZZUo1aGhpOU04Tnc1SHRVYm5XZkJIdFNYQ1JMa2JCb2k3ckk9");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjAzNDk5MkAzMjMxMmUzMjJlMzRaRGdKNUJmWjBwVWpwRjRtc2NKUEVjUldXbU9Lb1gwMjhHcmxYV0VDazMwPQ==");
 
 
 #if RELEASE

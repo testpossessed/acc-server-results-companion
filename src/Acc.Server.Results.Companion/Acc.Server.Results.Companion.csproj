@@ -33,30 +33,29 @@
 
 	<ItemGroup>
 		<PackageReference Include="Clowd.Squirrel" Version="3.0.210-g5f9f594" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
 		<PackageReference Include="FluentFTP" Version="46.0.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
 			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>
-				runtime; build; native; contentfiles; analyzers; buildtransitive
-			</IncludeAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="NLog" Version="5.1.2" />
-		<PackageReference Include="NLog.Extensions.Logging" Version="5.2.2" />
-		<PackageReference Include="Syncfusion.DataGridExcelExport.Wpf" Version="21.1.35" />
-		<PackageReference Include="Syncfusion.SfGrid.WPF" Version="21.1.35" />
-		<PackageReference Include="Syncfusion.SfInput.WPF" Version="21.1.35" />
-		<PackageReference Include="Syncfusion.SfProgressBar.WPF" Version="21.1.35" />
-		<PackageReference Include="Syncfusion.Shared.WPF" Version="21.1.35" />
-		<PackageReference Include="Syncfusion.Themes.Blend.WPF" Version="21.1.35" />
-		<PackageReference Include="Syncfusion.Tools.WPF" Version="21.1.35" />
+		<PackageReference Include="NLog" Version="5.1.4" />
+		<PackageReference Include="NLog.Extensions.Logging" Version="5.2.3" />
+		<PackageReference Include="Syncfusion.DataGridExcelExport.Wpf" Version="21.2.4" />
+		<PackageReference Include="Syncfusion.SfAccordion.WPF" Version="21.2.4" />
+		<PackageReference Include="Syncfusion.SfGrid.WPF" Version="21.2.4" />
+		<PackageReference Include="Syncfusion.SfInput.WPF" Version="21.2.4" />
+		<PackageReference Include="Syncfusion.SfProgressBar.WPF" Version="21.2.4" />
+		<PackageReference Include="Syncfusion.Shared.WPF" Version="21.2.4" />
+		<PackageReference Include="Syncfusion.Themes.Blend.WPF" Version="21.2.4" />
+		<PackageReference Include="Syncfusion.Tools.WPF" Version="21.2.4" />
 	</ItemGroup>
 
 	<ItemGroup>
